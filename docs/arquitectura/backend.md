@@ -197,7 +197,7 @@ backend/ (python + flask + swagger + uvicorn)
 | Servidor WSGI              | Gunicorn                                                |
 | Base de datos              | PostgreSQL                                              |
 | ORM                        | SQLAlchemy                                              |
-| Migraciones                | Flask-Migrate                                                 |
+| Migraciones                | Flask-Migrate                                           |
 | Arquitectura               | Clean Architecture + Hexagonal                          |
 | Autenticación              | JWT                                                     |
 | Caché / Broker             | Redis                                                   |
@@ -205,10 +205,11 @@ backend/ (python + flask + swagger + uvicorn)
 | Planificador               | Celery Beat                                             |
 | Notificaciones Push        | Firebase Cloud Messaging                                |
 | Almacenamiento de imágenes | Cloudinary                                              |
-| Documentación API          | Swagger / OpenAPI                                       |
-| Validación                 | Pydantic o Marshmallow                                  |
+| Documentación API          | Swagger                                            |
+| Validación                 | Pydantic                                                |
 | Pruebas                    | Pytest                                                  |
 | Contenedores               | Docker (PostgreSQL, Redis, Celery Worker y Celery Beat) |
 
 
 ## Funciones:
+
