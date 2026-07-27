@@ -1,18 +1,18 @@
-RecorNet: Software Multiplataforma para Recordatorio Inteligente de Medicamentos para Adultos Mayores
+# RecorNet: Software Multiplataforma para Recordatorio Inteligente de Medicamentos para Adultos Mayores
 
 ## Descripción:
 
 RecorNet es un software multiplataforma (Android, iOS y Web) diseñado para ayudar a los adultos mayores a cumplir correctamente con el tratamiento de sus medicamentos mediante recordatorios inteligentes, accesibles y fáciles de utilizar.
 
-Objetivo General
+## Objetivo General
 
 Desarrollar un software multiplataforma accesible que permita gestionar medicamentos, generar recordatorios inteligentes y realizar seguimiento del cumplimiento del tratamiento médico en adultos mayores, promoviendo la autonomía y facilitando el apoyo de sus cuidadores.
 
 
 
-La presentación y necesidades detectadas, problemas que resuelve, publico dirigido, enfoque del producto o servicio.
+## La presentación y necesidades detectadas, problemas que resuelve, publico dirigido, enfoque del producto o servicio.
 
-## La presentación:
+### La presentación:
 
 
 
@@ -28,95 +28,90 @@ Uno de los principales pilares del proyecto es la accesibilidad. La aplicación 
 
 De esta manera, RecorNet no solo constituye una herramienta tecnológica para recordar la toma de medicamentos, sino también una solución integral que promueve la autonomía del adulto mayor, facilita el trabajo de los cuidadores y contribuye a mejorar la seguridad y la calidad de vida durante el tratamiento médico.
 
-## Necesidades detectadas:
+### Necesidades detectadas:
 
 El envejecimiento de la población ha incrementado el número de adultos mayores que deben seguir tratamientos médicos de forma permanente. Muchos de ellos consumen varios medicamentos al día y en diferentes horarios, lo que aumenta la probabilidad de olvidar una dosis, tomar un medicamento equivocado o administrarlo fuera del tiempo indicado. Estas situaciones pueden disminuir la efectividad del tratamiento, agravar enfermedades preexistentes y generar complicaciones que afecten su salud y calidad de vida.
 
-## Durante el análisis del problema se identificaron las siguientes necesidades:
+Durante el análisis del problema se identificaron las siguientes necesidades:
 
-Reducir el olvido en la toma de medicamentos, mediante recordatorios oportunos y confiables que alerten al usuario en el momento adecuado.
+- Reducir el olvido en la toma de medicamentos, mediante recordatorios oportunos y confiables que alerten al usuario en el momento adecuado.
 
-Facilitar la administración de los tratamientos médicos, permitiendo registrar y organizar los medicamentos, dosis, horarios y duración del tratamiento en una sola aplicación.
+- Facilitar la administración de los tratamientos médicos, permitiendo registrar y organizar los medicamentos, dosis, horarios y duración del tratamiento en una sola aplicación.
 
-Brindar apoyo a los adultos mayores con limitaciones tecnológicas, incorporando un rol de cuidador que pueda gestionar los medicamentos y supervisar el tratamiento cuando sea necesario.
+- Brindar apoyo a los adultos mayores con limitaciones tecnológicas, incorporando un rol de cuidador que pueda gestionar los medicamentos y supervisar el tratamiento cuando sea necesario.
 
-Garantizar la accesibilidad del sistema, adaptando la interfaz para personas con discapacidad visual, auditiva, motriz o cognitiva mediante funciones como textos ampliables, alto contraste, lectura por voz, vibración, botones grandes y navegación sencilla.
+- Garantizar la accesibilidad del sistema, adaptando la interfaz para personas con discapacidad visual, auditiva, motriz o cognitiva mediante funciones como textos ampliables, alto contraste, lectura por voz, vibración, botones grandes y navegación sencilla.
 
-Realizar un seguimiento del cumplimiento del tratamiento, almacenando un historial de las dosis confirmadas, pendientes u omitidas para evaluar la adherencia al tratamiento.
+- Realizar un seguimiento del cumplimiento del tratamiento, almacenando un historial de las dosis confirmadas, pendientes u omitidas para evaluar la adherencia al tratamiento.
 
-Proporcionar información clara y comprensible, mostrando el nombre del medicamento, su fotografía, la dosis, la hora programada y una breve descripción de su finalidad para reducir errores durante la administración.
+- Proporcionar información clara y comprensible, mostrando el nombre del medicamento, su fotografía, la dosis, la hora programada y una breve descripción de su finalidad para reducir errores durante la administración.
 
-Ofrecer información estadística del tratamiento, mediante gráficos e indicadores que permitan conocer el porcentaje de cumplimiento, los días consecutivos de tratamiento, la cantidad de medicamentos registrados y las dosis administradas o pendientes.
+- Ofrecer información estadística del tratamiento, mediante gráficos e indicadores que permitan conocer el porcentaje de cumplimiento, los días consecutivos de tratamiento, la cantidad de medicamentos registrados y las dosis administradas o pendientes.
 
-Mejorar la comunicación entre el adulto mayor y su cuidador, facilitando el seguimiento del tratamiento y permitiendo detectar oportunamente posibles incumplimientos.
+-  Mejorar la comunicación entre el adulto mayor y su cuidador, facilitando el seguimiento del tratamiento y permitiendo detectar oportunamente posibles incumplimientos.
 
-Estas necesidades evidencian la importancia de contar con una solución tecnológica que no solo recuerde la toma de medicamentos, sino que también contribuya al seguimiento del tratamiento, fortalezca la autonomía del adulto mayor y apoye a los cuidadores en la supervisión de la medicación. De esta manera, RecorNet busca ofrecer una herramienta accesible, intuitiva y centrada en las necesidades reales de sus usuarios.
-
-
+- Estas necesidades evidencian la importancia de contar con una solución tecnológica que no solo recuerde la toma de medicamentos, sino que también contribuya al seguimiento del tratamiento, fortalezca la autonomía del adulto mayor y apoye a los cuidadores en la supervisión de la medicación. De esta manera, RecorNet busca ofrecer una herramienta accesible, intuitiva y centrada en las necesidades reales de sus usuarios.
 
 
 
-## Problemas que resuelve:
+
+
+### Problemas que resuelve:
 
 
 
 RecorNet está orientado a resolver problemas frecuentes que enfrentan los adultos mayores y sus cuidadores durante la administración de medicamentos. A través de sus funcionalidades, el sistema contribuye a mejorar la adherencia al tratamiento, reducir errores y facilitar el seguimiento del estado de la medicación.
 
-## Los principales problemas que resuelve son los siguientes:
+Los principales problemas que resuelve son los siguientes:
 
-Olvido en la toma de medicamentos.
+1. Olvido en la toma de medicamentos:
 Muchos adultos mayores olvidan tomar sus medicamentos debido a la edad, problemas de memoria o la cantidad de dosis que deben consumir diariamente. RecorNet envía recordatorios mediante notificaciones, alarmas, mensajes de voz y vibración para disminuir este riesgo.
 
-Confusión entre medicamentos y dosis.
+2. Confusión entre medicamentos y dosis:
 Cuando una persona consume varios medicamentos al día, puede confundirse sobre cuál debe tomar y en qué cantidad. La aplicación muestra el nombre del medicamento, su fotografía, la dosis indicada y una breve descripción de su uso para facilitar su identificación.
 
-Incumplimiento de los horarios de medicación.
+3. Incumplimiento de los horarios de medicación:
 Tomar un medicamento fuera del horario prescrito puede afectar la eficacia del tratamiento. RecorNet programa recordatorios automáticos según los horarios establecidos y solicita la confirmación de cada dosis administrada.
 
-Falta de seguimiento del tratamiento.
+4. Falta de seguimiento del tratamiento:
 Sin un registro adecuado, es difícil conocer si el tratamiento se está cumpliendo correctamente. El sistema almacena un historial de las dosis tomadas, pendientes y omitidas, permitiendo realizar un seguimiento continuo.
 
-Dificultad de algunos adultos mayores para utilizar dispositivos móviles.
+5. Dificultad de algunos adultos mayores para utilizar dispositivos móviles:
 No todos los adultos mayores poseen habilidades digitales suficientes para gestionar una aplicación. Por ello, RecorNet incorpora un rol de cuidador que permite a familiares o responsables registrar medicamentos, programar horarios y supervisar el tratamiento.
 
-Ausencia de herramientas para monitorear el cumplimiento del tratamiento.
+6. Ausencia de herramientas para monitorear el cumplimiento del tratamiento:
 Tanto el adulto mayor como el cuidador necesitan conocer el progreso del tratamiento. La aplicación genera gráficos e indicadores que muestran el porcentaje de cumplimiento, los días consecutivos de medicación, la cantidad de dosis administradas y otros datos relevantes.
 
-Barreras de accesibilidad en aplicaciones tradicionales.
+7. Barreras de accesibilidad en aplicaciones tradicionales:
 Muchas aplicaciones no consideran las necesidades de personas con discapacidad visual, auditiva, motriz o cognitiva. RecorNet incorpora principios de accesibilidad, como textos ampliables, alto contraste, botones de gran tamaño, compatibilidad con lectores de pantalla, mensajes de voz, vibración y una navegación sencilla.
 
-Riesgo de errores durante la administración de medicamentos.
+8. Riesgo de errores durante la administración de medicamentos:
 La falta de información clara o la complejidad de algunas interfaces puede provocar equivocaciones al momento de tomar un medicamento. RecorNet presenta la información de forma clara, utiliza confirmaciones antes de acciones importantes y aplica mecanismos de validación para reducir errores.
 
 En conjunto, estas funcionalidades permiten que RecorNet contribuya a una administración más segura y organizada de los medicamentos, fortaleciendo la autonomía de los adultos mayores, apoyando el trabajo de los cuidadores y favoreciendo el cumplimiento adecuado de los tratamientos médicos.
 
-## Publico dirigido:
+### Publico dirigido:
 
 RecorNet está dirigido principalmente a adultos mayores que requieren llevar un control adecuado de sus tratamientos médicos y a las personas encargadas de su cuidado. La aplicación ha sido diseñada considerando las necesidades, capacidades y limitaciones de estos usuarios, ofreciendo una interfaz sencilla, accesible e intuitiva.
 
-## Los principales usuarios del sistema son:
+Los principales usuarios del sistema son:
 
-Adultos mayores
+**Adultos mayores**
 
 Es el público objetivo principal de RecorNet. Está orientado a personas de 60 años o más que consumen uno o varios medicamentos de manera diaria o periódica y que necesitan apoyo para recordar la hora, la dosis y el medicamento que deben tomar.
 
-## La aplicación resulta especialmente útil para adultos mayores que:
+### La aplicación resulta especialmente útil para adultos mayores que:
 
-Deben seguir tratamientos médicos de larga duración.
-
-Consumen varios medicamentos al día (polimedicación).
-
-Presentan olvidos ocasionales relacionados con la memoria.
-
-Requieren recordatorios para cumplir con los horarios establecidos.
-
-Presentan discapacidad visual, auditiva, motriz o cognitiva leve, y necesitan una aplicación accesible.
-
-Cuidadores y familiares
+- Deben seguir tratamientos médicos de larga duración.
+- Consumen varios medicamentos al día (polimedicación).
+- Presentan olvidos ocasionales relacionados con la memoria.
+- Requieren recordatorios para cumplir con los horarios establecidos.
+- Presentan discapacidad visual, auditiva, motriz o cognitiva leve, y necesitan una aplicación accesible.
+- Cuidadores y familiares
 
 El sistema también está dirigido a familiares, cuidadores o personas responsables del adulto mayor, quienes podrán administrar el tratamiento cuando el usuario tenga dificultades para utilizar dispositivos móviles o requiera apoyo en la gestión de sus medicamentos.
 
-## Entre sus funciones se encuentran:
+### Entre sus funciones se encuentran:
 
 Registrar y actualizar medicamentos.
 
@@ -136,7 +131,7 @@ En general, RecorNet está orientado a personas que buscan una solución tecnol�
 
 
 
-Enfoque del producto o servicio
+### Enfoque del producto o servicio
 
 RecorNet se enfoca en ofrecer una solución tecnológica multiplataforma, accesible y centrada en el usuario, cuyo propósito es mejorar la adherencia a los tratamientos médicos de los adultos mayores mediante recordatorios inteligentes y herramientas de seguimiento. El desarrollo del sistema se basa en los principios del Diseño Centrado en el Usuario (DCU), la accesibilidad y la usabilidad, garantizando que personas con diferentes capacidades puedan utilizar la aplicación de manera sencilla, segura y eficiente.
 
@@ -148,11 +143,11 @@ Desde el punto de vista de la accesibilidad, el sistema está diseñado para ate
 
 En conjunto, el enfoque de RecorNet no se limita a recordar la toma de medicamentos, sino que busca convertirse en una herramienta integral de apoyo para el cuidado de la salud, promoviendo la autonomía del adulto mayor, fortaleciendo la participación de los cuidadores y contribuyendo a un tratamiento médico más seguro, organizado y eficiente.
 
-Funcionalidades generales
+## Funcionalidades generales
 
 RecorNet ofrece un conjunto de funcionalidades orientadas a facilitar la administración de medicamentos, mejorar el cumplimiento de los tratamientos médicos y proporcionar una experiencia accesible para los adultos mayores y sus cuidadores.
 
-## Las principales funcionalidades del sistema son las siguientes:
+### Las principales funcionalidades del sistema son las siguientes:
 
 # 1. Gestión de usuarios
 
