@@ -107,27 +107,20 @@ Es el público objetivo principal de RecorNet. Está orientado a personas de 60 
 - Presentan olvidos ocasionales relacionados con la memoria.
 - Requieren recordatorios para cumplir con los horarios establecidos.
 - Presentan discapacidad visual, auditiva, motriz o cognitiva leve, y necesitan una aplicación accesible.
-- Cuidadores y familiares
+
+**Cuidadores y familiares**
 
 El sistema también está dirigido a familiares, cuidadores o personas responsables del adulto mayor, quienes podrán administrar el tratamiento cuando el usuario tenga dificultades para utilizar dispositivos móviles o requiera apoyo en la gestión de sus medicamentos.
 
 ### Entre sus funciones se encuentran:
 
-Registrar y actualizar medicamentos.
-
-Programar horarios y dosis.
-
-Consultar el historial de tomas.
-
-Dar seguimiento al cumplimiento del tratamiento.
-
-Supervisar el progreso mediante estadísticas e indicadores.
-
-Profesionales de la salud (usuario complementario)
-
-Aunque no constituyen el usuario principal, médicos, enfermeros y otros profesionales de la salud pueden beneficiarse de la información registrada en la aplicación para conocer el nivel de adherencia al tratamiento y apoyar el seguimiento del paciente durante las consultas médicas.
-
-En general, RecorNet está orientado a personas que buscan una solución tecnológica accesible para mejorar la organización, el seguimiento y el cumplimiento de los tratamientos médicos, promoviendo la autonomía del adulto mayor y facilitando el trabajo de quienes participan en su cuidado.
+- Registrar y actualizar medicamentos.
+- Programar horarios y dosis.
+- Consultar el historial de tomas.
+- Dar seguimiento al cumplimiento del tratamiento.
+- Supervisar el progreso mediante estadísticas e indicadores.
+- Profesionales de la salud (usuario complementario)
+- En general, RecorNet está orientado a personas que buscan una solución tecnológica accesible para mejorar la organización, el seguimiento y el cumplimiento de los tratamientos médicos, promoviendo la autonomía del adulto mayor y facilitando el trabajo de quienes participan en su cuidado.
 
 
 
@@ -149,147 +142,103 @@ RecorNet ofrece un conjunto de funcionalidades orientadas a facilitar la adminis
 
 ### Las principales funcionalidades del sistema son las siguientes:
 
-# 1. Gestión de usuarios
+#### 1. Gestión de usuarios
 
-Registro e inicio de sesión de usuarios.
+- Registro e inicio de sesión de usuarios.
+- Recuperación de contraseña.
+- Administración del perfil del usuario.
+- Asignación de roles (Adulto Mayor y Cuidador).
 
-Recuperación de contraseña.
+#### 2. Gestión de medicamentos (CRUD)
+- Registrar nuevos medicamentos.
+- Consultar el listado de medicamentos.
+- Editar la información de un medicamento.
+- Eliminar medicamentos.
+- Registrar fotografía del medicamento.
+- Registrar descripción, dosis, frecuencia y duración del tratamiento.
 
-Administración del perfil del usuario.
+#### 3. Programación de tratamientos
+- Configurar horarios de administración.
+- Definir la cantidad de dosis por día.
+- Establecer fechas de inicio y finalización del tratamiento.
+- Configurar recordatorios personalizados.
 
-Asignación de roles (Adulto Mayor y Cuidador).
+#### 4. Recordatorios inteligentes
 
-# 2. Gestión de medicamentos (CRUD)
+- Envío de notificaciones automáticas.
+- Activación de alarma sonora.
+- Reproducción de mensajes de voz con el nombre del medicamento y la dosis.
+- Vibración del dispositivo.
+- Visualización de la fotografía del medicamento y su descripción.
+- Repetición del recordatorio hasta recibir una confirmación (según la configuración).
 
-Registrar nuevos medicamentos.
+#### 5. Confirmación de la toma del medicamento
 
-Consultar el listado de medicamentos.
+- Confirmar que el medicamento fue administrado.
+- Registrar la fecha y hora de la confirmación.
+- Marcar dosis pendientes u omitidas.
+- Mantener un historial de las tomas realizadas.
 
-Editar la información de un medicamento.
+#### 6. Seguimiento del tratamiento
 
-Eliminar medicamentos.
+- Consulta del historial de medicamentos.
+- Registro de dosis tomadas, pendientes y omitidas.
+- Seguimiento del cumplimiento del tratamiento.
+- Visualización del progreso diario, semanal y mensual.
 
-Registrar fotografía del medicamento.
+#### 7. Dashboard y estadísticas
 
-Registrar descripción, dosis, frecuencia y duración del tratamiento.
+- Número de dosis programadas por día.
+- Días consecutivos de cumplimiento del tratamiento.
+- Porcentaje de adherencia al tratamiento.
+- Cantidad de dosis tomadas, pendientes y omitidas.
+- Cantidad total de medicamentos registrados.
+- Gráficos de barras, líneas y pastel para facilitar la interpretación de la información.
 
-# 3. Programación de tratamientos
+#### 8. Gestión del cuidador
+- Registrar y administrar medicamentos del adulto mayor.
+- Programar horarios y tratamientos.
+- Consultar el historial de tomas.
+- Supervisar el cumplimiento del tratamiento mediante estadísticas.
+- Recibir alertas cuando una dosis no haya sido confirmada (según la configuración).
 
-Configurar horarios de administración.
+#### 9. Accesibilidad
 
-Definir la cantidad de dosis por día.
+- Compatibilidad con lectores de pantalla.
+- Textos ampliables.
+- Alto contraste y modo oscuro.
+- Botones grandes y fáciles de seleccionar.
+- Navegación sencilla e intuitiva.
+- Mensajes de voz para los recordatorios.
+- Vibración para personas con discapacidad auditiva.
+- Diseño adaptado para personas con discapacidad visual, auditiva, motriz y cognitiva.
 
-Establecer fechas de inicio y finalización del tratamiento.
+#### 10. Configuración de la aplicación
 
-Configurar recordatorios personalizados.
-
-# 4. Recordatorios inteligentes
-
-Envío de notificaciones automáticas.
-
-Activación de alarma sonora.
-
-Reproducción de mensajes de voz con el nombre del medicamento y la dosis.
-
-Vibración del dispositivo.
-
-Visualización de la fotografía del medicamento y su descripción.
-
-Repetición del recordatorio hasta recibir una confirmación (según la configuración).
-
-# 5. Confirmación de la toma del medicamento
-
-Confirmar que el medicamento fue administrado.
-
-Registrar la fecha y hora de la confirmación.
-
-Marcar dosis pendientes u omitidas.
-
-Mantener un historial de las tomas realizadas.
-
-# 6. Seguimiento del tratamiento
-
-Consulta del historial de medicamentos.
-
-Registro de dosis tomadas, pendientes y omitidas.
-
-Seguimiento del cumplimiento del tratamiento.
-
-Visualización del progreso diario, semanal y mensual.
-
-# 7. Dashboard y estadísticas
-
-Cantidad total de medicamentos registrados.
-
-Número de dosis programadas por día.
-
-Días consecutivos de cumplimiento del tratamiento.
-
-Porcentaje de adherencia al tratamiento.
-
-Cantidad de dosis tomadas, pendientes y omitidas.
-
-Gráficos de barras, líneas y pastel para facilitar la interpretación de la información.
-
-# 8. Gestión del cuidador
-
-Registrar y administrar medicamentos del adulto mayor.
-
-Programar horarios y tratamientos.
-
-Consultar el historial de tomas.
-
-Supervisar el cumplimiento del tratamiento mediante estadísticas.
-
-Recibir alertas cuando una dosis no haya sido confirmada (según la configuración).
-
-# 9. Accesibilidad
-
-Compatibilidad con lectores de pantalla.
-
-Textos ampliables.
-
-Alto contraste y modo oscuro.
-
-Botones grandes y fáciles de seleccionar.
-
-Navegación sencilla e intuitiva.
-
-Mensajes de voz para los recordatorios.
-
-Vibración para personas con discapacidad auditiva.
-
-Diseño adaptado para personas con discapacidad visual, auditiva, motriz y cognitiva.
-
-# 10. Configuración de la aplicación
-
-Personalización del volumen de las alarmas.
-
-Configuración del tipo de notificación (voz, sonido, vibración o combinación).
-
-Selección del tamaño de fuente.
-
-Cambio entre tema claro y oscuro.
-
-Configuración del idioma de la aplicación.
+- Personalización del volumen de las alarmas.
+- Configuración del tipo de notificación (voz, sonido, vibración o combinación).
+- Selección del tamaño de fuente.
+- Cambio entre tema claro y oscuro.
+- Configuración del idioma de la aplicación.
 
 Estas funcionalidades convierten a RecorNet en una solución integral para la gestión de medicamentos, permitiendo no solo recordar la toma de las dosis, sino también realizar un seguimiento del tratamiento, apoyar a los cuidadores y ofrecer una experiencia accesible, intuitiva y centrada en las necesidades de los adultos mayores.
 
 
 
-Requisitos funcionales por rol de usuario
+### Requisitos funcionales por rol de usuario
 
 Los requisitos funcionales describen las acciones que cada tipo de usuario puede realizar dentro del sistema RecorNet, de acuerdo con los permisos asignados a su rol.
 
-# 4.1 Rol: Adulto Mayor
+#### 4.1 Rol: Adulto Mayor
 
 
 
-# 4.2 Rol: Cuidador
+
+#### 4.2 Rol: Cuidador
 
 
 
-# 4.3 Funcionalidades comunes
+#### 4.3 Funcionalidades comunes
 
 ## Las siguientes funcionalidades estarán disponibles para ambos roles:
 

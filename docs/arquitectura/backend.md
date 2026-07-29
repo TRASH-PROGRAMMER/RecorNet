@@ -12,7 +12,6 @@ backend/
 ├── api/                # Flask API (Clean Architecture + Hexagonal)      
 ├── shared/             # (Opcional) utilidades compartidas
 ├── docker/             # Docker files
-├── docker-compose.yml  # Orquestación de servicios
 ├── docker-compose.yml      # Orquestación de servicios
 │
 ├── requirements.txt     # Dependencias de la aplicación
