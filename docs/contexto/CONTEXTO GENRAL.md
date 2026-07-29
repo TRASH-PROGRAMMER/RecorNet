@@ -230,272 +230,462 @@ Estas funcionalidades convierten a RecorNet en una solución integral para la ge
 Los requisitos funcionales describen las acciones que cada tipo de usuario puede realizar dentro del sistema RecorNet, de acuerdo con los permisos asignados a su rol.
 
 #### 4.1 Rol: Adulto Mayor
+Código	Requisito funcional
 
+RF-AM-01	El adulto mayor podrá iniciar sesión en la aplicación.
 
+RF-AM-02	El adulto mayor podrá visualizar la lista de sus medicamentos registrados.
+
+RF-AM-03	El adulto mayor podrá consultar la información detallada de cada medicamento (nombre, fotografía, dosis, descripción y horarios).
+
+RF-AM-04	El sistema deberá enviar recordatorios mediante notificaciones en los horarios programados.
+
+RF-AM-05	El sistema deberá emitir una alarma sonora al momento del recordatorio.
+
+RF-AM-06	El sistema deberá reproducir un mensaje de voz indicando el nombre del medicamento y la dosis correspondiente.
+
+RF-AM-07	El sistema deberá activar la vibración del dispositivo durante el recordatorio.
+
+RF-AM-08	El adulto mayor podrá confirmar que ha tomado el medicamento mediante un botón de confirmación.
+
+RF-AM-09	El sistema registrará automáticamente la fecha y hora de la confirmación de la toma.
+
+RF-AM-10	El adulto mayor podrá consultar el historial de medicamentos administrados.
+
+RF-AM-11	El adulto mayor podrá visualizar estadísticas del cumplimiento de su tratamiento.
+
+RF-AM-12	El adulto mayor podrá personalizar opciones de accesibilidad como tamaño de letra, contraste y volumen de las alertas.
 
 
 #### 4.2 Rol: Cuidador
+Código	Requisito funcional
+
+RF-CU-01	El cuidador podrá iniciar sesión en la aplicación.
+
+RF-CU-02	El cuidador podrá registrar un nuevo medicamento para el adulto mayor.
+
+RF-CU-03	El cuidador podrá consultar la lista de medicamentos registrados.
+
+RF-CU-04	El cuidador podrá editar la información de un medicamento.
+
+RF-CU-05	El cuidador podrá eliminar un medicamento del tratamiento.
+
+RF-CU-06	El cuidador podrá programar horarios, dosis y duración del tratamiento.
+
+RF-CU-07	El cuidador podrá registrar la fotografía y descripción de cada medicamento.
+
+RF-CU-08	El cuidador podrá consultar el historial de tomas del adulto mayor.
+
+RF-CU-09	El cuidador podrá visualizar estadísticas sobre el cumplimiento del tratamiento.
+
+RF-CU-10	El cuidador podrá identificar las dosis tomadas, pendientes y omitidas.
+
+RF-CU-11	El sistema podrá notificar al cuidador cuando una dosis no haya sido confirmada dentro del tiempo establecido (si esta opción está habilitada).
+
+RF-CU-12	El cuidador podrá modificar la configuración de las notificaciones y recordatorios del tratamiento.
+
 
 
 
 #### 4.3 Funcionalidades comunes
 
-## Las siguientes funcionalidades estarán disponibles para ambos roles:
+Las siguientes funcionalidades estarán disponibles para ambos roles:
+
+Código	Requisito funcional
+
+RF-CM-01	El usuario podrá recuperar su contraseña.
+
+RF-CM-02	El usuario podrá actualizar su información personal.
+
+RF-CM-03	El usuario podrá cerrar sesión de forma segura.
+
+RF-CM-04	El sistema almacenará de forma segura la información de medicamentos e historial de tomas.
+
+RF-CM-05	El sistema garantizará el acceso a la información de acuerdo con el rol del usuario.
+
+RF-CM-06	El sistema registrará automáticamente las confirmaciones de las dosis administradas.
+
+RF-CM-07	El sistema mostrará una interfaz accesible, intuitiva y adaptada a las necesidades de los adultos mayores.
+
+RF-CM-08	El sistema funcionará de forma multiplataforma en dispositivos Android, iOS y Web.
+
 
 Con estos requisitos funcionales se definen las operaciones permitidas para cada tipo de usuario, garantizando una adecuada gestión de los medicamentos, el seguimiento del tratamiento y una experiencia de uso accesible y segura.
 
 
 
-Accesibilidad
+## Accesibilidad
 
 RecorNet será desarrollado siguiendo las recomendaciones de las Pautas de Accesibilidad para el Contenido Web (WCAG 2.2) y principios de Diseño Universal.
 
-Personas con discapacidad visual
+**Personas con discapacidad visual:**
 
-Letras grandes.
+- Letras grandes.
 
-Zoom.
+- Zoom.
 
-Alto contraste.
+- Alto contraste.
 
-Modo oscuro.
+- Modo oscuro.
 
-Compatibilidad con lectores de pantalla.
+- Compatibilidad con lectores de pantalla.
 
-Lectura por voz.
+- Lectura por voz.
 
-Iconografía clara.
+- Mensajes de voz para los recordatorios.
 
-Botones grandes.
+- Iconografía clara.
 
+- Vibración.
 
-
-Personas con discapacidad auditiva
-
-Vibración.
-
-Alertas visuales.
-
-Animaciones.
-
-Texto grande.
-
-Confirmaciones visuales.
+- Botones grandes.
 
 
 
-Personas con discapacidad motriz
+**Personas con discapacidad auditiva:**
 
-Botones de gran tamaño.
+- Vibración.
 
-Espaciado amplio.
+- Alertas visuales.
 
-Evitar gestos complejos.
+- Animaciones.
 
-Compatibilidad con comandos de voz.
+- Texto grande.
 
-Navegación sencilla con pocos toques.
-
-
-
-Personas con discapacidad cognitiva
-
-Interfaz simple.
-
-Uso de pictogramas.
-
-Colores consistentes.
-
-Lenguaje sencillo.
-
-Confirmaciones claras.
-
-Pasos mínimos para realizar tareas.
-
-Evitar sobrecarga de información.
+- Confirmaciones visuales.
 
 
 
-Usabilidad
+**Personas con discapacidad motriz:**
+
+- Botones de gran tamaño.
+
+- Espaciado amplio.
+
+- Evitar gestos complejos.
+
+- Compatibilidad con comandos de voz.
+
+- Navegación sencilla con pocos toques.
+
+
+
+**Personas con discapacidad cognitiva:**
+
+- Interfaz simple.
+
+- Uso de pictogramas.
+
+- Iconografía clara.
+
+- Colores consistentes.
+
+- Lenguaje sencillo.
+
+- Confirmaciones claras.
+
+- Pasos mínimos para realizar tareas.
+
+ - Evitar sobrecarga de información.
+
+
+
+
+#### Principios de Usabilidad
 
 El sistema aplicará principios de usabilidad para garantizar que los adultos mayores puedan utilizar la aplicación con facilidad.
 
-## Entre ellos:
+Entre ellos:
 
-Interfaz intuitiva.
+- Interfaz intuitiva.
 
-Navegación consistente.
+- Navegación consistente.
 
-Retroalimentación inmediata.
+- Retroalimentación inmediata.
 
-Prevención de errores.
+- Prevención de errores.
 
-Confirmación antes de acciones importantes.
+- Confirmación antes de acciones importantes.
 
-Recuperación sencilla de errores.
+- Recuperación sencilla de errores.
 
-Tiempo mínimo para completar tareas.
+ -Tiempo mínimo para completar tareas.
 
-Iconografía comprensible.
+- Iconografía comprensible.
 
-Diseño limpio y organizado.
+- Diseño limpio y organizado.
 
 ## También se considerarán principios de UX como:
 
-Ley de Hick (reducir el número de opciones por pantalla).
+- Ley de Hick (reducir el número de opciones por pantalla).
 
-Ley de Fitts (botones grandes y fáciles de seleccionar).
+- Ley de Fitts (botones grandes y fáciles de seleccionar).
 
-Ley de Proximidad (agrupar elementos relacionados).
+- Ley de Proximidad (agrupar elementos relacionados).
 
-Ley de Prägnanz (interfaces simples y claras).
+- Ley de Prägnanz (interfaces simples y claras).
 
-Consistencia visual en toda la aplicación.
-
-
-
-Prevención de Errores
-
-## El sistema incorporará mecanismos para minimizar errores del usuario, entre ellos:
-
-Validación de formularios.
-
-Campos obligatorios.
-
-Confirmación antes de eliminar información.
-
-Evitar registros duplicados.
-
-Alertas cuando falten datos.
-
-Recuperación ante fallos.
-
-Guardado automático de cambios importantes.
-
-Mensajes de error claros y fáciles de comprender.
+- Consistencia visual en toda la aplicación.
 
 
 
-Flujo general del sistema
+## Prevención de Errores
+
+El sistema incorporará mecanismos para minimizar errores del usuario, entre ellos:
+
+- Validación de formularios.
+
+- Campos obligatorios.
+
+- Confirmación antes de eliminar información.
+
+- Evitar registros duplicados.
+
+- Alertas cuando falten datos.
+
+- Recuperación ante fallos.
+
+- Guardado automático de cambios importantes.
+
+- Mensajes de error claros y fáciles de comprender.
+
+
+
+### Flujo general del sistema
 
 El flujo general de RecorNet describe la secuencia de actividades que realizan los usuarios (Adulto Mayor y Cuidador) desde el acceso a la aplicación hasta el seguimiento del tratamiento médico.
 
-Flujo general
+**Flujo general:**
+````
+1. Inicio de la aplicación
 
-Inicio de la aplicación
-
-El usuario abre RecorNet desde un dispositivo Android, iOS o desde la versión web.
-
-Autenticación
+> El usuario abre RecorNet desde un dispositivo Android, iOS o desde la versión web.
+````
+````
+2. Autenticación
 
 El usuario inicia sesión con sus credenciales.
 
 El sistema identifica el rol del usuario (Adulto Mayor o Cuidador) y muestra las funcionalidades correspondientes.
+````
+````
+3. Gestión de medicamentos (Cuidador)
 
-Gestión de medicamentos (Cuidador)
+> El cuidador registra uno o varios medicamentos.
 
-El cuidador registra uno o varios medicamentos.
+> Ingresa la siguiente información:
 
-## Ingresa la siguiente información:
+- Nombre del medicamento.
 
-Nombre del medicamento.
+- Fotografía.
 
-Fotografía.
+- Descripción.
 
-Descripción.
+- Dosis.
 
-Dosis.
+-  Frecuencia.
 
-Frecuencia.
+- Horarios de administración.
 
-Horarios de administración.
+- Fecha de inicio y finalización del tratamiento.
 
-Fecha de inicio y finalización del tratamiento.
+> El sistema almacena la información en la base de datos.
+`````
 
-El sistema almacena la información en la base de datos.
+````
+4. Programación de recordatorios
 
-Programación de recordatorios
+> El sistema programa automáticamente las notificaciones de acuerdo con los horarios establecidos para cada medicamento.
 
-El sistema programa automáticamente las notificaciones de acuerdo con los horarios establecidos para cada medicamento.
+`````
 
-Envío del recordatorio
+````
+5. Envío del recordatorio
 
-Cuando llega la hora programada, el sistema envía una notificación al dispositivo del adulto mayor.
+> Cuando llega la hora programada, el sistema envía una notificación al dispositivo del adulto mayor.
+`````
 
-## La notificación incluye:
+````
+6.La notificación incluye
 
-Nombre del medicamento.
+> Nombre del medicamento.
 
-Fotografía.
+> Fotografía.
 
-Dosis.
+> Dosis.
 
-Breve descripción.
+> Breve descripción.
 
-Hora programada.
+> Hora programada.
 
-## Además, el sistema activa:
+````
+```` 
+7. Además, el sistema activa:
 
-Alarma sonora.
+> Alarma sonora.
 
-Mensaje de voz.
+> Mensaje de voz.
 
-Vibración.
+> Vibración.
 
-Alerta visual.
+> Alerta visual.
 
-Confirmación de la toma
+> Confirmación de la toma
 
-El adulto mayor revisa la información del medicamento.
+> El adulto mayor revisa la información del medicamento.
 
-Toma la dosis correspondiente.
+> Toma la dosis correspondiente.
 
-Presiona el botón "Confirmar toma".
+> Presiona el botón "Confirmar toma".
 
-El sistema registra automáticamente la fecha y hora de la confirmación.
+> El sistema registra automáticamente la fecha y hora de la confirmación.
+````
 
-Gestión de dosis pendientes
+````
+8.Gestión de dosis pendientes
 
-## Si el adulto mayor no confirma la toma dentro del tiempo establecido, el sistema puede:
+> Si el adulto mayor no confirma la toma dentro del tiempo establecido, el sistema puede:
 
-Repetir el recordatorio.
+- Repetir el recordatorio.
 
-Registrar la dosis como pendiente.
+- Registrar la dosis como pendiente.
 
-Notificar al cuidador (si esta opción está habilitada).
+- Notificar al cuidador (si esta opción está habilitada).
+````
+````
 
-Seguimiento del tratamiento
+9. Seguimiento del tratamiento
 
-El sistema almacena todas las dosis tomadas, pendientes u omitidas en un historial.
+> El sistema almacena todas las dosis tomadas, pendientes u omitidas en un historial.
 
-Tanto el adulto mayor como el cuidador pueden consultar el historial cuando lo necesiten.
+>Tanto el adulto mayor como el cuidador pueden consultar el historial cuando lo necesiten.
 
-Visualización de estadísticas
+````
 
-## El sistema genera gráficos e indicadores sobre:
+````
+10. Visualización de estadísticas
 
-Días consecutivos de cumplimiento.
+> El sistema genera gráficos e indicadores sobre:
 
-Porcentaje de adherencia al tratamiento.
+- Días consecutivos de cumplimiento.
 
-Cantidad de medicamentos registrados.
+- Porcentaje de adherencia al tratamiento.
 
-Dosis tomadas, pendientes y omitidas.
+- Cantidad de medicamentos registrados.
 
-Número de dosis programadas por día.
+- Dosis tomadas, pendientes y omitidas.
 
-Actualización del tratamiento
+- Número de dosis programadas por día.
 
-El cuidador puede modificar o eliminar medicamentos cuando el tratamiento cambie.
 
-El sistema actualiza automáticamente los horarios y recordatorios asociados.
+````
 
-Cierre de sesión
+`````
 
-El usuario finaliza sus actividades y cierra sesión de forma segura.
+11. Actualización del tratamiento
 
-Resumen del flujo
+> El cuidador puede modificar o eliminar medicamentos cuando el tratamiento cambie.
+
+> El sistema actualiza automáticamente los horarios y recordatorios asociados.
+``````
+
+`````
+12. Cierre de sesión
+
+> El usuario finaliza sus actividades y cierra sesión de forma segura.
+
+``````
+
+### Resumen del flujo
 
 Inicio → Inicio de sesión → Identificación del rol → Registro y programación de medicamentos → Recordatorios automáticos → Confirmación de la toma → Registro en el historial → Seguimiento mediante estadísticas → Actualización del tratamiento (si aplica) → Cierre de sesión.
 
 Este flujo garantiza una gestión organizada de los medicamentos, facilita el cumplimiento de los tratamientos médicos y permite realizar un seguimiento continuo del estado de la medicación, promoviendo la autonomía del adulto mayor y el apoyo oportuno por parte del cuidador.
+
+### diagrama de flujo general del sistema.
+
+
+```mermaid
+flowchart TD
+
+A([Inicio de la aplicación]) --> B[Inicio de sesión]
+B --> C{¿Credenciales válidas?}
+
+C -- No --> D[Mostrar error]
+D --> B
+
+C -- Sí --> E{Identificar rol}
+
+%%-------------------------
+%% CUIDADOR
+%%-------------------------
+
+E -->|Cuidador| F[Gestionar medicamentos]
+
+F --> G[Registrar medicamento]
+G --> H[Ingresar información<br/>• Nombre<br/>• Fotografía<br/>• Descripción<br/>• Dosis<br/>• Frecuencia<br/>• Horarios<br/>• Fecha inicio y fin]
+
+H --> I[Guardar en Base de Datos]
+I --> J[Programar recordatorios automáticos]
+
+%%-------------------------
+%% ADULTO MAYOR
+%%-------------------------
+
+E -->|Adulto Mayor| K[Esperar recordatorios]
+
+J --> K
+
+K --> L[Enviar notificación]
+
+L --> M[Mostrar información del medicamento<br/>• Nombre<br/>• Foto<br/>• Dosis<br/>• Descripción<br/>• Hora]
+
+M --> N[Activar alarma<br/>🔊 Sonido<br/>🗣️ Voz<br/>📳 Vibración<br/>💡 Alerta visual]
+
+N --> O{¿Confirma la toma?}
+
+O -- Sí --> P[Registrar fecha y hora]
+P --> Q[Guardar en historial]
+
+O -- No --> R{¿Tiempo límite superado?}
+
+R -- No --> N
+
+R -- Sí --> S[Marcar dosis pendiente]
+S --> T[Repetir recordatorio]
+
+T --> U{¿Notificar cuidador?}
+
+U -- Sí --> V[Enviar notificación al cuidador]
+U -- No --> Q
+
+V --> Q
+
+%%-------------------------
+%% HISTORIAL Y ESTADÍSTICAS
+%%-------------------------
+
+Q --> W[Seguimiento del tratamiento]
+
+W --> X[Generar estadísticas]
+
+X --> X1[Días consecutivos de cumplimiento]
+X --> X2[Porcentaje de adherencia]
+X --> X3[Medicamentos registrados]
+X --> X4[Dosis tomadas, pendientes y omitidas]
+X --> X5[Dosis programadas por día]
+
+%%-------------------------
+%% ACTUALIZACIÓN
+%%-------------------------
+
+X --> Y{¿Modificar tratamiento?}
+
+Y -- Sí --> Z[Cuidador actualiza o elimina medicamento]
+Z --> ZA[Actualizar horarios y recordatorios]
+ZA --> K
+
+Y -- No --> ZB[Cerrar sesión]
+
+ZB --> ZC([Fin])
+```
