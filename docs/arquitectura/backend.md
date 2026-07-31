@@ -39,15 +39,39 @@ Tecnología: Python + Celery
 
 **Funciones:**
 
-Planificador
+- Planificador
 
-Notificaciones Push
+- Notificaciones Push
 
-Almacenamiento de imágenes
+- Almacenamiento de imágenes
 
-Estadísticas
+- Estadísticas
 
-Reportes
+- Reportes
+
+3. 🔔 Sistema de Notificaciones (Backend secundario)
+Tecnología: Python + Firebase Cloud Messaging
+**Funciones:**
+
+- Notificaciones Push   
+
+4. 🔔 Sistema de Almacenamiento de Imágenes (Backend secundario)
+Tecnología: Python + Cloudinary
+**Funciones:**
+
+- Almacenamiento de imágenes
+
+5. 🔔 Sistema de Estadísticas (Backend secundario)
+Tecnología: Python + Redis
+**Funciones:**
+
+- Estadísticas
+
+6. 🔔 Sistema de Reportes (Backend secundario)
+Tecnología: Python + PostgreSQL
+**Funciones:**
+
+- Reportes
 
 Arquitectura: Clean Architecture + Hexagonal
 
