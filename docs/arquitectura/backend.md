@@ -14,29 +14,30 @@ Tecnología: Python + Flask + Swagger + Uvicorn
 
 **Funciones:**
 
-API REST
+- API REST
 
-Punto de entrada (API Gateway ligero)
+- Punto de entrada (API Gateway ligero)
 
-Autenticación
+- Autenticación
 
-Gestión de usuarios (adultos mayores y cuidadores)
+- Gestión de usuarios (adultos mayores y cuidadores)
 
-Gestión de familias
+- Gestión de familias
 
-Gestión de medicamentos y tratamientos
+- Gestión de medicamentos y tratamientos
 
-Gestión de recordatorios inteligentes
+- Gestión de recordatorios inteligentes
 
-Gestión de notificaciones push
+- Gestión de notificaciones push
 
-Gestión de estadísticas
+- Gestión de estadísticas
 
-Gestión de reportes
+- Gestión de reportes
 
 2. 🟢 Workers (Backend secundario)
 Tecnología: Python + Celery
-Funciones:
+
+**Funciones:**
 
 Planificador
 
@@ -261,5 +262,7 @@ backend/ (python + flask + swagger + uvicorn)
 - Gestión de notificaciones push.
 - Gestión de estadísticas.
 - Gestión de reportes.
+
+
 
 
