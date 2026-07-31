@@ -55,19 +55,19 @@ Tecnología: Python + Firebase Cloud Messaging
 
 - Notificaciones Push   
 
-4. 🔔 Sistema de Almacenamiento de Imágenes (Backend secundario)
+4. 💽 Sistema de Almacenamiento de Imágenes (Backend secundario)
 Tecnología: Python + Cloudinary
 **Funciones:**
 
 - Almacenamiento de imágenes
 
-5. 🔔 Sistema de Estadísticas (Backend secundario)
+5. 📈📊 Sistema de Estadísticas (Backend secundario)
 Tecnología: Python + Redis
 **Funciones:**
 
 - Estadísticas
 
-6. 🔔 Sistema de Reportes (Backend secundario)
+6. 🗒️ Sistema de Reportes (Backend secundario)
 Tecnología: Python + PostgreSQL
 **Funciones:**
 
@@ -75,7 +75,7 @@ Tecnología: Python + PostgreSQL
 
 Arquitectura: Clean Architecture + Hexagonal
 
-### 📁 Estructura del proyecto arquitectura backend: Clean Architecture + Hexagonal
+### 📁 Estructura del proyecto arquitectura backend: Clean Architecture + Hexagonal:
 ```text
 backend/
 ├── api/                # Flask API REST (Clean Architecture + Hexagonal)      
@@ -92,7 +92,7 @@ backend/
 └── README.md            # Descripción del proyecto
 ```
 
-## 📁 Estructura interna
+## 📁 Estructura interna:
 
 ```text
 backend/ (python + flask + swagger + uvicorn)       
@@ -257,7 +257,7 @@ backend/ (python + flask + swagger + uvicorn)
 └── .gitignore
 ```
 
-## Tecnologías asociadas
+## Tecnologías asociadas:
 
 | Componente                 | Tecnología                                              |
 | -------------------------- | ------------------------------------------------------- |
@@ -286,6 +286,59 @@ backend/ (python + flask + swagger + uvicorn)
 - Gestión de notificaciones push.
 - Gestión de estadísticas.
 - Gestión de reportes.
+
+ ## Base de Datos:
+
+Motor: PostgreSQL
+Contenerización: Docker
+ORM: SQLAlchemy
+Migraciones: Flask-Migrate
+Funciones:
+- Gestión de usuarios (adultos mayores y cuidadores).
+- Gestión de medicamentos y tratamientos.
+- Gestión de recordatorios inteligentes.
+- Gestión de notificaciones push.
+- Gestión de estadísticas.
+- Gestión de reportes.
+
+diagrama entidad relacion:
+![alt text](https://github.com/RUDYPIO/Recornet/blob/main/docs/arquitectura/backend/diagrama-entidad-relacion.png)
+
+## Caché / Broker:
+
+Motor: Redis, Celery Beat y Celery Worker 
+Funciones:
+- Planificador
+- Estadísticas
+- Reportes      
+ 
+
+## Notificaciones Push:
+
+Motor: Firebase Cloud Messaging
+Funciones:
+- Notificaciones Push   
+ 
+## Almacenamiento de imágenes:
+
+Motor: Cloudinary
+Funciones:
+- Almacenamiento de imágenes
+ 
+## Estadísticas:
+
+Motor: Redis
+Funciones:
+- Estadísticas
+ 
+## Reportes:
+
+Motor: PostgreSQL
+Funciones:
+- Reportes
+
+
+
 
 
 
