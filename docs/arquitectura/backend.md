@@ -6,10 +6,54 @@
 ## 🏗️ Arquitectura General
 El backend de **RecorNet** se compone de una API RESTful y un sistema de base de datos relacional (PostgreSQL) siguiendo la arquitectura de  clean architecture + hexagonal architecture.
 
+
+## Componentes principales
+1. 🟢 API / Gateway (Backend principal)
+
+Tecnología: Python + Flask + Swagger + Uvicorn
+
+**Funciones:**
+
+API REST
+
+Punto de entrada (API Gateway ligero)
+
+Autenticación
+
+Gestión de usuarios (adultos mayores y cuidadores)
+
+Gestión de familias
+
+Gestión de medicamentos y tratamientos
+
+Gestión de recordatorios inteligentes
+
+Gestión de notificaciones push
+
+Gestión de estadísticas
+
+Gestión de reportes
+
+2. 🟢 Workers (Backend secundario)
+Tecnología: Python + Celery
+Funciones:
+
+Planificador
+
+Notificaciones Push
+
+Almacenamiento de imágenes
+
+Estadísticas
+
+Reportes
+
+Arquitectura: Clean Architecture + Hexagonal
+
 ### 📁 Estructura del proyecto arquitectura backend: Clean Architecture + Hexagonal
 ```text
 backend/
-├── api/                # Flask API (Clean Architecture + Hexagonal)      
+├── api/                # Flask API REST (Clean Architecture + Hexagonal)      
 ├── shared/             # (Opcional) utilidades compartidas
 ├── docker/             # Docker files
 ├── docker-compose.yml      # Orquestación de servicios
@@ -204,11 +248,18 @@ backend/ (python + flask + swagger + uvicorn)
 | Planificador               | Celery Beat                                             |
 | Notificaciones Push        | Firebase Cloud Messaging                                |
 | Almacenamiento de imágenes | Cloudinary                                              |
-| Documentación API          | Swagger                                            |
+| Documentación API          | Swagger                                                 |
 | Validación                 | Pydantic                                                |
 | Pruebas                    | Pytest                                                  |
 | Contenedores               | Docker (PostgreSQL, Redis, Celery Worker y Celery Beat) |
 
 
 ## Funciones:
+- Gestión de usuarios (adultos mayores y cuidadores).
+- Gestión de medicamentos y tratamientos.
+- Gestión de recordatorios inteligentes.
+- Gestión de notificaciones push.
+- Gestión de estadísticas.
+- Gestión de reportes.
+
 
