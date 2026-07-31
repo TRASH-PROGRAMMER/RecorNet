@@ -35,6 +35,7 @@ Tecnología: Python + Flask + Swagger + Uvicorn
 - Gestión de reportes
 
 2. 🟢 Workers (Backend secundario)
+
 Tecnología: Python + Celery
 
 **Funciones:**
@@ -280,6 +281,7 @@ backend/ (python + flask + swagger + uvicorn)
 
 
 ## Funciones:
+
 - Gestión de usuarios (adultos mayores y cuidadores).
 - Gestión de medicamentos y tratamientos.
 - Gestión de recordatorios inteligentes.
