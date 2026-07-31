@@ -78,7 +78,8 @@ Tecnología: Python + PostgreSQL
 7.🐳 Contenerización (Backend secundario)
 Tecnología: Docker
 
-Funciones:
+**Funciones:**
+
 - Contenerización de servicios (PostgreSQL, Redis, Celery Worker y Celery Beat)
 
 
