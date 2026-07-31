@@ -8,6 +8,7 @@ El backend de **RecorNet** se compone de una API RESTful y un sistema de base de
 
 
 ## Componentes principales
+
 1. 🟢 API / Gateway (Backend principal)
 
 Tecnología: Python + Flask + Swagger + Uvicorn
@@ -74,9 +75,17 @@ Tecnología: Python + PostgreSQL
 
 - Reportes
 
+7.🐳 Contenerización (Backend secundario)
+Tecnología: Docker
+
+Funciones:
+- Contenerización de servicios (PostgreSQL, Redis, Celery Worker y Celery Beat)
+
+
 Arquitectura: Clean Architecture + Hexagonal
 
-### 📁 Estructura del proyecto arquitectura backend: Clean Architecture + Hexagonal:
+## 📁 Estructura del proyecto arquitectura backend: Clean Architecture + Hexagonal:
+
 ```text
 backend/
 ├── api/                # Flask API REST (Clean Architecture + Hexagonal)      
@@ -302,8 +311,7 @@ Funciones:
 - Gestión de notificaciones push.
 - Gestión de estadísticas.
 - Gestión de reportes.
-
-diagrama entidad relacion:
+- diagrama entidad relacion:
 ![alt text](https://github.com/RUDYPIO/Recornet/blob/main/docs/arquitectura/backend/diagrama-entidad-relacion.png)
 
 ## Caché / Broker:
@@ -339,9 +347,39 @@ Motor: PostgreSQL
 Funciones:
 - Reportes
 
+## Docker:
+
+Motor: Docker
+Se utiliza Docker para facilitar despliegue y desarrollo:
+Funciones:
+- Contenerización de servicios (PostgreSQL, Redis, Celery Worker y Celery Beat)
+
+## Comunicación entre servicios:
+
+![alt text](https://github.com/RUDYPIO/Recornet/blob/main/docs/arquitectura/backend/diagrama-comunicacion-entre-servicios.png)
+
+## Comunicación entre componentes:
+![alt text](https://github.com/RUDYPIO/Recornet/blob/main/docs/arquitectura/backend/diagrama-comunicacion-entre-componentes.png)
 
 
+✅ Conclusión
 
+La arquitectura de  RecorNet se basa en la arquitectura de Clean Architecture + Hexagonal, que es una arquitectura que se enfoca en separar el código de negocio del código de infraestructura, lo que permite una mejor organización y mantenimiento del código.
 
+Ser escalable
+Mantener separación clara de responsabilidades
+Permitir evolución hacia sistemas más complejos
+Facilitar la comunicación entre componentes
+Facilitar la comunicación entre servicios
+Mantenimiento de la arquitectura
+Mejora continua
+Migración de la base de datos
+Gestión de la caché
+Gestión de la planificación
+Gestión de las notificaciones push
+Gestión de las estadísticas
+Gestión de los reportes
+Mejora de la seguridad y rendimiento
+Seguridad de la aplicación y usuarios
 
 
