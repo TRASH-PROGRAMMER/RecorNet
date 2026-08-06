@@ -102,5 +102,51 @@ El frontend de **RecorNet** se compone de una aplicación web que se ejecuta en 
 #### 1. 🧑 ** auth **
 - Pantalla de login
 - Pantalla de registro
+#### 2. 🏠 ** dashboard **
+- Pantalla de inicio
+- Pantalla de perfil
+- Pantalla de estadísticas
+- Pantalla de notificaciones
+#### 3. 🧑‍🤝‍🧑 ** medications **
+- Pantalla de listado de medicamentos
+- Pantalla de detalle de medicamentos
+- Pantalla de creación de medicamentos
+- Pantalla de edición de medicamentos
+#### 4. 📅 ** reminders **
+- Pantalla de listado de recordatorios
+- Pantalla de detalle de recordatorios
+- Pantalla de creación de recordatorios
+- Pantalla de edición de recordatorios
+#### 5. 👩‍🏫 ** statistics **
+- Pantalla de listado de estadísticas
+- Pantalla de detalle de estadísticas
+- Pantalla de creación de estadísticas
+- Pantalla de edición de estadísticas
+#### 6. 👩‍🏫 ** caregivers **
+- Pantalla de listado de cuidadores
+- Pantalla de detalle de cuidadores
+- Pantalla de creación de cuidadores
+- Pantalla de edición de cuidadores
+#### 7. 👩‍🏫 ** elderly **
+- Pantalla de listado de adultos mayores
+- Pantalla de detalle de adultos mayores
+- Pantalla de creación de adultos mayores
+- Pantalla de edición de adultos mayores
+#### 8. 👩‍🏫 ** profile **
+- Pantalla de perfil  
 
-g
+### 🔗 **Conexión con el backend**
+
+La aplicación se conecta a un backend RESTful que proporciona una API para la gestión de usuarios, medicamentos, tratamientos, recordatorios inteligentes, notificaciones push, estadísticas y reportes.
+
+El backend se encarga de gestionar la autenticación, autorización y autorización de acceso a las funciones de la aplicación. También se encarga de almacenar y gestionar los datos de usuarios, medicamentos, tratamientos, recordatorios inteligentes, notificaciones push, estadísticas y reportes.
+
+La conexión entre el frontend y el backend se realiza mediante una API RESTful que proporciona una interfaz para la comunicación entre los dos sistemas. La API RESTful se encarga de proporcionar una API para la gestión de usuarios, medicamentos, tratamientos, recordatorios inteligentes, notificaciones push, estadísticas y reportes.
+
+
+En services/api.ts:
+
+import axios from "axios";
+
+export const api = axios.create({ baseURL: "http://localhost:3000/api"});
+
