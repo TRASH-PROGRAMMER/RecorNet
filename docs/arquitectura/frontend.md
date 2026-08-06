@@ -85,18 +85,22 @@ El frontend de **RecorNet** se compone de una aplicación web que se ejecuta en 
 ````
 ### ⚙️ Stack: 
 
-- **Framework** → Vue.js
 
-- **Build tool** → Vite
+| Componente                 | Tecnología                                              |
+| -------------------------- | ------------------------------------------------------- |
+| Framework Frontend         | Vue.js                                                  |          
+| lenguaje                   | TypeScript                                              |
+| Router                     | Vue Router                                              |
+| Estado                     | Pinia                                                   |
+| HTTP                       | Axios                                                   |
+| UI                         | Vuetify                                                 |
+| tailwind                   | Css                                                     |
 
-- **Lenguaje** → TypeScript
 
-- **Router** → Vue Router
+### 📱 Pantallas clave de la aplicación:
 
-- **Estado** → Pinia
+#### 1. 🧑 ** auth **
+- Pantalla de login
+- Pantalla de registro
 
-- **HTTP** → Axios
-
-- **UI** → Vuetify
-
-- **tailwind** →Css
+g
