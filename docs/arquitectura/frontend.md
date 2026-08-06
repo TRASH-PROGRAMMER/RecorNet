@@ -83,3 +83,20 @@ El frontend de **RecorNet** se compone de una aplicación web que se ejecuta en 
 ├── .env
 └── README.md
 ````
+### ⚙️ Stack: 
+
+- **Framework** → Vue.js
+
+- **Build tool** → Vite
+
+- **Lenguaje** → TypeScript
+
+- **Router** → Vue Router
+
+- **Estado** → Pinia
+
+- **HTTP** → Axios
+
+- **UI** → Vuetify
+
+- **tailwind** →Css
