@@ -93,7 +93,7 @@ El frontend de **RecorNet** se compone de una aplicación web que se ejecuta en 
 | Router                     | Vue Router                                              |
 | Estado                     | Pinia                                                   |
 | HTTP                       | Axios                                                   |
-| UI                         | Vuetify                                                 |
+|notificaciones push         | Firebase Cloud Messaging                                |
 | tailwind                   | Css                                                     |
 
 
@@ -150,3 +150,381 @@ import axios from "axios";
 
 export const api = axios.create({ baseURL: "http://localhost:3000/api"});
 
+### 🧠 **UX / UI**
+
+El frontend se centra en la experiencia de usuario (UX) y la interfaz de usuario (UI) de la aplicación. El diseño de la interfaz de usuario se basa en la experiencia de usuario y se enfoca en la usabilidad, la accesibilidad y la eficiencia.
+
+#### Accesibilidad
+
+RecorNet será desarrollado siguiendo las recomendaciones de las Pautas de Accesibilidad para el Contenido Web (WCAG 2.2) y principios de Diseño Universal.
+
+**Personas con discapacidad visual:**
+
+- Letras grandes.
+
+- Zoom.
+
+- Alto contraste.
+
+- Modo oscuro.
+
+- Compatibilidad con lectores de pantalla.
+
+- Lectura por voz.
+
+- Mensajes de voz para los recordatorios.
+
+- Iconografía clara.
+
+- Vibración.
+
+- Botones grandes.
+
+
+
+**Personas con discapacidad auditiva:**
+
+- Vibración.
+
+- Alertas visuales.
+
+- Animaciones.
+
+- Texto grande.
+
+- Confirmaciones visuales.
+
+
+
+**Personas con discapacidad motriz:**
+
+- Botones de gran tamaño.
+
+- Espaciado amplio.
+
+- Evitar gestos complejos.
+
+- Compatibilidad con comandos de voz.
+
+- Navegación sencilla con pocos toques.
+
+
+
+**Personas con discapacidad cognitiva:**
+
+- Interfaz simple.
+
+- Uso de pictogramas.
+
+- Iconografía clara.
+
+- Colores consistentes.
+
+- Lenguaje sencillo.
+
+- Confirmaciones claras.
+
+- Pasos mínimos para realizar tareas.
+
+ - Evitar sobrecarga de información.
+
+
+
+
+#### Principios de Usabilidad
+
+El sistema aplicará principios de usabilidad para garantizar que los adultos mayores puedan utilizar la aplicación con facilidad.
+
+Entre ellos:
+
+- Interfaz intuitiva.
+
+- Navegación consistente.
+
+- Retroalimentación inmediata.
+
+- Prevención de errores.
+
+- Confirmación antes de acciones importantes.
+
+- Recuperación sencilla de errores.
+
+ -Tiempo mínimo para completar tareas.
+
+- Iconografía comprensible.
+
+- Diseño limpio y organizado.
+
+#### También se considerarán principios de UX como:
+
+- Ley de Hick (reducir el número de opciones por pantalla).
+
+- Ley de Fitts (botones grandes y fáciles de seleccionar).
+
+- Ley de Proximidad (agrupar elementos relacionados).
+
+- Ley de Prägnanz (interfaces simples y claras).
+
+- Consistencia visual en toda la aplicación.
+
+
+
+#### Prevención de Errores
+
+El sistema incorporará mecanismos para minimizar errores del usuario, entre ellos:
+
+- Validación de formularios.
+
+- Campos obligatorios.
+
+- Confirmación antes de eliminar información.
+
+- Evitar registros duplicados.
+
+- Alertas cuando falten datos.
+
+- Recuperación ante fallos.
+
+- Guardado automático de cambios importantes.
+
+- Mensajes de error claros y fáciles de comprender.
+
+
+## flujo general del sistema
+
+El flujo general de RecorNet describe la secuencia de actividades que realizan los usuarios (Adulto Mayor y Cuidador) desde el acceso a la aplicación hasta el seguimiento del tratamiento médico.
+
+**Flujo general:**
+````
+1. Inicio de la aplicación
+
+> El usuario abre RecorNet desde un dispositivo Android, iOS o desde la versión web.
+````
+````
+2. Autenticación
+
+El usuario inicia sesión con sus credenciales.
+
+El sistema identifica el rol del usuario (Adulto Mayor o Cuidador) y muestra las funcionalidades correspondientes.
+````
+````
+3. Gestión de medicamentos (Cuidador)
+
+> El cuidador registra uno o varios medicamentos.
+
+> Ingresa la siguiente información:
+
+- Nombre del medicamento.
+
+- Fotografía.
+
+- Descripción.
+
+- Dosis.
+
+-  Frecuencia.
+
+- Horarios de administración.
+
+- Fecha de inicio y finalización del tratamiento.
+
+> El sistema almacena la información en la base de datos.
+`````
+
+````
+4. Programación de recordatorios
+
+> El sistema programa automáticamente las notificaciones de acuerdo con los horarios establecidos para cada medicamento.
+
+`````
+
+````
+5. Envío del recordatorio
+
+> Cuando llega la hora programada, el sistema envía una notificación al dispositivo del adulto mayor.
+`````
+
+````
+6.La notificación incluye
+
+> Nombre del medicamento.
+
+> Fotografía.
+
+> Dosis.
+
+> Breve descripción.
+
+> Hora programada.
+
+````
+```` 
+7. Además, el sistema activa:
+
+> Alarma sonora.
+
+> Mensaje de voz.
+
+> Vibración.
+
+> Alerta visual.
+
+> Confirmación de la toma
+
+> El adulto mayor revisa la información del medicamento.
+
+> Toma la dosis correspondiente.
+
+> Presiona el botón "Confirmar toma".
+
+> El sistema registra automáticamente la fecha y hora de la confirmación.
+````
+
+````
+8.Gestión de dosis pendientes
+
+> Si el adulto mayor no confirma la toma dentro del tiempo establecido, el sistema puede:
+
+- Repetir el recordatorio.
+
+- Registrar la dosis como pendiente.
+
+- Notificar al cuidador (si esta opción está habilitada).
+````
+````
+
+9. Seguimiento del tratamiento
+
+> El sistema almacena todas las dosis tomadas, pendientes u omitidas en un historial.
+
+>Tanto el adulto mayor como el cuidador pueden consultar el historial cuando lo necesiten.
+
+````
+
+````
+10. Visualización de estadísticas
+
+> El sistema genera gráficos e indicadores sobre:
+
+- Días consecutivos de cumplimiento.
+
+- Porcentaje de adherencia al tratamiento.
+
+- Cantidad de medicamentos registrados.
+
+- Dosis tomadas, pendientes y omitidas. 
+
+- Número de dosis programadas por día.
+
+
+````
+
+`````
+
+11. Actualización del tratamiento
+
+> El cuidador puede modificar o eliminar medicamentos cuando el tratamiento cambie.
+
+> El sistema actualiza automáticamente los horarios y recordatorios asociados.
+``````
+
+``````
+12. Cierre de sesión
+
+> El usuario finaliza sus actividades y cierra sesión de forma segura.
+
+``````
+
+### Resumen del flujo
+
+Inicio → Inicio de sesión → Identificación del rol → Registro y programación de medicamentos → Recordatorios automáticos → Confirmación de la toma → Registro en el historial → Seguimiento mediante estadísticas → Actualización del tratamiento (si aplica) → Cierre de sesión.
+
+Este flujo garantiza una gestión organizada de los medicamentos, facilita el cumplimiento de los tratamientos médicos y permite realizar un seguimiento continuo del estado de la medicación, promoviendo la autonomía del adulto mayor y el apoyo oportuno por parte del cuidador.
+
+### diagrama de flujo general del sistema.
+
+
+```mermaid
+flowchart TD
+
+A([Inicio de la aplicación]) --> B[Inicio de sesión]
+B --> C{¿Credenciales válidas?}
+
+C -- No --> D[Mostrar error]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+D --> B
+
+C -- Sí --> E{Identificar rol}
+
+%%-------------------------
+%% CUIDADOR
+%%-------------------------
+
+E -->|Cuidador| F[Gestionar medicamentos]
+
+F --> G[Registrar medicamento]
+G --> H[Ingresar información<br/>• Nombre<br/>• Foto<br/>• Dosis<br/>• Frecuencia<br/>• Horarios<br/>• Fecha inicio y fin]
+
+H --> I[Guardar en Base de Datos]
+I --> J[Programar recordatorios automáticos]
+
+%%-------------------------
+%% ADULTO MAYOR
+%%-------------------------
+
+E -->|Adulto Mayor| K[Esperar recordatorios]
+
+J --> K
+
+K --> L[Enviar notificación]
+
+L --> M[Mostrar información del medicamento<br/>• Nombre<br/>• Foto<br/>• Dosis<br/>• Descripción<br/>• Hora]
+
+M --> N[Activar alarma<br/>🔊 Sonido<br/>🗣️ Voz<br/>📳 Vibración<br/>💡 Alerta visual]
+
+N --> O{¿Confirma la toma?}
+
+O -- Sí --> P[Registrar fecha y hora]
+P --> Q[Guardar en historial]
+
+O -- No --> R{¿Tiempo límite superado?}
+
+R -- No --> N
+
+R -- Sí --> S[Marcar dosis pendiente]
+S --> T[Repetir recordatorio]
+
+T --> U{¿Notificar cuidador?}
+
+U -- Sí --> V[Enviar notificación al cuidador]
+U -- No --> Q
+
+V --> Q
+
+%%-------------------------
+%% HISTORIAL Y ESTADÍSTICAS
+%%-------------------------
+
+Q --> W[Seguimiento del tratamiento]
+
+W --> X[Generar estadísticas]
+
+X --> X1[Días consecutivos de cumplimiento]
+X --> X2[Porcentaje de adherencia]
+X --> X3[Medicamentos registrados]
+X --> X4[Dosis tomadas, pendientes y omitidas]
+X --> X5[Dosis programadas por día]
+
+%%-------------------------
+%% ACTUALIZACIÓN
+%%-------------------------
+
+X --> Y{¿Modificar tratamiento?}
+
+Y -- Sí --> Z[Cuidador actualiza o elimina medicamento]
+Z --> ZA[Actualizar horarios y recordatorios]
+ZA --> K
+
+Y -- No --> ZB[Cerrar sesión]
+
+ZB --> ZC([Fin])
+```                 
