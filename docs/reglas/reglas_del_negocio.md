@@ -18,36 +18,35 @@ En este documento se describen las reglas del negocio que se aplican a los usuar
 - Los datos se actualizan cuando los usuarios realizan cambios en sus datos personales.
 - Los datos se eliminan cuando los usuarios eliminan su cuenta.
 
-### 🔐 Propiedad y Privacidad por  administrador
-
-- Los administradores tienen derecho a acceder a los datos de todos los usuarios.
-- Los administradores tienen derecho a modificar los datos de todos los usuarios.
-- Los administradores tienen derecho a eliminar los datos de todos los usuarios.
 
 ### notificaciones
 
-- Los usuarios reciben notificaciones de los cambios en sus datos personales.
-- Los administradores reciben notificaciones de los cambios en los datos de todos los usuarios.
+- Los usuarios con rol de  aldulto mayor reciben notificaciones y alarmas de toma de medicamentos (nombre, foto, dosis, descripción, hora), repetición del recordatorio hasta confirmar.
+- Los usuarios con rol de cuidador  reciben notificaciones y alerta cuando una dosis queda pendiente. Las reglas de notificación deben centrarse en esos casos.
 
 ### ⚠️ Seguridad
 
 - Los datos personales se almacenan en un servidor seguro.
 - El servidor se encuentra en un lugar seguro y protegido.
-- Se utiliza una contraseña segura para acceder al servidor.
 - Las contraseñas se almacenan en un lugar seguro y protegido.
 - Si se pierde la contraseña, se puede recuperar la contraseña.
--Cada dato debe ser manejado de manera segura y protegida.
+- Cada dato debe ser manejado de manera segura y protegida.
+- se realiza encriptación de contraseñas en la base de datos (hash, nunca texto plano).
+- seguridad de los servicions de Cloudinary para las fotos de medicamentos.
+-  gestionar los permisos por rol en la API REST.
 
-## 🧮Integridad de Datos
+
+### 🧮Integridad de Datos
 
 - los  datos se almase en uan base de datos segura y protegida.
 - los  datos son validados para asegurar que son correctos y no contienen datos incorrectos.
 - los  datos sencibles se almacenan en un lugar seguro y protegido.
 - se realiza una copia de seguridad de los datos regularmente.
 - se realiza una verificacion de integridad de los datos regularmente.
-- linpieza de los datos.
+- se  realiza una limpieza de los datos regularmente para eliminar datos obsoletos o incorrectos.
 
-## 🔐 autenticación de usuarios
+
+### 🔐 autenticación de usuarios
 
 - Los usuarios tienen una sesión de usuario que se mantiene abierta durante la sesión.
 - Los usuarios pueden cerrar la sesión de usuario cuando se cierran la sesión.
