@@ -22,9 +22,7 @@ En este documento se describen las reglas del negocio que se aplican a los usuar
 ### notificaciones
 
 - Los usuarios con rol de  aldulto mayor reciben notificaciones y alarmas de toma de medicamentos (nombre, foto, dosis, descripción, hora), repetición del recordatorio hasta confirmar.
-- Los usuarios con rol de cuidador  reciben notificaciones y alerta cuando una dosis queda pendiente. Las reglas de notificación deben centrarse en esos casos.
-
-### ⚠️ Seguridad
+- Los usuarios con rol de cuidador  reciben notificaciones y alerta cuando una dosis queda pendiente por el adulto mayor. 
 
 - Los datos personales se almacenan en un servidor seguro.
 - El servidor se encuentra en un lugar seguro y protegido.
