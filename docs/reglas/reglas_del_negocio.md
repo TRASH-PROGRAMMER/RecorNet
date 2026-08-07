@@ -41,9 +41,26 @@ En este documento se describen las reglas del negocio que se aplican a los usuar
 ## 🧮Integridad de Datos
 
 - los  datos se almase en uan base de datos segura y protegida.
-- los ddatos son validados para asegurar que son correctos y no contienen datos incorrectos.
-- los datos sencibles se almacenan en un lugar seguro y protegido.
+- los  datos son validados para asegurar que son correctos y no contienen datos incorrectos.
+- los  datos sencibles se almacenan en un lugar seguro y protegido.
 - se realiza una copia de seguridad de los datos regularmente.
 - se realiza una verificacion de integridad de los datos regularmente.
 - linpieza de los datos.
+
+## 🔐 autenticación de usuarios
+
+- Los usuarios tienen una sesión de usuario que se mantiene abierta durante la sesión.
+- Los usuarios pueden cerrar la sesión de usuario cuando se cierran la sesión.
+- Los usuarios puden iniciar sesión de usuario  por role.
+- los usuarios pueden establecer su contraseña o cambiarla. o recuperarla.
+ 
+ ### Auditoría
+
+- Se realiza una auditoría de los datos regularmente.
+- Se realiza una auditoría de la seguridad de los datos regularmente.
+- Se realiza una auditoría de la integridad de los datos regularmente.
+- Se realiza una auditoría de la disponibilidad de los datos regularmente.
+- se realiza una auditoría de la seguridad de la aplicación regularmente.
+- se realiza una autoria de los requisitos funcionales regularmente y no funcionales.
+- se realiza una auditoría de las notificaciones regularmente.
 
