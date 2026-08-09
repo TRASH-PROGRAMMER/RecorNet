@@ -1,5 +1,5 @@
 # Reglas del Negocio
-En este documento se describen las reglas del negocio que se aplican a los usuarios de la aplicación de recorner.
+En este documento se describen las reglas del negocio que se aplican a los usuarios de la aplicación de RecorNet.
 
 ## 🔐 Propiedad y Privacidad:
 - La propiedad de los datos es el derecho de acceder, modificar y eliminar los datos.
@@ -47,7 +47,7 @@ En este documento se describen las reglas del negocio que se aplican a los usuar
 
 ### 🧮Integridad de Datos:
 
-- los  datos se almase en uan base de datos segura y protegida.
+- los datos se almacenan en una base de datos segura y protegida.
 - los  datos son validados para asegurar que son correctos y no contienen datos incorrectos.
 - los  datos sencibles se almacenan en un lugar seguro y protegido.
 - se realiza una copia de seguridad de los datos regularmente.
@@ -70,7 +70,11 @@ En este documento se describen las reglas del negocio que se aplican a los usuar
 - el cuidador puede registrar medicamentos y programar horarios de administración.
 - el adulto mayor solo confirma tomas y consulta su historial y estadísticas y vissualiza los medicamentos registrados.
 
-
+### Accesibilidad: 
+- tipografía ampliable 
+- alto contraste, botones grandes
+- lectura por voz y vibración son requisitos verificables del producto
+- dado que su público son adultos mayores y personas con discapacidad.
 
 ### Medicamentos y tratamientos: 
 - campos obligatorios (nombre, dosis, frecuencia, horarios, fechas de inicio/fin, descripción, fotografía)
