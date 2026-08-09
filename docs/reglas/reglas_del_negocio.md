@@ -23,6 +23,10 @@ En este documento se describen las reglas del negocio que se aplican a los usuar
 
 - Los usuarios con rol de  aldulto mayor reciben notificaciones y alarmas de toma de medicamentos (nombre, foto, dosis, descripción, hora), repetición del recordatorio hasta confirmar.
 - Los usuarios con rol de cuidador  reciben notificaciones y alerta cuando una dosis queda pendiente por el adulto mayor. 
+- Las notificaciones se envían a través de un sistema de mensajería seguro.
+- Las alertas se envían a través de un sistema de notificación en tiempo real.
+- Las notificaciones  activan solo en el dispositivo movil del usuario.
+- Las notificaciones que se envia a el usuario con rol de aldulto mayor consta de un mensaje de voz, un sonido y una vibración.
 
 ## 🔐 Seguridad
 
@@ -52,6 +56,15 @@ En este documento se describen las reglas del negocio que se aplican a los usuar
 - Los usuarios pueden cerrar la sesión de usuario cuando se cierran la sesión.
 - Los usuarios puden iniciar sesión de usuario  por role.
 - los usuarios pueden establecer su contraseña o cambiarla. o recuperarla.
+ 
+ ### roles:
+
+- el rol de aldulto mayor es el rol principal de los usuarios.
+- el rol de cuidador es un rol secundario de los usuarios.
+- el cuidador crea/edita/elimina medicamentos y horarios de los adultos mayores vinculados a él
+- el cuidador puede registrar medicamentos y programar horarios de administración.
+ el adulto mayor solo confirma tomas y consulta su historial y estadísticas y vissualiza los medicamentos registrados.
+
  
  ### Auditoría
 
