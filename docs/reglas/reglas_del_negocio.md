@@ -1,25 +1,30 @@
 # Reglas del Negocio
 En este documento se describen las reglas del negocio que se aplican a los usuarios de la aplicación de recorner.
 
-## 🔐 Propiedad y Privacidad
+## 🔐 Propiedad y Privacidad:
 - La propiedad de los datos es el derecho de acceder, modificar y eliminar los datos.
 - La privacidad de los datos es el derecho de no ser identificado.
 - La confidencialidad de los datos es el derecho de no ser divulgado.
 
-### 🔐 Propiedad y Privacidad por  usuario
+### 🔐 Propiedad y Privacidad por  usuario:
 
 - Los usuarios tienen derecho a acceder a sus datos personales.
 - Los usuarios tienen derecho a modificar sus datos personales.
 - Los usuarios tienen derecho a eliminar sus datos personales.
 
-### ciclo de vida de los datos
+### Historial y estadísticas: 
+
+- registro de dosis tomadas, pendientes y omitidas 
+- cálculo de días consecutivos de cumplimiento, porcentaje de adherencia y dosis programadas ppr dia.
+
+### ciclo de vida de los datos:
 
 - Los datos se crean cuando los usuarios registran una cuenta.
 - Los datos se actualizan cuando los usuarios realizan cambios en sus datos personales.
 - Los datos se eliminan cuando los usuarios eliminan su cuenta.
 
 
-### notificaciones
+### notificaciones:
 
 - Los usuarios con rol de  aldulto mayor reciben notificaciones y alarmas de toma de medicamentos (nombre, foto, dosis, descripción, hora), repetición del recordatorio hasta confirmar.
 - Los usuarios con rol de cuidador  reciben notificaciones y alerta cuando una dosis queda pendiente por el adulto mayor. 
@@ -28,7 +33,7 @@ En este documento se describen las reglas del negocio que se aplican a los usuar
 - Las notificaciones  activan solo en el dispositivo movil del usuario.
 - Las notificaciones que se envia a el usuario con rol de aldulto mayor consta de un mensaje de voz, un sonido y una vibración.
 
-## 🔐 Seguridad
+## 🔐 Seguridad:
 
 - Los datos personales se almacenan en un servidor seguro.
 - El servidor se encuentra en un lugar seguro y protegido.
@@ -40,7 +45,7 @@ En este documento se describen las reglas del negocio que se aplican a los usuar
 -  gestionar los permisos por rol en la API REST.
 
 
-### 🧮Integridad de Datos
+### 🧮Integridad de Datos:
 
 - los  datos se almase en uan base de datos segura y protegida.
 - los  datos son validados para asegurar que son correctos y no contienen datos incorrectos.
@@ -50,7 +55,7 @@ En este documento se describen las reglas del negocio que se aplican a los usuar
 - se  realiza una limpieza de los datos regularmente para eliminar datos obsoletos o incorrectos.
 
 
-### 🔐 autenticación de usuarios
+### 🔐 autenticación de usuarios:
 
 - Los usuarios tienen una sesión de usuario que se mantiene abierta durante la sesión.
 - Los usuarios pueden cerrar la sesión de usuario cuando se cierran la sesión.
@@ -63,10 +68,16 @@ En este documento se describen las reglas del negocio que se aplican a los usuar
 - el rol de cuidador es un rol secundario de los usuarios.
 - el cuidador crea/edita/elimina medicamentos y horarios de los adultos mayores vinculados a él
 - el cuidador puede registrar medicamentos y programar horarios de administración.
- el adulto mayor solo confirma tomas y consulta su historial y estadísticas y vissualiza los medicamentos registrados.
+- el adulto mayor solo confirma tomas y consulta su historial y estadísticas y vissualiza los medicamentos registrados.
 
- 
- ### Auditoría
+
+
+### Medicamentos y tratamientos: 
+- campos obligatorios (nombre, dosis, frecuencia, horarios, fechas de inicio/fin, descripción, fotografía)
+- validación que evite duplicados y registros sin datos obligatorios
+- actualización automática de recordatorios al modificar un tratamiento.
+
+ ### Auditoría:
 
 - Se realiza una auditoría de los datos regularmente.
 - Se realiza una auditoría de la seguridad de los datos regularmente.
