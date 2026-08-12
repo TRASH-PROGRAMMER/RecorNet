@@ -313,7 +313,67 @@ Funciones:
 - Gestión de estadísticas.
 - Gestión de reportes.
 - diagrama entidad relacion:
-![alt text](https://github.com/RUDYPIO/Recornet/blob/main/docs/arquitectura/backend/diagrama-entidad-relacion.png)
+
+```mermaid
+erDiagram
+    USERS ||--o| PROFILES : tiene
+    USERS }o--o{ ROLES : asigna_via_USER_ROLES
+    USERS ||--o{ CARE_RELATIONSHIPS : cuidador
+    USERS ||--o{ CARE_RELATIONSHIPS : adulto_mayor
+    USERS ||--o{ TREATMENTS : paciente
+    USERS ||--o{ TREATMENTS : creado_por
+    MEDICATIONS ||--o{ TREATMENTS : define
+    TREATMENTS ||--o{ REMINDER_SCHEDULES : programa
+    TREATMENTS ||--o{ DOSE_EVENTS : genera
+    REMINDER_SCHEDULES ||--o{ DOSE_EVENTS : instancia
+    USERS ||--o{ NOTIFICATIONS : recibe
+    DOSE_EVENTS ||--o{ NOTIFICATIONS : origina
+    USERS ||--o{ USER_DEVICES : posee
+    USERS ||--o{ REPORTS : sujeto_o_autor
+
+```
+
+| Relación               | Tipo |
+| ---------------------- | ---- |
+| User → Profile         | 1:1  |
+| User → Role            | N:M  |
+| User → Service         | 1:N  |
+| user → medicamnets     | 1:N  |
+| user → treatments      | 1:N  |
+| user → reminders       | 1:N  |
+| User → Notification    | 1:N  |
+| User → Statistics      | 1:N  |
+| User → Report          | 1:N  |
+| Profile → User         | 1:1  |
+| Profile → Role         | 1:1  |
+| Profile → Service      | 1:1  |
+| Profile → Notification | 1:1  |
+| Profile → Statistics   | 1:1  |
+| Profile → Report       | 1:1  |
+| Role → User            | 1:1  |
+| Role → Profile         | 1:1  |
+| Role → Service         | 1:1  |
+| Role → Notification    | 1:1  |
+| Role → Statistics      | 1:1  |
+| Role → Report          | 1:1  |
+| Service → User         | 1:1  |
+| Service → Profile      | 1:1  |
+| Service → Role         | 1:1  |
+| Service → Notification | 1:1  |
+| Service → Statistics   | 1:1  |
+| Service → Report       | 1:1  |
+| Notification → User    | 1:1  |
+| Notification → Profile | 1:1  |
+| Notification → Role    | 1:1  |
+| Notification → Service | 1:1  |
+| Statistics → User      | 1:1  |
+| Statistics → Profile   | 1:1  |
+| Statistics → Role      | 1:1  |
+| Statistics → Service   | 1:1  |
+| Report → User          | 1:1  |
+| Report → Profile       | 1:1  |
+| Report → Role          | 1:1  |
+| Report → Service       | 1:1  |   
 
 ## Caché / Broker:
 

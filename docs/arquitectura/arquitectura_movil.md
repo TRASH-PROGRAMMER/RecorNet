@@ -1,10 +1,6 @@
 # Arquitectura móvil de RecorNet
 
-**Estado:** Propuesta técnica base  
-**Plataformas objetivo:** Android e iOS  
-**Cliente recomendado:** Ionic Vue + Capacitor + TypeScript  
-**Autor:** Manus AI  
-**Última actualización:** 11 de agosto de 2026
+
 
 ---
 
