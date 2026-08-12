@@ -11,7 +11,6 @@ El sistema se compone de cinco servicios coordinados por `docker-compose.yml`, q
 ```text
 RecorNet/
 ├── backend/
-│   ├── Dockerfile                # Imagen de la API Flask
 │   ├── Dockerfile.worker         # Imagen del Celery worker
 │   ├── Dockerfile.beat           # Imagen del Celery beat (planificador)
 │   └── init.py
@@ -58,7 +57,6 @@ flowchart LR
 |----------|-------------|---------|--------|---------|
 | `postgres` | `postgres:16-alpine` | Base de datos principal (usuarios, medicamentos, tratamientos, historial) | 5432 | `pgdata:/var/lib/postgresql/data` |
 | `redis` | `redis:7-alpine` | Caché de estadísticas y broker de mensajes de Celery | 6379 | — (datos volátiles por diseño) |
-| `api` | `python:3.12-slim` + Flask/uvicorn/gunicorn | API REST con autenticación JWT, Swagger y endpoints CRUD | 3000:8000 | `./backend:/app` |
 | `worker` | Misma imagen que `api` | Procesamiento asíncrono: notificaciones push, carga de imágenes, estadísticas y reportes | — | `./backend:/app` |
 | `beat` | Misma imagen que `api` | Planificador de tareas programadas: genera recordatorios de dosis según horarios | — | `./backend:/app` |
 
@@ -108,29 +106,6 @@ services:
       timeout: 5s
       retries: 5
 
-  api:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: recorner-api
-    restart: unless-stopped
-    command: >
-      sh -c "uvicorn src.main:app --host 0.0.0.0 --port 8000
-             --workers 2 --log-level info"
-    ports:
-      - "3000:8000"
-    environment:
-      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      - REDIS_URL=redis://redis:6379/0
-    volumes:
-      - ./backend:/app
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    networks:
-      - recorner-net
 
   worker:
     build:
@@ -174,27 +149,7 @@ networks:
     driver: bridge
 ```
 
-## 📄 Dockerfile de referencia (API / worker / beat)
 
-```dockerfile
-FROM python:3.12-slim
-
-WORKDIR /app
-
-# Dependencias del sistema mínimas
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        gcc libpq-dev curl \
-    && rm -rf /var/lib/apt/lists/*
-
-# Instalación de dependencias con caché en capas
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
-EXPOSE 8000
-
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
 ## 🔐 Variables de entorno (.env)
@@ -224,7 +179,6 @@ docker compose up -d
 docker compose ps
 
 # Ver logs en tiempo real de un servicio
-docker compose logs -f api
 docker compose logs -f worker
 
 # Detener la plataforma sin perder datos
@@ -263,7 +217,3 @@ docker compose exec postgres psql -U recorner_user -d recorner_db
 
 Docker es la capa de infraestructura que soporta los componentes documentados en `backend.md`: PostgreSQL como motor de persistencia con SQLAlchemy/Flask-Migrate, Redis como caché y broker de Celery, Celery Worker/Beat como sistema de procesamiento asíncrono y planificador, y la API de Flask como punto de entrada RESTful. Para la fase móvil, esta misma orquestación sirve al cliente de Capacitor, que solo necesita la API expuesta en el puerto 3000.
 
----
-**Autor:** Manus AI
-**Versión:** 1.0.0
-**Referencia:** Basado en `backend.md` (arquitectura backend de RecorNet) y `CONTEXTO GENRAL.md`.
