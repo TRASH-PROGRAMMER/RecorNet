@@ -42,3 +42,7 @@ Despues de CUALQUIER correccion del usuario: actualiza tasks/lessons.md con el p
 - ** La Simplicidad Primero **: Haz cada cambio tan simple como sea posible. Impacta el minimo código posible.
 - ** Nada de Pereza **: Encuentra las causas raiz. Nada de arreglos temporales. Estandares de un desarrollador senior.
 - ** Impacto Minimo **: Los cambios solo deben tocar lo necesario. Evita introducir bugs.
+- ** Documenta Todo **: Cada cambio debe tener un resumen de alto nivel. Los cambios complejos requieren una sección de revisión.
+- ** Reglas de Oro **: No ignores los errores. No ignores los tests fallidos. No ignores los logs. No ignores las advertencias del compilador. No ignores las advertencias de seguridad.
+- Para tener contexto general del proyecto web debes rvisar y analizar el archivo de  contexto general del proyecto  en docs\contexto.
+- no puedes elinar esta carpetas  ni su subcarpetas y archivos C:\Users\RUDY PICO\Desktop\Recornet\docs  y .agents
