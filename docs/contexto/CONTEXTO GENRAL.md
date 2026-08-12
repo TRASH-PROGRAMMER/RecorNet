@@ -2,7 +2,7 @@
 
 ## Descripción:
 
-RecorNet es un software multiplataforma (Android, iOS y Web) diseñado para ayudar a los adultos mayores a cumplir correctamente con el tratamiento de sus medicamentos mediante recordatorios inteligentes, accesibles y fáciles de utilizar.
+RecorNet es un software multiplataforma (Android  y Web) diseñado para ayudar a los adultos mayores a cumplir correctamente con el tratamiento de sus medicamentos mediante recordatorios inteligentes, accesibles y fáciles de utilizar.
 
 ## Objetivo General
 
@@ -16,7 +16,7 @@ Desarrollar un software multiplataforma accesible que permita gestionar medicame
 
 
 
-RecorNet es un software multiplataforma (Android, iOS y Web) diseñado para apoyar a los adultos mayores en el cumplimiento de sus tratamientos médicos mediante un sistema inteligente de recordatorios de medicamentos. La aplicación busca disminuir el olvido en la toma de medicamentos y mejorar la adherencia al tratamiento, utilizando notificaciones accesibles que combinan alarmas sonoras, mensajes de voz, vibración y alertas visuales.
+RecorNet es un software multiplataforma (Android y Web) diseñado para apoyar a los adultos mayores en el cumplimiento de sus tratamientos médicos mediante un sistema inteligente de recordatorios de medicamentos. La aplicación busca disminuir el olvido en la toma de medicamentos y mejorar la adherencia al tratamiento, utilizando notificaciones accesibles que combinan alarmas sonoras, mensajes de voz, vibración y alertas visuales.
 
 El sistema permite registrar y administrar los medicamentos mediante un módulo de gestión (CRUD), donde se almacena información como el nombre del medicamento, dosis, horario de administración, fotografía y una breve descripción de su uso. Cuando llega la hora programada, RecorNet envía una notificación indicando el medicamento que debe tomarse, la cantidad correspondiente y su descripción, solicitando al usuario confirmar que la dosis fue administrada.
 

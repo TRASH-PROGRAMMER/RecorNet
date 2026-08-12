@@ -45,4 +45,9 @@ Despues de CUALQUIER correccion del usuario: actualiza tasks/lessons.md con el p
 - ** Documenta Todo **: Cada cambio debe tener un resumen de alto nivel. Los cambios complejos requieren una sección de revisión.
 - ** Reglas de Oro **: No ignores los errores. No ignores los tests fallidos. No ignores los logs. No ignores las advertencias del compilador. No ignores las advertencias de seguridad.
 - Para tener contexto general del proyecto web debes rvisar y analizar el archivo de  contexto general del proyecto  en docs\contexto.
-- no puedes elinar esta carpetas  ni su subcarpetas y archivos C:\Users\RUDY PICO\Desktop\Recornet\docs  y .agents
+- No puedes elinar esta carpetas  ni su subcarpetas y archivos C:\Users\RUDY PICO\Desktop\Recornet\docs  y .agents.
+- No puedes eliminar ni renombrar ni mover estos archivos y carpetas  ni su subcarpetas y archivos C:\Users\RUDY PICO\Desktop\Recornet\docs  y .agents.
+- Para  el frotend del proyecto web debes revisar y analizar los archivos C:\Users\RUDY PICO\Desktop\Recornet\docs\arquitectura\frontend.md y C:\Users\RUDY PICO\Desktop\Recornet\docs\contexto\CONTEXTO GENRAL.md para asi cumplir con estos.
+- Para  el backend del proyecto web debes revisar y analizar los archivos C:\Users\RUDY PICO\Desktop\Recornet\docs\arquitectura\backend.md y C:\Users\RUDY PICO\Desktop\Recornet\docs\contexto\CONTEXTO GENRAL.md para asi cumplir con estos.
+- Para la aplicación de Android debes revisar y analizar los archivos C:\Users\RUDY PICO\Desktop\Recornet\docs\arquitectura\android.md y C:\Users\RUDY PICO\Desktop\Recornet\docs\contexto\CONTEXTO GENRAL.md para asi cumplir con estos.
+- Puedes elimidar carpetas y archivos de codigoden tro de backend , frontend, multiplataforma siempre cuando me preguntes y yo apruebe elimiar ese archivo y explica el por que ese archvio de codigo  nesecia  ser eliminado.
