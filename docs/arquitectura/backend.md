@@ -11,7 +11,7 @@ El backend de **RecorNet** se compone de una API RESTful y un sistema de base de
 
 1. 🟢 API / Gateway (Backend principal)
 
-Tecnología: Python + Flask + Swagger + Uvicorn
+Tecnología: Python + Flask + Swagger + Gunicorn 
 
 **Funciones:**
 
