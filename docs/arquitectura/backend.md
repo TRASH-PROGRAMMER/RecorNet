@@ -333,47 +333,22 @@ erDiagram
 
 ```
 
-| Relación               | Tipo |
-| ---------------------- | ---- |
-| User → Profile         | 1:1  |
-| User → Role            | N:M  |
-| User → Service         | 1:N  |
-| user → medicamnets     | 1:N  |
-| user → treatments      | 1:N  |
-| user → reminders       | 1:N  |
-| User → Notification    | 1:N  |
-| User → Statistics      | 1:N  |
-| User → Report          | 1:N  |
-| Profile → User         | 1:1  |
-| Profile → Role         | 1:1  |
-| Profile → Service      | 1:1  |
-| Profile → Notification | 1:1  |
-| Profile → Statistics   | 1:1  |
-| Profile → Report       | 1:1  |
-| Role → User            | 1:1  |
-| Role → Profile         | 1:1  |
-| Role → Service         | 1:1  |
-| Role → Notification    | 1:1  |
-| Role → Statistics      | 1:1  |
-| Role → Report          | 1:1  |
-| Service → User         | 1:1  |
-| Service → Profile      | 1:1  |
-| Service → Role         | 1:1  |
-| Service → Notification | 1:1  |
-| Service → Statistics   | 1:1  |
-| Service → Report       | 1:1  |
-| Notification → User    | 1:1  |
-| Notification → Profile | 1:1  |
-| Notification → Role    | 1:1  |
-| Notification → Service | 1:1  |
-| Statistics → User      | 1:1  |
-| Statistics → Profile   | 1:1  |
-| Statistics → Role      | 1:1  |
-| Statistics → Service   | 1:1  |
-| Report → User          | 1:1  |
-| Report → Profile       | 1:1  |
-| Report → Role          | 1:1  |
-| Report → Service       | 1:1  |   
+| Relación               | Cardinalidad | Evaluación                                         | Recomendación                                                                                                            |
+| ---------------------- | ------------ | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| User → Profile         | 1:1          | Correcta                                           | Usa `profiles.user_id` como PK/FK. Perfil es extensión opcional del usuario.                                             |
+| User → Role            | N:M          | Válida solo si un usuario puede tener varios roles | Implementa tabla puente `user_roles`. Si un usuario solo puede tener un rol activo, usa `roles 1:N users`.               |
+| Profile → Role         | 1:1          | Incorrecta                                         | El rol pertenece a `User`, no a `Profile`.                                                                               |
+| User → Medication      | 1:N          | Incompleta                                         | Mejor: `User (paciente) 1:N Treatment` y `Medication 1:N Treatment`. La dosis/horario pertenecen al tratamiento.         |
+| User → Treatment       | 1:N          | Correcta para el paciente                          | Añade también `created_by_user_id` para el cuidador que lo crea/modifica.                                                |
+| User → Reminder        | 1:N          | Correcta, pero indirecta                           | Modela `Treatment 1:N ReminderSchedule`; los recordatorios se derivan del tratamiento.                                   |
+| User → Notification    | 1:N          | Correcta                                           | Añade `DoseEvent 1:N Notification` para conservar el origen de cada aviso.                                               |
+| User → Statistics      | 1:N          | Generalmente innecesaria                           | Calcula estadísticas desde `dose_events`; persiste `statistics_snapshots` solo si necesitas caché por período.           |
+| User → Report          | 1:N          | Posible                                            | El reporte debe tener `subject_user_id` y `created_by_user_id`; también puede generarse bajo demanda.                    |
+| Relaciones con Service | —            | Incorrectas o prematuras                           | `Service` no parece una entidad de negocio; FCM, Cloudinary, Celery y Redis son infraestructura, no tablas relacionales. |
+
+
+
+
 
 ## Caché / Broker:
 
