@@ -70,7 +70,7 @@ version: "3.9"
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: recorner-postgres
+    container_name: recornet-postgres
     restart: unless-stopped
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -82,7 +82,7 @@ services:
       - pgdata:/var/lib/postgresql/data
       - ./docker/postgres:/docker-entrypoint-initdb.d
     networks:
-      - recorner-net
+      - recornet-net
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
@@ -91,7 +91,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: recorner-redis
+    container_name: recornet-redis
     restart: unless-stopped
     command: redis-server /usr/local/etc/redis/redis.conf
     ports:
@@ -121,13 +121,13 @@ services:
       redis:
         condition: service_healthy
     networks:
-      - recorner-net
+      - recornet-net
 
   worker:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: recorner-worker
+    container_name: recornet-worker
     restart: unless-stopped
     command: celery -A src.main worker --loglevel=info --concurrency=2
     environment:
@@ -144,7 +144,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: recorner-beat
+    container_name: recornet-beat
     restart: unless-stopped
     command: celery -A src.main beat --loglevel=info
     environment:
@@ -161,7 +161,7 @@ volumes:
   pgdata:
 
 networks:
-  recorner-net:
+  recornet-net:
     driver: bridge
 ```
 
@@ -172,8 +172,8 @@ networks:
 
 ```env
 # Base de datos
-POSTGRES_DB=recorner_db
-POSTGRES_USER=recorner_user
+POSTGRES_DB=recornet_db
+POSTGRES_USER=recornet_user
 POSTGRES_PASSWORD=<contraseña-segura-generada>
 
 # Aplicación
@@ -209,7 +209,7 @@ docker compose build --no-cache
 # Ejecutar un comando dentro de un contenedor
 docker compose exec api flask db upgrade   # migraciones
 docker compose exec api pytest             # pruebas del backend
-docker compose exec postgres psql -U recorner_user -d recorner_db
+docker compose exec postgres psql -U recornet_user -d recornet_db
 ```
 
 ## 📊 Ciclo de vida de los servicios
@@ -226,7 +226,7 @@ docker compose exec postgres psql -U recorner_user -d recorner_db
 3. **Volúmenes nombrados** (`pgdata`) para persistencia independiente del ciclo de vida del contenedor.
 4. **Variables de entorno** para credenciales; nada se hardcodea en imágenes ni en `docker-compose.yml`.
 5. **`restart: unless-stopped`** para que los servicios se recuperen de caídas del daemon.
-6. **Red interna aislada** (`recorner-net`); solo la API expone puertos al host (3000).
+6. **Red interna aislada** (`recornet-net`); solo la API expone puertos al host (3000).
 7. **Dependencias declaradas** (`depends_on` con condición `service_healthy`) para evitar errores de arranque.
 
 ## 🔗 Relación con la arquitectura general
