@@ -689,3 +689,21 @@ Y -- No --> ZB[Cerrar sesión]
 
 ZB --> ZC([Fin])
 ```
+
+
+## Diagrama de la máquina de estados de una dosis
+
+El estado de cada evento de dosis sigue la máquina documentada en `arquitectura_movil.md` y se registra en la columna `status`:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Programada
+    Programada --> Alertada: llega hora de toma
+    Alertada --> Tomada: usuario confirma
+    Alertada --> Pendiente: vence el tiempo sin confirmar
+    Pendiente --> Alertada: reintento permitido
+    Pendiente --> Omitida: usuario omite o expira política
+    Tomada --> Sincronizada: servidor acepta evento
+    Omitida --> Sincronizada: servidor acepta evento
+    Pendiente --> Sincronizada: servidor registra pendiente
+```
