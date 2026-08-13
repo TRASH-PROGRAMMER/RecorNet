@@ -51,3 +51,4 @@ Despues de CUALQUIER correccion del usuario: actualiza tasks/lessons.md con el p
 - Para  el backend del proyecto web debes revisar y analizar los archivos C:\Users\RUDY PICO\Desktop\Recornet\docs\arquitectura\backend.md y C:\Users\RUDY PICO\Desktop\Recornet\docs\contexto\CONTEXTO GENRAL.md para asi cumplir con estos.
 - Para la aplicación de Android debes revisar y analizar los archivos C:\Users\RUDY PICO\Desktop\Recornet\docs\arquitectura\arquitectura_movil.md y C:\Users\RUDY PICO\Desktop\Recornet\docs\contexto\CONTEXTO GENRAL.md para asi cumplir con estos.
 - Puedes eliminar carpetas y archivos de codigo  de backend , frontend, multiplataforma siempre cuando me preguntes y yo apruebe elimiar ese archivo y explica el por que ese archvio de codigo  nesecia  ser eliminado.
+
