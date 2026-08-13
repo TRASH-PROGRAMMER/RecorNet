@@ -146,9 +146,17 @@ La conexión entre el frontend y el backend se realiza mediante una API RESTful 
 
 En services/api.ts:
 
-import axios from "axios";
+Usar variables de entorno:
 
-export const api = axios.create({ baseURL: "http://localhost:3000/api"});
+export const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000/api"
+});
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem("token");
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+})
+
 
 ### 🧠 **UX / UI**
 
