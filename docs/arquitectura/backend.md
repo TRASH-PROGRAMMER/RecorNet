@@ -333,6 +333,7 @@ erDiagram
 
 ```
 
+
 | Relación               | Cardinalidad | Evaluación                                         | Recomendación                                                                                                            |
 | ---------------------- | ------------ | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | User → Profile         | 1:1          | Correcta                                           | Usa `profiles.user_id` como PK/FK. Perfil es extensión opcional del usuario.                                             |
@@ -345,9 +346,6 @@ erDiagram
 | User → Statistics      | 1:N          | Generalmente innecesaria                           | Calcula estadísticas desde `dose_events`; persiste `statistics_snapshots` solo si necesitas caché por período.           |
 | User → Report          | 1:N          | Posible                                            | El reporte debe tener `subject_user_id` y `created_by_user_id`; también puede generarse bajo demanda.                    |
 | Relaciones con Service | —            | Incorrectas o prematuras                           | `Service` no parece una entidad de negocio; FCM, Cloudinary, Celery y Redis son infraestructura, no tablas relacionales. |
-
-
-
 
 
 ## Caché / Broker:
