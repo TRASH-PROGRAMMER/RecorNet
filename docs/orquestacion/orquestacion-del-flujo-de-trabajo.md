@@ -50,5 +50,11 @@ Despues de CUALQUIER correccion del usuario: actualiza tasks/lessons.md con el p
 - Para  el frotend del proyecto web debes revisar y analizar los archivos C:\Users\RUDY PICO\Desktop\Recornet\docs\arquitectura\frontend.md y C:\Users\RUDY PICO\Desktop\Recornet\docs\contexto\CONTEXTO GENRAL.md para asi cumplir con estos.
 - Para  el backend del proyecto web debes revisar y analizar los archivos C:\Users\RUDY PICO\Desktop\Recornet\docs\arquitectura\backend.md y C:\Users\RUDY PICO\Desktop\Recornet\docs\contexto\CONTEXTO GENRAL.md para asi cumplir con estos.
 - Para la aplicación de Android debes revisar y analizar los archivos C:\Users\RUDY PICO\Desktop\Recornet\docs\arquitectura\arquitectura_movil.md y C:\Users\RUDY PICO\Desktop\Recornet\docs\contexto\CONTEXTO GENRAL.md para asi cumplir con estos.
+- Para la base de datos debes revisar y analizar los archivos C:\Users\RUDY PICO\Desktop\Recornet\docs\arquitectura\base_de_datos.md y C:\Users\RUDY PICO\Desktop\Recornet\docs\contexto\CONTEXTO GENRAL.md para asi cumplir con estos.
+- Las reglas del negocio  se encuentran en el archivo 'docs\reglas\reglas_del_negocio.md'. Revisar  estos archivos te permitira cumplir con las reglas de negocio y desarrollar el proyecto web y la aplicación de Android. No te alejes de las reglas del negocio.
+
 - Puedes eliminar carpetas y archivos de codigo  de backend , frontend, multiplataforma siempre cuando me preguntes y yo apruebe elimiar ese archivo y explica el por que ese archvio de codigo  nesecia  ser eliminado.
+
+- Los archivos y carpetas dentro de la carpeta 'docs' y la carpeta '.agents' no deben ser tocados ni modificados.
+
 
