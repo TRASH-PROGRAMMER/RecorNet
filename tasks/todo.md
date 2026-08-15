@@ -8,11 +8,11 @@
 - [x] Estructura de carpetas `tests/` (unit, integration)
 
 ## Componente 2: Capa de Dominio
-- [ ] Entidades del dominio
-- [ ] Value objects
-- [ ] Repositorios abstractos
-- [ ] Puertos abstractos
-- [ ] Excepciones de dominio
+- [x] Entidades del dominio
+- [x] Value objects
+- [x] Repositorios abstractos
+- [x] Puertos abstractos
+- [x] Excepciones de dominio
 
 ## Componente 3: Infraestructura — Persistencia
 - [ ] Modelos SQLAlchemy
