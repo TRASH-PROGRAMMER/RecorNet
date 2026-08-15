@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 
+# Clase para representar un horario
 @dataclass(frozen=True)
 class Schedule:
     times: List[str] # ["08:00", "20:00"]
