@@ -8,3 +8,4 @@ class CloudinaryPort(ABC): # Clase abstracta para representar puertos de Cloudin
         
     @abstractmethod
     def delete_image(self, public_id: str) -> bool: # Método para eliminar una imagen de Cloudinary
+        pass
