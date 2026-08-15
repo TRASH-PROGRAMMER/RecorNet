@@ -10,7 +10,7 @@ Flask-CORS==5.0.1
 
 # --- Base de datos ---
 SQLAlchemy==2.0.41
-psycopg2-binary==2.9.10
+psycopg[binary]
 alembic==1.15.2
 
 # --- Autenticación ---
@@ -18,7 +18,7 @@ PyJWT==2.9.0
 bcrypt==4.3.0
 
 # --- Validación ---
-pydantic==2.11.3
+pydantic
 
 # --- Documentación API ---
 flasgger==0.9.7.1
