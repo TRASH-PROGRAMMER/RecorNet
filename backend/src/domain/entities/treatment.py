@@ -31,7 +31,7 @@ class Treatments:
     frequency: Frequency = field(default_factory=lambda: Frequency(0, "")) # Frecuencia del tratamiento
     schedules: list[Any] = field(default_factory=list) # Horario de las tomas
     start_date: date = field(default_factory=date.today) # Fecha de inicio del tratamiento
-    end_date: Optional[date] = None # Fecha de fin del tratamiento
+    end_date: date  # Fecha de fin del tratamiento
     version: int = 1
     status: TreatmentStatus = TreatmentStatus.ACTIVE # Estado del tratamiento (ACTIVE, INACTIVE, CANCELLED)
     

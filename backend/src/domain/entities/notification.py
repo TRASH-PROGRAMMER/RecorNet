@@ -20,6 +20,13 @@ class NotificationStatus(str, Enum):
     DELIVERED = "delivered"
     OPENED = "opened"
 
+# clase para representar el canal de notificación
+class NotificationChannel(str, Enum):
+    PUSH = "push"
+    LOCAL = "local"
+    SMS = "sms"
+    
+  
 
 # clase para representar una notificación
 
@@ -31,6 +38,7 @@ class Notification:
     title: str = ""
     type: NotificationType = NotificationType.REMINDER
     message: str = ""
+    channel: NotificationChannel = NotificationChannel.PUSH
     status:  NotificationStatus = NotificationStatus.PENDING
     sent_at: Optional[datetime] = None
     read_at: Optional[datetime] = None

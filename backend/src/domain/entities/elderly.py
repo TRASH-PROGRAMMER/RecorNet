@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List
 from src.domain.entities.user import User
+from src.domain.entities.caregiver import Caregiver
 
 # es una clase que hereda de User  
 @dataclass
