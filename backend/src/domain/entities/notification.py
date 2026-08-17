@@ -42,3 +42,20 @@ class Notification:
     status:  NotificationStatus = NotificationStatus.PENDING
     sent_at: Optional[datetime] = None
     read_at: Optional[datetime] = None
+    
+    def mark_as_sent(self):
+        self.status = NotificationStatus.SENT
+        self.sent_at = datetime.utcnow()
+    def mark_as_read(self):
+        self.status = NotificationStatus.READ
+        self.read_at = datetime.utcnow()
+
+    def mark_as_failed(self):
+        self.status = NotificationStatus.FAILED
+        
+    def mark_as_delivered(self):
+        self.status = NotificationStatus.DELIVERED
+        
+    def mark_as_opened(self):
+        self.status = NotificationStatus.OPENED
+        

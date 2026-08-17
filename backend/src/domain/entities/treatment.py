@@ -34,4 +34,7 @@ class Treatments:
     end_date: date  # Fecha de fin del tratamiento
     version: int = 1
     status: TreatmentStatus = TreatmentStatus.ACTIVE # Estado del tratamiento (ACTIVE, INACTIVE, CANCELLED)
-    
+    def change_status(self, status: TreatmentStatus):
+        self.status = status
+        self.version += 1
+
