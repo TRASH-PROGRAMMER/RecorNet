@@ -9,8 +9,7 @@ from enum import Enum
 from src.domain.entities.medication import Medication
 from src.domain.entities.user import User
 # pyrefly: ignore [missing-import]
-from src.domain.entities.reminder_schedule import ReminderSchedule
-
+from src.domain.entities.reminder import ReminderSchedule
 # clase para representar el estado del tratamiento
 class TreatmentStatus(str,Enum):
     ACTIVE = "ACTIVE"
@@ -29,7 +28,7 @@ class Treatments:
     created_by_user_id: int = 0 
     dosage: Dosage = field(default_factory=lambda: Dosage(0, "")) # Dosis del medicamento
     frequency: Frequency = field(default_factory=lambda: Frequency(0, "")) # Frecuencia del tratamiento
-    schedules: list[Any] = field(default_factory=list) # Horario de las tomas
+    schedules: list[ReminderSchedule] = field(default_factory=list) # Horario de las tomas
     start_date: date = field(default_factory=date.today) # Fecha de inicio del tratamiento
     end_date: date = field(default_factory=date.today) # Fecha de fin del tratamiento
     version: int = 1
@@ -37,4 +36,17 @@ class Treatments:
     def change_status(self, status: TreatmentStatus):
         self.status = status
         self.version += 1
+        if status == TreatmentStatus.CANCELLED:
+            self.end_date = date.today()
+
+    def __post_init__(self):
+        if self.end_date < self.start_date:
+            raise ValueError("end_date must be greater than or equal to start_date")
+        
+    def update_start_date(self, start_date: date):
+        self.start_date = start_date
+        self.version += 1
+        
+    
+        
 
