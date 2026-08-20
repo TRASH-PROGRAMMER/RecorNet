@@ -23,7 +23,7 @@ class DoseEvent:
     reminder_schedule_id: str = ""
     treatment_id: str = ""
     user_id: str = ""
-    scheduled_at: datetime = None
+    scheduled_at: Optional[datetime] = None
     taken_at: Optional[datetime] = None
     status: DoseEventStatus = DoseEventStatus.SCHEDULED 
     def change_status(self, status: DoseEventStatus):
