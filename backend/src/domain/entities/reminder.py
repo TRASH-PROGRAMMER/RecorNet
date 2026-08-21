@@ -1,12 +1,13 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional, List
-
+from src.domain.value_objects.Frequency import Frequency
 # clase para representar un recordatorio
 @dataclass
 class ReminderSchedule:
     id: Optional[str] = None
     treatment_id: str = ""
     scheduled_time: str = "" # HH:MM format
+    frequency: Frequency = field(default_factory=lambda: Frequency(0, "")) # Frecuencia del tratamiento
     days_of_week: List[int] = None # 0 = Monday, 6 = Sunday
     is_active: bool = True
 

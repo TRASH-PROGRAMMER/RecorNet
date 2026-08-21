@@ -24,5 +24,4 @@ class User:
     #cambia el estado del usuario
     def change_status(self, status: Status):
         self.status = status
-    #cambia el rol del usuario
     

@@ -27,6 +27,7 @@ class Treatments:
     users: Optional[User] = None
     created_by_user_id: int = 0 
     dosage: Dosage = field(default_factory=lambda: Dosage(0, "")) # Dosis del medicamento
+    instructions: str = "" # Instrucciones del medicamento
     frequency: Frequency = field(default_factory=lambda: Frequency(0, "")) # Frecuencia del tratamiento
     schedules: list[ReminderSchedule] = field(default_factory=list) # Horario de las tomas
     start_date: date = field(default_factory=date.today) # Fecha de inicio del tratamiento

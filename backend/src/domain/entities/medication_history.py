@@ -10,7 +10,6 @@ class DoseEventStatus(str, Enum):
     SCHEDULED = "scheduled"
     ALERTED = "alerted"
     TAKEN = "taken"
-    PENDING = "pending"
     SKIPPED = "skipped"
     FAILED = "failed"
     SYNCED = "synced"
