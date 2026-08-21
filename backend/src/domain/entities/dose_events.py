@@ -1,26 +1,52 @@
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Optional
 from enum import Enum 
+import uuid
 # clase para representar un evento de dosis
+#enums para el estado
+class DoseEventStatus(str, Enum):
+    PENDING = "pending"
+    TAKEN = "taken"
+    MISSED = "missed"
+    SKIPPED = "skipped"
+
+#enum para el estado de sincronización
+class SyncStatus(str, Enum):
+    SYNCED = "synced"
+    UNSYNCED = "unsynced"
+    FAILED = "failed"
+    
+
+class Source(str, Enum):
+    WEB = "web"
+    MOBILE = "mobile" 
+    API = "api" 
+
 @dataclass
 class DoseEvent:
     id: Optional[str] = None
     treatment_id: str = ""
-    reminder_id: str = ""
-    dose_time: str = "" # HH:MM format
-    dose_date: str = "" # YYYY-MM-DD format
-    status: str = "" # pending, taken, missed
-    created_at: str = "" # YYYY-MM-DD HH:MM:SS format
-    updated_at: str = "" # YYYY-MM-DD HH:MM:SS format
+    schedule_id: str = ""
+    indepotency_key: str = "" # para evitar la creación de múltiples eventos de dosis para el mismo horario
+    scheduled_at: str = "" # YYYY-MM-DDTHH:MM:SSZ format
+    status: DoseEventStatus = DoseEventStatus.PENDING # pending, taken, missed
+    sync_status: SyncStatus = SyncStatus.UNSYNCED # synced, unsynced, failed
+    confirmed_at: datetime = field(default_factory=datetime.now) # fecha de confirmación del evento de dosis  
+    source: str = "" # fuente del evento de dosis    
     # pyrefly: enable-type-checking
     def __post_init__(self):
-        if self.dose_time is None:
-            self.dose_time = "00:00"
-        if self.dose_date is None:
-            self.dose_date = "2022-01-01"
+        if self.scheduled_at is None:
+            self.scheduled_at = datetime.now()
+        if self.confirmed_at is None:
+            self.confirmed_at = datetime.now()
         if self.status is None:
-            self.status = "pending"
-        if self.created_at is None:
-            self.created_at = "2022-01-01 00:00:00"
-        if self.updated_at is None:
-            self.updated_at = "2022-01-01 00:00:00"
+            self.status = DoseEventStatus.PENDING
+        if self.sync_status is None:
+            self.sync_status = SyncStatus.UNSYNCED
+        if self.source is None:
+            self.source = ""
+        if self.indepotency_key is None:
+            self.indepotency_key = ""
+        if self.id is None:
+            self.id = str(uuid.uuid4())
