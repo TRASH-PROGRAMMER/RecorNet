@@ -3,10 +3,6 @@ from datetime import datetime
 from typing import Optional
 from enum import Enum
 
-class Role(str, Enum):
-    PATIENT = "patient"
-    CAREGIVER = "caregiver"
-
 class Status(str, Enum):
     ACTIVE = "active"
     INACTIVE = "inactive"
@@ -17,7 +13,6 @@ class Status(str, Enum):
 class User:
     id: Optional[str] = None
     name: str = ""
-    role: Role = Role.PATIENT
     email: str = ""
     password_hash: str = ""
     phone: Optional[str] = None
@@ -30,6 +25,4 @@ class User:
     def change_status(self, status: Status):
         self.status = status
     #cambia el rol del usuario
-    def change_role(self, role: Role):
-        self.role = role
-        
+    
