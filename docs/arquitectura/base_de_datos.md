@@ -67,7 +67,7 @@ Las definiciones siguientes sirven como punto de partida para los modelos SQLAlc
 ```sql
 CREATE TABLE roles (
     id   SERIAL PRIMARY KEY,
-    name TEXT NOT NULL UNIQUE CHECK (name IN ('patient', 'caregiver', 'admin'))
+    name TEXT NOT NULL UNIQUE CHECK (name IN ('patient', 'caregiver'))
 );
 
 CREATE TABLE users (
