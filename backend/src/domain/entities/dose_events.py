@@ -8,8 +8,12 @@ import uuid
 class DoseEventStatus(str, Enum):
     PENDING = "pending"
     TAKEN = "taken"
-    MISSED = "missed"
     SKIPPED = "skipped"
+    SCHEDULED = "scheduled"
+    ALERTED = "alerted"
+    FAILED = "failed"
+    SYNCED = "synced"
+    
 
 #enum para el estado de sincronización
 class SyncStatus(str, Enum):
@@ -17,7 +21,7 @@ class SyncStatus(str, Enum):
     UNSYNCED = "unsynced"
     FAILED = "failed"
     
-
+# clase para representar la fuente del evento de dosis
 class Source(str, Enum):
     WEB = "web"
     MOBILE = "mobile" 
@@ -29,11 +33,11 @@ class DoseEvent:
     treatment_id: str = ""
     schedule_id: str = ""
     indepotency_key: str = "" # para evitar la creación de múltiples eventos de dosis para el mismo horario
-    scheduled_at: str = "" # YYYY-MM-DDTHH:MM:SSZ format
+    scheduled_at: datetime = field(default_factory=datetime.now) # YYYY-MM-DDTHH:MM:SSZ format
     status: DoseEventStatus = DoseEventStatus.PENDING # pending, taken, missed
     sync_status: SyncStatus = SyncStatus.UNSYNCED # synced, unsynced, failed
     confirmed_at: datetime = field(default_factory=datetime.now) # fecha de confirmación del evento de dosis  
-    source: str = "" # fuente del evento de dosis    
+    source: Source = Source.WEB # fuente del evento de dosis    
     # pyrefly: enable-type-checking
     def __post_init__(self):
         if self.scheduled_at is None:

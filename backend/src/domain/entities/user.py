@@ -16,6 +16,7 @@ class User:
     email: str = ""
     password_hash: str = ""
     phone: Optional[str] = None
+    role: str = ""
     is_active: bool = True
     status: Status = Status.ACTIVE
     created_at: datetime = field(default_factory=datetime.utcnow)

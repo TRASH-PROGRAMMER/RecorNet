@@ -12,3 +12,4 @@ class Role:
 class RoleType(str, Enum):
     PATIENT = "patient"
     CAREGIVER = "caregiver"
+    ADMIN = "admin"
