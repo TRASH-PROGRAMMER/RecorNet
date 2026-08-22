@@ -2,23 +2,34 @@
 
 ## Descripción general
 
-Este documento detalla la arquitectura de la base de datos que se utilizará en el proyecto **RecorNet**. El modelo persiste dos dominios entrelazados: la **gestión de usuarios y relaciones de cuidado** (adultos mayores vinculados a cuidadores con permisos asimétricos) y el **ciclo de vida de la medicación** (medicamentos, tratamientos, programación de recordatorios, eventos de dosis y su historial). La separación entre la definición de un tratamiento y las instancias de dosis generadas por ese tratamiento es una decisión de modelado central: permite modificar horarios sin destruir el historial de dosis ya confirmadas, y garantiza que una confirmación de toma nunca se duplique gracias a la clave de idempotencia.
+Este documento detalla la arquitectura de la base de datos que se utilizará en el proyecto **RecorNet**. El modelo persiste cuatro dominios complementarios: **identidad y cuidado**, **ciclo de medicación**, **notificación accesible** y **gobierno operativo**. El último concentra consentimiento, sesiones, auditoría, revisiones y operaciones offline, de modo que la aplicación no pierda trazabilidad cuando el dispositivo carece temporalmente de conexión. La separación entre la definición de un tratamiento y las instancias de dosis generadas por ese tratamiento permite modificar horarios sin destruir el historial de dosis ya confirmadas, y garantiza que una confirmación de toma nunca se duplique gracias a la clave de idempotencia.
 
 ```mermaid
 erDiagram
     USERS ||--o| PROFILES : tiene
     USERS ||--o{ USER_ROLES : recibe
     ROLES ||--o{ USER_ROLES : asigna
+    USERS ||--o{ AUTH_SESSIONS : inicia
+    USERS ||--o{ PASSWORD_RESET_TOKENS : recupera
+    USERS ||--o| ACCESSIBILITY_PREFERENCES : configura
     USERS ||--o{ CARE_RELATIONSHIPS : cuidador
     USERS ||--o{ CARE_RELATIONSHIPS : adulto_mayor
+    CARE_RELATIONSHIPS ||--o{ CARE_PERMISSIONS : delega
     USERS ||--o{ TREATMENTS : paciente
     USERS ||--o{ TREATMENTS : creado_por
     MEDICATIONS ||--o{ TREATMENTS : define
     TREATMENTS ||--o{ REMINDER_SCHEDULES : programa
     REMINDER_SCHEDULES ||--o{ REMINDER_TIMES : contiene
     TREATMENTS ||--o{ DOSE_EVENTS : genera
+    TREATMENTS ||--o{ TREATMENT_REVISIONS : versiona
+    TREATMENTS ||--o{ NOTIFICATION_POLICIES : regula
     DOSE_EVENTS ||--o{ NOTIFICATIONS : origina
+    DOSE_EVENTS ||--o{ DOSE_STATUS_TRANSITIONS : historiza
+    NOTIFICATIONS ||--o{ NOTIFICATION_DELIVERIES : intenta
     USERS ||--o{ USER_DEVICES : posee
+    USERS ||--o{ CONSENTS : concede
+    USERS ||--o{ SYNC_OPERATIONS : encola
+    USERS ||--o{ AUDIT_EVENTS : ejecuta
     USERS ||--o{ REPORTS : sujeto
     USERS ||--o{ REPORTS : autor
     USERS ||--o{ STATISTICS_SNAPSHOTS : conserva
@@ -48,17 +59,28 @@ stateDiagram-v2
 |-------|-------|-------------|
 | `users` | `id` (PK) | Usuario principal: adulto mayor o cuidador. Datos de identidad y credenciales (contraseña como hash). Eliminado con soft delete. No contiene una columna `role`: la asignación se centraliza en `user_roles`. |
 | `profiles` | `user_id` (PK/FK) | Extensión opcional del usuario con datos adicionales (preferencias, foto, ubicación). |
+| `accessibility_preferences` | `user_id` (PK/FK) | Preferencias accesibles explícitas: escala tipográfica, alto contraste, voz, hápticos y reducción de movimiento. |
 | `roles` | `id` (PK) | Catálogo de roles: `patient` (adulto mayor), `caregiver` (cuidador). Un eventual rol `admin` interno debe aprobarse explícitamente por producto antes de habilitarse. |
 | `user_roles` | `(user_id, role_id)` (PK compuesta) | Tabla puente N:M entre usuarios y roles; permite evolución futura sin cambiar el modelo. |
+| `auth_sessions` | `id` (PK) | Sesiones renovables y revocables; conserva hash del token de renovación, dispositivo y vencimiento. |
+| `password_reset_tokens` | `id` (PK) | Token de recuperación de acceso almacenado como hash, con vencimiento y consumo único. |
 | `medications` | `id` (PK) | Catálogo del medicamento: nombre, descripción, forma, fabricante, estado y fotografía. No contiene dosis ni frecuencia porque dependen de la prescripción del paciente. |
 | `treatments` | `id` (PK) | Prescripción que une un paciente, un cuidador autor y un medicamento con fechas de inicio/fin, dosis e instrucciones. Cada modificación incrementa `version`. |
+| `treatment_revisions` | `id` (PK) | Historial de versiones de tratamiento, con autor y cambios; apoya la resolución explícita de conflictos. |
 | `reminder_schedules` | `id` (PK) | Regla de recurrencia asociada a un tratamiento. FK `treatment_id`; conserva zona horaria y días de la semana. |
 | `reminder_times` | `id` (PK) | Hora(s) del día para cada programación; evita almacenar horarios en JSON y permite validarlos e indexarlos. |
+| `notification_policies` | `id` (PK) | Política de reintentos y escalamiento de un tratamiento o usuario: intervalo, máximo de intentos y umbral de pendiente. |
 | `dose_events` | `id` (PK) | Instancias de dosis programadas. FK `schedule_id` y `treatment_id`; incluye `idempotency_key` única. El estado clínico de la toma y el estado de sincronización se conservan en columnas separadas. |
+| `dose_status_transitions` | `id` (PK) | Transición inmutable entre estados de una dosis, con actor, motivo y marca temporal. |
 | `notifications` | `id` (PK) | Registro de avisos locales o push. FK `dose_event_id` y `recipient_user_id`, con canal, estado de entrega y payload. |
+| `notification_deliveries` | `id` (PK) | Intento individual de enviar una notificación a un dispositivo; registra reintentos, proveedor, entrega o fallo. |
 | `user_devices` | `id` (PK) | Dispositivos registrados con tokens FCM, sistema operativo y preferencias de notificación. FK `user_id`. |
+| `consents` | `id` (PK) | Evidencia temporal de consentimiento o revocación para tratamiento de datos, avisos y guía por voz. |
 | `reports` | `id` (PK) | Reportes de seguimiento generados por el cuidador o por el sistema. FK explícitas `subject_user_id` y `created_by_user_id`. |
 | `statistics_snapshots` | `id` (PK) | Snapshot histórico opcional de estadísticas (adherencia, rachas), complementario a la caché de Redis. |
+| `sync_operations` | `id` (PK) | Cola durable de operaciones offline con idempotencia, reintentos y último error conocido. |
+| `audit_events` | `id` (PK) | Registro inmutable de acciones relevantes de seguridad, cambios de estado, acceso y entregas. |
+| `care_permissions` | `id` (PK) | Permiso individual, revocable y auditable dentro de una relación cuidador-adulto mayor. |
 
 ## Esquema DDL de referencia (PostgreSQL)
 
@@ -88,10 +110,39 @@ CREATE TABLE profiles (
     preferences  JSONB NOT NULL DEFAULT '{}'   -- fuente, contraste, voz, vibración
 );
 
+CREATE TABLE accessibility_preferences (
+    user_id                INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+    text_scale             NUMERIC(3,2) NOT NULL DEFAULT 1.00 CHECK (text_scale BETWEEN 0.80 AND 2.00),
+    high_contrast          BOOLEAN NOT NULL DEFAULT false,
+    voice_guidance_enabled BOOLEAN NOT NULL DEFAULT false,
+    haptics_enabled        BOOLEAN NOT NULL DEFAULT true,
+    reduce_motion          BOOLEAN NOT NULL DEFAULT false
+);
+
 CREATE TABLE user_roles (
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     role_id INTEGER NOT NULL REFERENCES roles(id) ON DELETE CASCADE,
     PRIMARY KEY (user_id, role_id)
+);
+
+CREATE TABLE auth_sessions (
+    id                 UUID PRIMARY KEY,
+    user_id            INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    device_id          TEXT,
+    refresh_token_hash TEXT NOT NULL UNIQUE,
+    status             TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'revoked', 'expired')),
+    expires_at         TIMESTAMPTZ NOT NULL,
+    revoked_at         TIMESTAMPTZ,
+    created_at         TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE password_reset_tokens (
+    id         UUID PRIMARY KEY,
+    user_id    INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    token_hash TEXT NOT NULL UNIQUE,
+    expires_at TIMESTAMPTZ NOT NULL,
+    used_at    TIMESTAMPTZ,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 CREATE TABLE care_relationships (
@@ -104,6 +155,16 @@ CREATE TABLE care_relationships (
     revoked_at   TIMESTAMPTZ,
     CONSTRAINT caregiver_differs_from_elderly CHECK (caregiver_id <> elderly_id),
     UNIQUE (caregiver_id, elderly_id)
+);
+
+CREATE TABLE care_permissions (
+    id                   UUID PRIMARY KEY,
+    care_relationship_id INTEGER NOT NULL REFERENCES care_relationships(id) ON DELETE CASCADE,
+    code                 TEXT NOT NULL CHECK (code IN ('view_treatments', 'manage_treatments', 'view_history', 'view_statistics', 'receive_escalations')),
+    granted_by_user_id   INTEGER REFERENCES users(id),
+    granted_at           TIMESTAMPTZ NOT NULL DEFAULT now(),
+    revoked_at           TIMESTAMPTZ,
+    UNIQUE (care_relationship_id, code)
 );
 
 CREATE TABLE medications (
@@ -131,6 +192,16 @@ CREATE TABLE treatments (
     CONSTRAINT treatment_version_positive CHECK (version > 0)
 );
 
+CREATE TABLE treatment_revisions (
+    id                 UUID PRIMARY KEY,
+    treatment_id       INTEGER NOT NULL REFERENCES treatments(id) ON DELETE CASCADE,
+    version            INTEGER NOT NULL CHECK (version > 0),
+    changed_by_user_id INTEGER NOT NULL REFERENCES users(id),
+    changes            JSONB NOT NULL DEFAULT '{}',
+    created_at         TIMESTAMPTZ NOT NULL DEFAULT now(),
+    UNIQUE (treatment_id, version)
+);
+
 CREATE TABLE reminder_schedules (
     id           SERIAL PRIMARY KEY,
     treatment_id INTEGER NOT NULL REFERENCES treatments(id) ON DELETE CASCADE,
@@ -147,6 +218,18 @@ CREATE TABLE reminder_times (
     UNIQUE (schedule_id, time_of_day)
 );
 
+CREATE TABLE notification_policies (
+    id                      UUID PRIMARY KEY,
+    owner_user_id           INTEGER NOT NULL REFERENCES users(id),
+    treatment_id            INTEGER REFERENCES treatments(id) ON DELETE CASCADE,
+    repeat_interval_minutes INTEGER NOT NULL DEFAULT 10 CHECK (repeat_interval_minutes > 0),
+    max_retries             INTEGER NOT NULL DEFAULT 3 CHECK (max_retries >= 0),
+    pending_after_minutes   INTEGER NOT NULL DEFAULT 30 CHECK (pending_after_minutes > 0),
+    escalation_target       TEXT NOT NULL DEFAULT 'caregiver' CHECK (escalation_target IN ('patient', 'caregiver')),
+    enabled                 BOOLEAN NOT NULL DEFAULT true,
+    CONSTRAINT notification_policy_timing CHECK (pending_after_minutes >= repeat_interval_minutes)
+);
+
 CREATE TABLE dose_events (
     id                SERIAL PRIMARY KEY,
     treatment_id      INTEGER NOT NULL REFERENCES treatments(id),
@@ -160,6 +243,16 @@ CREATE TABLE dose_events (
                       CHECK (sync_status IN ('pending', 'synced', 'failed')),
     confirmed_at      TIMESTAMPTZ,
     source            TEXT NOT NULL DEFAULT 'client' CHECK (source IN ('client', 'backend'))
+);
+
+CREATE TABLE dose_status_transitions (
+    id                 UUID PRIMARY KEY,
+    dose_event_id      INTEGER NOT NULL REFERENCES dose_events(id) ON DELETE CASCADE,
+    from_status        TEXT,
+    to_status          TEXT NOT NULL CHECK (to_status IN ('scheduled', 'alerted', 'taken', 'pending', 'skipped')),
+    changed_by_user_id INTEGER REFERENCES users(id),
+    reason             TEXT,
+    occurred_at        TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 CREATE TABLE notifications (
@@ -185,6 +278,30 @@ CREATE TABLE user_devices (
     UNIQUE (user_id, device_id)
 );
 
+CREATE TABLE notification_deliveries (
+    id                  UUID PRIMARY KEY,
+    notification_id     INTEGER NOT NULL REFERENCES notifications(id) ON DELETE CASCADE,
+    user_device_id      INTEGER REFERENCES user_devices(id) ON DELETE SET NULL,
+    attempt_number      INTEGER NOT NULL DEFAULT 1 CHECK (attempt_number > 0),
+    status              TEXT NOT NULL DEFAULT 'queued' CHECK (status IN ('queued', 'sent', 'delivered', 'failed', 'cancelled')),
+    provider_message_id TEXT,
+    attempted_at        TIMESTAMPTZ,
+    delivered_at        TIMESTAMPTZ,
+    failure_reason      TEXT,
+    UNIQUE (notification_id, attempt_number, user_device_id)
+);
+
+CREATE TABLE consents (
+    id             UUID PRIMARY KEY,
+    user_id        INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    user_device_id INTEGER REFERENCES user_devices(id) ON DELETE SET NULL,
+    type           TEXT NOT NULL CHECK (type IN ('data_processing', 'notifications', 'voice_guidance')),
+    status         TEXT NOT NULL DEFAULT 'granted' CHECK (status IN ('granted', 'revoked')),
+    policy_version TEXT,
+    granted_at     TIMESTAMPTZ NOT NULL DEFAULT now(),
+    revoked_at     TIMESTAMPTZ
+);
+
 CREATE TABLE reports (
     id                SERIAL PRIMARY KEY,
     subject_user_id   INTEGER NOT NULL REFERENCES users(id),
@@ -201,6 +318,32 @@ CREATE TABLE statistics_snapshots (
     snapshot_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     metrics     JSONB NOT NULL DEFAULT '{}'   -- adherencia %, racha, dosis por estado
 );
+
+CREATE TABLE sync_operations (
+    id              UUID PRIMARY KEY,
+    user_id         INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    aggregate_type  TEXT NOT NULL,
+    aggregate_id    TEXT NOT NULL,
+    operation_type  TEXT NOT NULL,
+    idempotency_key TEXT NOT NULL UNIQUE,
+    payload         JSONB NOT NULL DEFAULT '{}',
+    status          TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'processing', 'succeeded', 'failed')),
+    attempt_count   INTEGER NOT NULL DEFAULT 0 CHECK (attempt_count >= 0),
+    last_error      TEXT,
+    next_attempt_at TIMESTAMPTZ,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE audit_events (
+    id             UUID PRIMARY KEY,
+    actor_user_id  INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    action         TEXT NOT NULL CHECK (action IN ('create', 'update', 'delete', 'status_transition', 'access', 'delivery')),
+    aggregate_type TEXT NOT NULL,
+    aggregate_id   TEXT NOT NULL,
+    correlation_id TEXT,
+    metadata       JSONB NOT NULL DEFAULT '{}',
+    occurred_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+);
 ```
 
 ### Índices recomendados
@@ -213,6 +356,10 @@ CREATE INDEX idx_notifications_recipient ON notifications(recipient_user_id, sen
 CREATE INDEX idx_care_elderly           ON care_relationships(elderly_id, status);
 CREATE INDEX idx_snapshots_user         ON statistics_snapshots(user_id, snapshot_at);
 CREATE INDEX idx_reminder_times_schedule ON reminder_times(schedule_id, time_of_day);
+CREATE INDEX idx_transitions_dose_event   ON dose_status_transitions(dose_event_id, occurred_at);
+CREATE INDEX idx_deliveries_notification  ON notification_deliveries(notification_id, attempt_number);
+CREATE INDEX idx_sync_operations_pending  ON sync_operations(next_attempt_at) WHERE status IN ('pending', 'failed');
+CREATE INDEX idx_audit_aggregate           ON audit_events(aggregate_type, aggregate_id, occurred_at);
 ```
 
 ## Seguridad de la base de datos
@@ -234,7 +381,7 @@ CREATE INDEX idx_reminder_times_schedule ON reminder_times(schedule_id, time_of_
 | Migraciones | Flask-Migrate (Alembic) | Evolución del esquema versionada junto al código |
 | Caché complementaria | Redis | Estadísticas en caliente y broker de Celery (datos volátiles por diseño) |
 
-Funciones que soporta el modelo: gestión de usuarios (adultos mayores y cuidadores), gestión de medicamentos y tratamientos, recordatorios inteligentes con generación de dosis, notificaciones push con tokens FCM por dispositivo, estadísticas con snapshots históricos y reportes de seguimiento por cuidador.
+Funciones que soporta el modelo: gestión de usuarios (adultos mayores y cuidadores), tratamientos, recordatorios con generación de dosis, políticas de reintento y escalamiento, notificaciones push y locales con trazabilidad de entregas, preferencias de accesibilidad, consentimiento, sesiones revocables, estadísticas, reportes, auditoría y sincronización offline idempotente.
 
 ## Consultas SQL de referencia (seguras y parametrizadas)
 
@@ -296,9 +443,9 @@ En la capa de aplicación, el patrón es siempre el mismo — `session.execute(t
 
 ## Relación con la arquitectura general
 
-Este modelo es la materialización en PostgreSQL de las entidades de dominio documentadas en `backend.md` y `arquitectura_movil.md` (`Medication`, `Treatment`, `DoseEvent`, `Reminder`/`reminder_schedules`, `CareRelation`), y de las reglas del negocio de `reglas_del_negocio.md` (campos obligatorios, prevención de duplicados, idempotencia de confirmaciones, roles asimétricos). La separación entre el catálogo de medicamentos y la prescripción (`treatments`) evita atribuir al medicamento una dosis o frecuencia que en realidad pertenece al paciente. Asimismo, `user_roles` es la única fuente de asignación de roles y `dose_events` separa el estado clínico de una toma del estado técnico de sincronización. Los servicios de contenedores que lo hostean están definidos en `docker.md`.
+Este modelo es la materialización en PostgreSQL de las entidades de dominio documentadas en `backend.md` y `arquitectura_movil.md` (`Medication`, `Treatment`, `DoseEvent`, `Reminder`/`reminder_schedules`, `CareRelation`), y de las reglas del negocio de `reglas_del_negocio.md` (campos obligatorios, prevención de duplicados, idempotencia de confirmaciones, roles asimétricos). La separación entre el catálogo de medicamentos y la prescripción (`treatments`) evita atribuir al medicamento una dosis o frecuencia que en realidad pertenece al paciente. Asimismo, `user_roles` es la única fuente de asignación de roles; `dose_events` separa el estado clínico de una toma de la sincronización; y los agregados de sesión, consentimiento, auditoría y entrega mantienen un rastro verificable de las operaciones sensibles. Los servicios de contenedores que lo hostean están definidos en `docker.md`.
 
 ---
 **Autor:** Manus AI
-**Versión:** 1.1.0
+**Versión:** 1.2.0
 **Referencias:** `backend.md`, `arquitectura_movil.md`, `docker.md`, `reglas_del_negocio.md` y `CONTEXTO GENRAL.md` de RecorNet.
