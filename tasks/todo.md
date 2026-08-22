@@ -39,3 +39,8 @@
 - [ ] main.py (create_app factory)
 - [ ] Shared (responses, enums)
 - [ ] Verificación final
+
+## Gobierno de desarrollo y orquestación
+- [x] Adoptar `docs/orquestacion/orquestacion-del-flujo-de-trabajo.md` como guía obligatoria
+- [x] Registrar las lecciones de proceso en `tasks/lessons.md`
+- [ ] Añadir una sección de revisión verificable a cada tarea no trivial completada
