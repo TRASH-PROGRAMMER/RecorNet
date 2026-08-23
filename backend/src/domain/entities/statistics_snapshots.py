@@ -6,5 +6,5 @@ from typing import Optional
 class StatisticsSnapshots:
     id: Optional[str] = None  # ID de la instantánea
     user_id: str = "" # ID del usuario
-    snapshot: datetime = field(default_factory=datetime.utcnow)  # Fecha de la instantánea
+    snapshot_at: datetime = field(default_factory=datetime.utcnow)  # Fecha de la instantánea
     metrics: dict = field(default_factory=dict)  # Métricas de la instantánea

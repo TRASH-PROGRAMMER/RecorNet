@@ -12,9 +12,9 @@ from src.domain.entities.user import User
 from src.domain.entities.reminder import ReminderSchedule
 # clase para representar el estado del tratamiento
 class TreatmentStatus(str,Enum):
-    ACTIVE = "ACTIVE"
-    INACTIVE = "INACTIVE"
-    CANCELLED = "CANCELLED"
+    ACTIVE = "active"
+    INACTIVE = "inactive"
+    CANCELLED = "cancelled"
 
 
 # clase para representar un tratamiento

@@ -7,7 +7,7 @@ class UserDevices:
     id: Optional[str] = None
     user_id: str = ""
     device_token: str = ""
-    device_id : Optional[str] = None
+    device_id : str = ""
     os: str = ""  # 'android' or 'ios' or 'web'  
     fcm_token: str = ""
     notifications_consent: bool = False

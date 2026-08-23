@@ -4,7 +4,7 @@ from src.domain.entities.user import User
 # clase para representar una relación de cuidado
 from enum import Enum 
 
-class status(str,Enum): 
+class CareRelationshipStatus(str,Enum): 
     ACTIVE = "active" 
     INACTIVE = "inactive" 
     CANCELLED = "cancelled"  
@@ -16,7 +16,7 @@ class CareRelationship:
     caregiver_id: str = "" 
     elderly_id: str = "" 
     permissions: dict = field(default_factory=dict) # permisos del cuidador
-    status: status = status.ACTIVE # estado de la relación
+    status: CareRelationshipStatus = CareRelationshipStatus.ACTIVE # estado de la relación
 
     def add_permission(self, permission: str):
         self.permissions[permission] = True
@@ -27,11 +27,11 @@ class CareRelationship:
     def has_permission(self, permission: str) -> bool:
         return permission in self.permissions # verifica si tiene el permiso
 
-    def update_status(self, status: str):
+    def update_status(self, status: CareRelationshipStatus):
         self.status = status # actualiza el estado
 
     def is_active(self) -> bool:
-        return self.status == "active" # verifica si la relación está activa
+        return self.status == CareRelationshipStatus.ACTIVE # verifica si la relación está activa
 
     def is_owner(self, user: User) -> bool:
         return self.elderly_id == user.id # verifica si el usuario es el dueño

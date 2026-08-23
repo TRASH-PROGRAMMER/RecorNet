@@ -23,7 +23,7 @@ class SyncStatus(str, Enum):
     
 # clase para representar la fuente del evento de dosis
 class Source(str, Enum):
-    WEB = "web"
+    CLIENT = "client"
     MOBILE = "mobile" 
     API = "api" 
 
@@ -32,12 +32,12 @@ class DoseEvent:
     id: Optional[str] = None
     treatment_id: str = ""
     schedule_id: str = ""
-    indepotency_key: str = "" # para evitar la creación de múltiples eventos de dosis para el mismo horario
+    indempotency_key: str = "" # para evitar la creación de múltiples eventos de dosis para el mismo horario
     scheduled_at: datetime = field(default_factory=datetime.now) # YYYY-MM-DDTHH:MM:SSZ format
     status: DoseEventStatus = DoseEventStatus.PENDING # pending, taken, missed
     sync_status: SyncStatus = SyncStatus.UNSYNCED # synced, unsynced, failed
     confirmed_at: datetime = field(default_factory=datetime.now) # fecha de confirmación del evento de dosis  
-    source: Source = Source.WEB # fuente del evento de dosis    
+    source: Source = Source.CLIENT # fuente del evento de dosis    
     # pyrefly: enable-type-checking
     def __post_init__(self):
         if self.scheduled_at is None:

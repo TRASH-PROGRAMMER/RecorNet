@@ -10,4 +10,4 @@ class Report:
     period_from: date = field(default_factory=date.today)
     period_to: date = field(default_factory=date.today)
     content: dict = field(default_factory=dict)
-    created_at: str = field(default_factory=lambda: datetime.utcnow().isoformat())
+    created_at: datetime = field(default_factory=datetime.now)
