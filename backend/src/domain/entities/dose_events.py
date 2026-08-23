@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import Optional
 from enum import Enum 
 import uuid
+import src.domain.value_objects.idempotency_key as IdempotencyKey
 # clase para representar un evento de dosis
 #enums para el estado
 class DoseEventStatus(str, Enum):
@@ -30,10 +31,10 @@ class DoseEvent:
     id: Optional[str] = None
     treatment_id: str = ""
     schedule_id: str = ""
-    idempotency_key: str = "" # para evitar la creación de múltiples eventos de dosis para el mismo horario
+    idempotency_key: IdempotencyKey = "" # para evitar la creación de múltiples eventos de dosis para el mismo horario
     scheduled_at: datetime = field(default_factory=datetime.now) # YYYY-MM-DDTHH:MM:SSZ format
-    status: DoseEventStatus = DoseEventStatus.PENDING # pending, taken, missed
-    sync_status: SyncStatus = SyncStatus.UNSYNCED # synced, unsynced, failed
+    status: DoseEventStatus = DoseEventStatus.SCHEDULED # pending, taken, missed
+    sync_status: SyncStatus = SyncStatus.PENDING # synced, unsynced, failed
     confirmed_at: datetime = field(default_factory=datetime.now) # fecha de confirmación del evento de dosis  
     source: Source = Source.CLIENT # fuente del evento de dosis    
     # pyrefly: enable-type-checking
@@ -52,3 +53,15 @@ class DoseEvent:
             self.idempotency_key = ""
         if self.id is None:
             self.id = str(uuid.uuid4())
+
+
+    def mark_taken(self):
+        self.status = DoseEventStatus.TAKEN
+        self.sync_status = SyncStatus.UNSYNCED
+        self.confirmed_at = datetime.now()
+
+    def mark_skipped(self):
+        self.status = DoseEventStatus.SKIPPED
+        self.sync_status = SyncStatus.UNSYNCED
+        self.confirmed_at = datetime.now()
+        
