@@ -11,8 +11,6 @@ class DoseEventStatus(str, Enum):
     SKIPPED = "skipped"
     SCHEDULED = "scheduled"
     ALERTED = "alerted"
-    FAILED = "failed"
-    SYNCED = "synced"
     
 
 #enum para el estado de sincronización
@@ -32,7 +30,7 @@ class DoseEvent:
     id: Optional[str] = None
     treatment_id: str = ""
     schedule_id: str = ""
-    indempotency_key: str = "" # para evitar la creación de múltiples eventos de dosis para el mismo horario
+    idempotency_key: str = "" # para evitar la creación de múltiples eventos de dosis para el mismo horario
     scheduled_at: datetime = field(default_factory=datetime.now) # YYYY-MM-DDTHH:MM:SSZ format
     status: DoseEventStatus = DoseEventStatus.PENDING # pending, taken, missed
     sync_status: SyncStatus = SyncStatus.UNSYNCED # synced, unsynced, failed
@@ -50,7 +48,7 @@ class DoseEvent:
             self.sync_status = SyncStatus.UNSYNCED
         if self.source is None:
             self.source = ""
-        if self.indepotency_key is None:
-            self.indepotency_key = ""
+        if self.idempotency_key is None:
+            self.idempotency_key = ""
         if self.id is None:
             self.id = str(uuid.uuid4())
