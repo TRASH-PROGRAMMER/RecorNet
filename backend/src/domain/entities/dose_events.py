@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Optional
 from enum import Enum 
 import uuid
-import src.domain.value_objects.idempotency_key as IdempotencyKey
+from src.domain.value_objects.idempotency_key import IdempotencyKey
 # clase para representar un evento de dosis
 #enums para el estado
 class DoseEventStatus(str, Enum):
@@ -31,7 +31,7 @@ class DoseEvent:
     id: Optional[str] = None
     treatment_id: str = ""
     schedule_id: str = ""
-    idempotency_key: IdempotencyKey = "" # para evitar la creación de múltiples eventos de dosis para el mismo horario
+    idempotency_key: IdempotencyKey = field(default_factory=IdempotencyKey) # para evitar la creación de múltiples eventos de dosis para el mismo horario
     scheduled_at: datetime = field(default_factory=datetime.now) # YYYY-MM-DDTHH:MM:SSZ format
     status: DoseEventStatus = DoseEventStatus.SCHEDULED # pending, taken, missed
     sync_status: SyncStatus = SyncStatus.PENDING # synced, unsynced, failed
@@ -56,14 +56,56 @@ class DoseEvent:
 
 # Métodos para cambiar el estado del evento de dosis
     def mark_taken(self):
+        """Marca el evento de dosis como tomado."""  
         if self.status == DoseEventStatus.PENDING or self.status == DoseEventStatus.SCHEDULED: # si el evento de dosis está pendiente o programado
             self.status = DoseEventStatus.TAKEN # se marca como tomado
-            self.sync_status = SyncStatus.UNSYNCED # se marca como no sincronizado
             self.confirmed_at = datetime.now() # se actualiza la fecha de confirmación
-
+# metodo para saltar el evento de dosis 
     def mark_skipped(self):
+        """Marca el evento de dosis como saltado."""  
         if self.status == DoseEventStatus.PENDING or self.status == DoseEventStatus.SCHEDULED: # si el evento de dosis está pendiente o programado
             self.status = DoseEventStatus.SKIPPED # se marca como saltado
-            self.sync_status = SyncStatus.UNSYNCED # se marca como no sincronizado
             self.confirmed_at = datetime.now() # se actualiza la fecha de confirmación
+
+    # Método para actualizar el estado de sincronización
+    def mark_synced(self):
+        """Marca el evento de dosis como sincronizado."""   
+        if self.status == DoseEventStatus.TAKEN or self.status == DoseEventStatus.SKIPPED: # si el evento de dosis está tomado o saltado
+            self.sync_status = SyncStatus.SYNCED # se marca como sincronizado
+    
+    def mark_failed(self):
+        """Marca el evento de dosis como fallido."""
+        if self.status == DoseEventStatus.TAKEN or self.status == DoseEventStatus.SKIPPED: # si el evento de dosis está tomado o saltado
+            self.sync_status = SyncStatus.FAILED # se marca como fallido
+    
+    def mark_pending(self):
+        """Marca el evento de dosis como pendiente."""
+        if self.status == DoseEventStatus.TAKEN or self.status == DoseEventStatus.SKIPPED: # si el evento de dosis está tomado o saltado
+            self.sync_status = SyncStatus.PENDING # se marca como pendiente
+
+    # Método para actualizar la fuente del evento de dosis
+    def set_source(self, source: Source):
+        """Establece la fuente del evento de dosis."""
+        self.source = source # se establece la fuente
+
+    # Método para verificar si el evento de dosis está sincronizado
+    def is_synced(self) -> bool:
+        """Verifica si el evento de dosis está sincronizado."""
+        return self.sync_status == SyncStatus.SYNCED # verifica si el estado de sincronización es sincronizado
+
+    def is_pending(self) -> bool:
+        """Verifica si el evento de dosis está pendiente."""
+        return self.status == DoseEventStatus.PENDING # verifica si el estado es pendiente
+
+    def is_taken(self) -> bool:
+        """Verifica si el evento de dosis está tomado."""
+        return self.status == DoseEventStatus.TAKEN # verifica si el estado es tomado
+
+    def is_skipped(self) -> bool:
+        """Verifica si el evento de dosis está saltado."""
+        return self.status == DoseEventStatus.SKIPPED # verifica si el estado es saltado
+
+    def is_scheduled(self) -> bool:
+        """Verifica si el evento de dosis está programado."""
+        return self.status == DoseEventStatus.SCHEDULED # verifica si el estado es programado
         
