@@ -17,8 +17,8 @@ class DoseEventStatus(str, Enum):
 #enum para el estado de sincronización
 class SyncStatus(str, Enum):
     SYNCED = "synced"
-    UNSYNCED = "unsynced"
     FAILED = "failed"
+    PENDING = "pending"
     
 # clase para representar la fuente del evento de dosis
 class Source(str, Enum):
@@ -38,30 +38,32 @@ class DoseEvent:
     confirmed_at: datetime = field(default_factory=datetime.now) # fecha de confirmación del evento de dosis  
     source: Source = Source.CLIENT # fuente del evento de dosis    
     # pyrefly: enable-type-checking
-    def __post_init__(self):
-        if self.scheduled_at is None:
-            self.scheduled_at = datetime.now()
-        if self.confirmed_at is None:
-            self.confirmed_at = datetime.now()
-        if self.status is None:
-            self.status = DoseEventStatus.PENDING
-        if self.sync_status is None:
-            self.sync_status = SyncStatus.UNSYNCED
-        if self.source is None:
-            self.source = ""
-        if self.idempotency_key is None:
-            self.idempotency_key = ""
-        if self.id is None:
-            self.id = str(uuid.uuid4())
+    def __post_init__(self): # post_init es un método que se ejecuta después de __init__
+        if self.scheduled_at is None: # si la fecha programada es None
+            self.scheduled_at = datetime.now() # se establece la fecha programada como la fecha actual
+        if self.confirmed_at is None: # si la fecha de confirmación es None
+            self.confirmed_at = datetime.now() # se establece la fecha de confirmación como la fecha actual
+        if self.status is None: # si el estado es None
+            self.status = DoseEventStatus.PENDING # se establece el estado como pendiente
+        if self.sync_status is None: # si el estado de sincronización es None
+            self.sync_status = SyncStatus.PENDING # se establece el estado de sincronización como pendiente
+        if self.source is None: # si la fuente es None
+            self.source = "" # se establece la fuente como vacía
+        if self.idempotency_key is None: # si la clave de idempotencia es None
+            self.idempotency_key = IdempotencyKey() # se establece la clave de idempotencia como una nueva instancia de IdempotencyKey
+        if self.id is None: # si el id es None
+            self.id = str(uuid.uuid4()) # se establece el id como un nuevo uuid
 
-
+# Métodos para cambiar el estado del evento de dosis
     def mark_taken(self):
-        self.status = DoseEventStatus.TAKEN
-        self.sync_status = SyncStatus.UNSYNCED
-        self.confirmed_at = datetime.now()
+        if self.status == DoseEventStatus.PENDING or self.status == DoseEventStatus.SCHEDULED: # si el evento de dosis está pendiente o programado
+            self.status = DoseEventStatus.TAKEN # se marca como tomado
+            self.sync_status = SyncStatus.UNSYNCED # se marca como no sincronizado
+            self.confirmed_at = datetime.now() # se actualiza la fecha de confirmación
 
     def mark_skipped(self):
-        self.status = DoseEventStatus.SKIPPED
-        self.sync_status = SyncStatus.UNSYNCED
-        self.confirmed_at = datetime.now()
+        if self.status == DoseEventStatus.PENDING or self.status == DoseEventStatus.SCHEDULED: # si el evento de dosis está pendiente o programado
+            self.status = DoseEventStatus.SKIPPED # se marca como saltado
+            self.sync_status = SyncStatus.UNSYNCED # se marca como no sincronizado
+            self.confirmed_at = datetime.now() # se actualiza la fecha de confirmación
         
