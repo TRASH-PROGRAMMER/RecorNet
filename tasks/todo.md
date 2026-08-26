@@ -44,3 +44,23 @@
 - [x] Adoptar `docs/orquestacion/orquestacion-del-flujo-de-trabajo.md` como guía obligatoria
 - [x] Registrar las lecciones de proceso en `tasks/lessons.md`
 - [ ] Añadir una sección de revisión verificable a cada tarea no trivial completada
+
+## Revisión de entidades de dominio
+- [x] Inspeccionar entidades, pruebas y documentación del dominio
+- [x] Verificar el cumplimiento con contexto, arquitectura backend, reglas de negocio y orquestación
+- [x] Corregir inconsistencias de estado, roles, idempotencia y tipos temporales
+- [x] Resolver la dependencia faltante `value_objects.interval` detectada por las pruebas
+- [x] Corregir imports incompletos del objeto de valor `Frequency`
+- [x] Ampliar las pruebas unitarias de las entidades corregidas
+- [x] Documentar resultados, evidencias y acciones pendientes de la revisión
+
+### Revisión verificable — entidades de dominio (2026-08-22)
+
+| Criterio | Evidencia | Resultado |
+| --- | --- | --- |
+| Contexto y reglas | Revisión de `docs/contexto/CONTEXTO GENERAL.md`, `docs/arquitectura/backend.md`, `docs/reglas/reglas_del_negocio.md` y la guía de orquestación. | Cumplido. |
+| Estados y sincronización de dosis | `DoseEvent` separa estado clínico, sincronización e idempotencia; se añadió `Interval` para restaurar `Frequency`. | Corregido y probado. |
+| Usuarios, roles y notificaciones | `User` elimina el rol duplicado y usa borrado lógico; `Notification` actualiza su campo de estado documentado. | Corregido y probado. |
+| Pruebas y compilación | `pytest -q` ejecutó 11 pruebas correctas; `compileall -q src` terminó sin errores; `git diff --check` no reportó errores. | Cumplido. |
+
+**Acciones pendientes no bloqueantes:** normalizar `CareRelationship.permissions` hacia `CarePermission`; reconciliar `UserDevices.notifications_consent` con `Consent`; unificar `ReminderSchedule.scheduled_time` con `ReminderTimes`; consolidar las dos representaciones de estadísticas; y actualizar el inventario histórico de entidades en `docs/arquitectura/backend.md` únicamente con autorización explícita, porque la guía prohíbe modificar `docs/` durante el desarrollo ordinario.
