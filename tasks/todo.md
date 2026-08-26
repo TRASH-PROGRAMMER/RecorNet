@@ -64,3 +64,12 @@
 | Pruebas y compilación | `pytest -q` ejecutó 11 pruebas correctas; `compileall -q src` terminó sin errores; `git diff --check` no reportó errores. | Cumplido. |
 
 **Acciones pendientes no bloqueantes:** normalizar `CareRelationship.permissions` hacia `CarePermission`; reconciliar `UserDevices.notifications_consent` con `Consent`; unificar `ReminderSchedule.scheduled_time` con `ReminderTimes`; consolidar las dos representaciones de estadísticas; y actualizar el inventario histórico de entidades en `docs/arquitectura/backend.md` únicamente con autorización explícita, porque la guía prohíbe modificar `docs/` durante el desarrollo ordinario.
+
+## Informe de cambios publicados
+- [x] Delimitar los commits y archivos incluidos en el informe
+- [x] Documentar alcance, validaciones, incidencias y pendientes
+- [x] Entregar un informe verificable al usuario
+
+### Revisión verificable — informe de cambios (2026-08-26)
+
+El informe cubre los commits `9978e9f`, `f32e9a9`, `4bf856a`, `79f76de` y `b432c5e`; documenta archivos, alcance, validaciones, conflictos de integración y pendientes. El archivo entregable se conserva fuera del repositorio para respetar la restricción de no modificar `docs/` sin autorización explícita.
