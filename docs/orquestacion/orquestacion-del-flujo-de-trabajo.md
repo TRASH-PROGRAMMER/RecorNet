@@ -44,17 +44,14 @@ Despues de CUALQUIER correccion del usuario: actualiza tasks/lessons.md con el p
 - ** Impacto Minimo **: Los cambios solo deben tocar lo necesario. Evita introducir bugs.
 - ** Documenta Todo **: Cada cambio debe tener un resumen de alto nivel. Los cambios complejos requieren una sección de revisión.
 - ** Reglas de Oro **: No ignores los errores. No ignores los tests fallidos. No ignores los logs. No ignores las advertencias del compilador. No ignores las advertencias de seguridad.
-- Para tener contexto general del proyecto web debes rvisar y analizar el archivo de  contexto general del proyecto  en docs\contexto.
-- No puedes elinar esta carpetas  ni su subcarpetas y archivos C:\Users\RUDY PICO\Desktop\Recornet\docs  y .agents.
-- No puedes eliminar ni renombrar ni mover estos archivos y carpetas  ni su subcarpetas y archivos C:\Users\RUDY PICO\Desktop\Recornet\docs  y .agents.
-- Para  el frotend del proyecto web debes revisar y analizar los archivos C:\Users\RUDY PICO\Desktop\Recornet\docs\arquitectura\frontend.md y C:\Users\RUDY PICO\Desktop\Recornet\docs\contexto\CONTEXTO GENRAL.md para asi cumplir con estos.
-- Para  el backend del proyecto web debes revisar y analizar los archivos C:\Users\RUDY PICO\Desktop\Recornet\docs\arquitectura\backend.md y C:\Users\RUDY PICO\Desktop\Recornet\docs\contexto\CONTEXTO GENRAL.md para asi cumplir con estos.
-- Para la aplicación de Android debes revisar y analizar los archivos C:\Users\RUDY PICO\Desktop\Recornet\docs\arquitectura\arquitectura_movil.md y C:\Users\RUDY PICO\Desktop\Recornet\docs\contexto\CONTEXTO GENRAL.md para asi cumplir con estos.
-- Para la base de datos debes revisar y analizar los archivos C:\Users\RUDY PICO\Desktop\Recornet\docs\arquitectura\base_de_datos.md y C:\Users\RUDY PICO\Desktop\Recornet\docs\contexto\CONTEXTO GENRAL.md para asi cumplir con estos.
-- Las reglas del negocio  se encuentran en el archivo 'docs\reglas\reglas_del_negocio.md'. Revisar  estos archivos te permitira cumplir con las reglas de negocio y desarrollar el proyecto web y la aplicación de Android. No te alejes de las reglas del negocio.
+- Para tener contexto general del proyecto, revisa y analiza `docs/contexto/CONTEXTO GENERAL.md`.
+- No puedes eliminar, mover, renombrar ni modificar archivos dentro de `docs/` o `.agents/` durante el desarrollo ordinario.
+- Para el frontend del proyecto web debes revisar y analizar `docs/arquitectura/frontend.md` y `docs/contexto/CONTEXTO GENERAL.md`.
+- Para el backend del proyecto web debes revisar y analizar `docs/arquitectura/backend.md` y `docs/contexto/CONTEXTO GENERAL.md`.
+- Para la aplicación Android debes revisar y analizar `docs/arquitectura/arquitectura_movil.md` y `docs/contexto/CONTEXTO GENERAL.md`.
+- Para la base de datos debes revisar y analizar `docs/arquitectura/base_de_datos.md` y `docs/contexto/CONTEXTO GENERAL.md`.
+- Las reglas del negocio se encuentran en `docs/reglas/reglas_del_negocio.md`. Revisa estos archivos para cumplir con las reglas de negocio y desarrollar el proyecto web y la aplicación Android. No te alejes de las reglas del negocio.
 
-- Puedes eliminar carpetas y archivos de codigo  de backend , frontend, multiplataforma siempre cuando me preguntes y yo apruebe elimiar ese archivo y explica el por que ese archvio de codigo  nesecia  ser eliminado.
-
-- Los archivos y carpetas dentro de la carpeta 'docs' y la carpeta '.agents' no deben ser tocados ni modificados.
+- Puedes eliminar carpetas y archivos de código del backend, frontend o multiplataforma únicamente cuando el usuario lo apruebe explícitamente, y debes explicar por qué ese archivo necesita ser eliminado.
 
 
