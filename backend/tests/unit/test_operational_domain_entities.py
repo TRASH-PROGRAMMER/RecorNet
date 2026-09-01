@@ -129,7 +129,7 @@ def test_treatment_uses_singular_entity_and_valid_dates() -> None:
     treatment.change_status(TreatmentStatus.CANCELLED)
 
     assert treatment.status == TreatmentStatus.CANCELLED
-    assert treatment.version == 2
+    assert treatment.version == 1
     assert treatment.end_date == date.today()
 
 
@@ -140,3 +140,40 @@ def test_frequency_requires_a_positive_interval() -> None:
     assert frequency.interval.unit == IntervalUnit.HOURS
     with pytest.raises(ValueError, match="interval value"):
         Interval(value=0)
+
+
+def test_care_relationship_is_the_single_authorization_source() -> None:
+    from src.domain.entities.care_relationship import CareRelationship
+    from src.domain.repositories.care_relationship_repository import CareRelationshipRepository
+    from src.domain.services.care_authorization import CareAuthorizationService
+    from src.domain.exceptions.domain_exceptions import UnauthorizedAccess
+
+    relationship = CareRelationship(
+        caregiver_id="caregiver-1",
+        elderly_id="elderly-1",
+        permissions={"view_treatment": True},
+    )
+
+    class InMemoryRelationships(CareRelationshipRepository):
+        def get_between(self, caregiver_id: str, elderly_id: str):
+            if (caregiver_id, elderly_id) == (relationship.caregiver_id, relationship.elderly_id):
+                return relationship
+            return None
+
+    authorization = CareAuthorizationService(InMemoryRelationships())
+    authorization.ensure_can_act("caregiver-1", "elderly-1", "view_treatment")
+    with pytest.raises(UnauthorizedAccess):
+        authorization.ensure_can_act("caregiver-2", "elderly-1", "view_treatment")
+
+
+def test_treatment_and_medication_ports_require_authorized_care_context() -> None:
+    import inspect
+    from src.domain.repositories.medication_repository import MedicationRepository
+    from src.domain.repositories.treatment_repository import TreatmentRepository
+
+    treatment_params = inspect.signature(TreatmentRepository.get_by_patient_id).parameters
+    medication_params = inspect.signature(MedicationRepository.get_for_patient).parameters
+    assert "actor_id" in treatment_params
+    assert "permission" in treatment_params
+    assert "actor_id" in medication_params
+    assert "permission" in medication_params

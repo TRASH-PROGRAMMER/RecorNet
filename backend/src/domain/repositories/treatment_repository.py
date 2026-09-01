@@ -1,16 +1,31 @@
 from abc import ABC, abstractmethod
-from typing import Optional, List
+from typing import List, Optional
+
 from src.domain.entities.treatment import Treatment
 
-class TreatmentRepository(ABC): # Clase abstracta para representar repositorios de tratamientos
+
+class TreatmentRepository(ABC):
     @abstractmethod
-    def save(self, treatment: Treatment) -> Treatment: # Método para guardar un tratamiento
-        pass
+    def save(self, treatment: Treatment, actor_id: str) -> Treatment:
+        raise NotImplementedError
 
     @abstractmethod
-    def get_by_id(self, treatment_id: str) -> Optional[Treatment]: # Método para obtener un tratamiento por ID
-        pass
+    def get_by_id(
+        self,
+        treatment_id: str,
+        *,
+        actor_id: str,
+        permission: str = "view_treatment",
+    ) -> Optional[Treatment]:
+        raise NotImplementedError
 
     @abstractmethod
-    def get_by_patient_id(self, patient_id: str) -> List[Treatment]: # Método para obtener un tratamiento por paciente ID
-        pass
+    def get_by_patient_id(
+        self,
+        patient_id: str,
+        *,
+        actor_id: str,
+        permission: str = "view_treatment",
+    ) -> List[Treatment]:
+        """Solo devuelve tratamientos si actor_id está autorizado sobre patient_id."""
+        raise NotImplementedError

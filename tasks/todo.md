@@ -73,3 +73,10 @@
 ### Revisión verificable — informe de cambios (2026-08-26)
 
 El informe cubre los commits `9978e9f`, `f32e9a9`, `4bf856a`, `79f76de` y `b432c5e`; documenta archivos, alcance, validaciones, conflictos de integración y pendientes. El archivo entregable se conserva fuera del repositorio para respetar la restricción de no modificar `docs/` sin autorización explícita.
+
+## Corrección del gap G3 — relación cuidador–adulto mayor
+- [x] Revisar listas mutuas en `Caregiver`/`Elderly` y establecer `CareRelationship` como fuente única
+- [x] Aplicar permisos y estado de `CareRelationship` en los accesos del cuidador
+- [x] Filtrar repositorios de tratamientos y medicación por relación de cuidado autorizada
+- [x] Añadir pruebas de aislamiento entre adultos mayores vinculados y no vinculados
+- [x] Registrar evidencia de validación y publicar la corrección

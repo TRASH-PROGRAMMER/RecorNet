@@ -1,20 +1,37 @@
 from abc import ABC, abstractmethod
-from typing import Optional, List
+from typing import List, Optional
+
 from src.domain.entities.medication import Medication
 
-class MedicationRepository(ABC): # Clase abstracta para representar repositorios de medicamentos
+
+class MedicationRepository(ABC):
     @abstractmethod
-    def save(self, medication: Medication) -> Medication: # Método para guardar un medicamento
-        pass
+    def save(self, medication: Medication, actor_id: str) -> Medication:
+        raise NotImplementedError
 
     @abstractmethod
-    def get_by_id(self, medication_id: str) -> Optional[Medication]: # Método para obtener un medicamento por ID
-        pass
+    def get_by_id(
+        self,
+        medication_id: str,
+        *,
+        actor_id: str,
+        patient_id: Optional[str] = None,
+        permission: str = "view_medication",
+    ) -> Optional[Medication]:
+        """La consulta debe validar la relación si patient_id pertenece a un adulto mayor."""
+        raise NotImplementedError
 
     @abstractmethod
-    def get_by_caregiver_id(self, caregiver_id: str) -> List[Medication]: # Método para obtener un medicamento por caregiver ID
-        pass
-        
+    def get_for_patient(
+        self,
+        patient_id: str,
+        *,
+        actor_id: str,
+        permission: str = "view_medication",
+    ) -> List[Medication]:
+        """Devuelve medicamentos solo dentro del contexto autorizado del paciente."""
+        raise NotImplementedError
+
     @abstractmethod
-    def delete(self, medication_id: str) -> bool: # Método para eliminar un medicamento
-        pass
+    def delete(self, medication_id: str, *, actor_id: str, patient_id: str) -> bool:
+        raise NotImplementedError
