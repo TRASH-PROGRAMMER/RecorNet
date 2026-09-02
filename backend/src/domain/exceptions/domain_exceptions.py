@@ -1,20 +1,29 @@
-class DomainException(Exception):  # clase para representar excepciones de dominio
-    pass
+class DomainException(Exception): # clase para representar excepciones de dominio
+    """Excepción base para errores relacionados con las reglas del dominio"""
+    def __init__(self, message: str): 
+       super().__init__(message) 
+       self.message = message 
 
 class UserNotFound(DomainException):  # clase para representar excepciones de usuario no encontrado
-    pass
+    def __init__(self, message: str):
+        self.message = message
 
 class UnauthorizedAccess(DomainException): # clase para representar excepciones de acceso no autorizado
-    pass
+    def __init__(self, message: str):
+        self.message = message
 
 class MedicationNotFound(DomainException): # clase para representar excepciones de medicamento no encontrado
-    pass
+    def __init__(self, message: str):
+        self.message = message
 
 class DuplicateMedication(DomainException): # clase para representar excepciones de medicamento duplicado
-    pass
+    def __init__(self, message: str):
+        self.message = message
 
 class InvalidDosage(DomainException): # clase para representar excepciones de dosis inválida
-    pass
+    def __init__(self, message: str):
+        self.message = message
 
 class TreatmentNotFound(DomainException): # clase para representar excepciones de tratamiento no encontrado
-    pass
+    def __init__(self, message: str):
+        self.message = message
