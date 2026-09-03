@@ -1,8 +1,11 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 from src.domain.entities.dose_events import DoseEvent
-# clase para re
+# clase para representar el repositorio de eventos de dosis
+# @abstractmethod indica que el metodo es abstracto y debe ser implementado por la clase hija
 class DoseEventRepository(ABC):
+    """Clase abstracta para representar el repositorio de eventos de dosis"""
+    #Metodos abstractos para manejar los eventos de dosis
     @abstractmethod
     def save(self, dose_event: DoseEvent) -> DoseEvent:
         """Guarda un evento de dosis en la base de datos"""

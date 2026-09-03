@@ -5,8 +5,12 @@ from src.domain.entities.medication import Medication
 
 
 class MedicationRepository(ABC):
+    """Clase abstracta para representar el repositorio de medicamentos"""
+    #@abstractmethod indica que el metodo es abstracto y debe ser implementado por la clase hija
     @abstractmethod
+    # Metodos para guardar, obtener, actualizar y eliminar medicamentos
     def save(self, medication: Medication, actor_id: str) -> Medication:
+        """Guarda un medicamento en la base de datos"""
         raise NotImplementedError
 
     @abstractmethod
@@ -18,7 +22,7 @@ class MedicationRepository(ABC):
         patient_id: Optional[str] = None,
         permission: str = "view_medication",
     ) -> Optional[Medication]:
-        """La consulta debe validar la relación si patient_id pertenece a un adulto mayor."""
+        """Obtiene un medicamento por su ID"""
         raise NotImplementedError
 
     @abstractmethod
