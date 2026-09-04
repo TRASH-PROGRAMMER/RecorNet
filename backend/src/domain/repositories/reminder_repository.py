@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 
-from src.domain.entities.reminder import Reminder
+from src.domain.entities.reminder import Reminder 
 #Clase para representar el repositorio de recordatorios
 class ReminderRepository(ABC):
     #@abstractmethod indica que el metodo es abstracto y debe ser implementado por la clase hija

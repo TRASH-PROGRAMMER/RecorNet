@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import Optional
 from src.domain.entities.profiles import Profile
 
 # pyre-ignore [13]
@@ -16,7 +16,7 @@ class ProfileRepository(ABC):
         raise NotImplementedError
     # Metodos para obtener perfiles
     @abstractmethod
-    def get_for_user(self, user_id: str) -> List[Profile]:
+    def get_for_user(self, user_id: str) -> Optional[Profile]:
         raise NotImplementedError
     # Metodos para eliminar perfiles
     @abstractmethod
