@@ -85,7 +85,7 @@ El informe cubre los commits `9978e9f`, `f32e9a9`, `4bf856a`, `79f76de` y `b432c
 - [x] Corregir `ReminderRepository`: importar `ReminderSchedule` y exigir `actor_id` con autorización de relación de cuidado.
 - [x] Añadir pruebas de contrato y aislamiento para `ReminderRepository`.
 - [x] Validar con `pytest -q` (14 pruebas), `compileall -q src` y `git diff --check`.
-- [ ] Publicar la corrección del repositorio de recordatorios en GitHub.
+- [x] Publicar la corrección del repositorio de recordatorios en GitHub.
 
 ### Revisión verificable — ReminderRepository
 
