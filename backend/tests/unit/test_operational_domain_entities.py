@@ -1,4 +1,5 @@
 from datetime import date, datetime, timedelta, timezone
+from typing import Optional
 
 import pytest
 
@@ -177,3 +178,28 @@ def test_treatment_and_medication_ports_require_authorized_care_context() -> Non
     assert "permission" in treatment_params
     assert "actor_id" in medication_params
     assert "permission" in medication_params
+
+
+
+def test_reminder_repository_uses_schedule_and_authorized_actor_context() -> None:
+    import inspect
+    from typing import get_args, get_origin
+
+    from src.domain.entities.reminder import ReminderSchedule
+    from src.domain.repositories.reminder_repository import ReminderRepository
+
+    save_signature = inspect.signature(ReminderRepository.save)
+    get_by_id_signature = inspect.signature(ReminderRepository.get_by_id)
+    get_for_patient_signature = inspect.signature(ReminderRepository.get_for_patient)
+    delete_signature = inspect.signature(ReminderRepository.delete)
+
+    assert save_signature.parameters["reminder"].annotation is ReminderSchedule
+    assert save_signature.return_annotation is ReminderSchedule
+    assert get_by_id_signature.return_annotation == Optional[ReminderSchedule]
+    assert get_origin(get_for_patient_signature.return_annotation) is list
+    assert get_args(get_for_patient_signature.return_annotation) == (ReminderSchedule,)
+    assert get_by_id_signature.parameters["actor_id"].kind is inspect.Parameter.KEYWORD_ONLY
+    assert get_for_patient_signature.parameters["actor_id"].kind is inspect.Parameter.KEYWORD_ONLY
+    assert delete_signature.parameters["actor_id"].kind is inspect.Parameter.KEYWORD_ONLY
+    assert "patient_id" in get_by_id_signature.parameters
+    assert "permission" in get_for_patient_signature.parameters

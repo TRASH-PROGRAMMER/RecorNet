@@ -80,3 +80,18 @@ El informe cubre los commits `9978e9f`, `f32e9a9`, `4bf856a`, `79f76de` y `b432c
 - [x] Filtrar repositorios de tratamientos y medicación por relación de cuidado autorizada
 - [x] Añadir pruebas de aislamiento entre adultos mayores vinculados y no vinculados
 - [x] Registrar evidencia de validación y publicar la corrección
+
+## Corrección del repositorio de recordatorios — ReminderRepository
+- [x] Corregir `ReminderRepository`: importar `ReminderSchedule` y exigir `actor_id` con autorización de relación de cuidado.
+- [x] Añadir pruebas de contrato y aislamiento para `ReminderRepository`.
+- [x] Validar con `pytest -q` (14 pruebas), `compileall -q src` y `git diff --check`.
+- [ ] Publicar la corrección del repositorio de recordatorios en GitHub.
+
+### Revisión verificable — ReminderRepository
+
+| Criterio | Evidencia | Resultado |
+| --- | --- | --- |
+| Entidad correcta | `backend/src/domain/repositories/reminder_repository.py` importa y utiliza `ReminderSchedule`; no importa `Reminder`. | Cumplido. |
+| Contexto de autorización | `save`, `get_by_id`, `get_for_patient` y `delete` exigen `actor_id`; las operaciones por registro también exigen `patient_id` y `permission`. | Cumplido en el contrato de dominio. |
+| Pruebas | `backend/tests/unit/test_operational_domain_entities.py` verifica tipos, parámetros keyword-only y permisos; `pytest -q` terminó con 14 pruebas correctas. | Cumplido. |
+| Persistencia concreta | No existe todavía un adaptador SQLAlchemy de recordatorios en el árbol actual. | Pendiente para la capa de infraestructura. |
