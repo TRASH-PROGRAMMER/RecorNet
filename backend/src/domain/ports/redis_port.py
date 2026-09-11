@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-import redis
+
 class RedisPort(ABC):
     @abstractmethod
     def get(self, key: str) -> str:
@@ -12,17 +12,3 @@ class RedisPort(ABC):
     def delete(self, key: str) -> bool:
         """Elimina una clave"""
         raise NotImplementedError
-
-class RedisConnection: 
-    def __init__(self):
-        self.redis_client = redis.Redis(
-            host='localhost',
-            port=6379,
-            decode_responses=True
-        )
-    def get(self, key: str) -> str:
-        return self.redis_client.get(key)
-    def set(self, key: str, value: str, ex: int) -> bool:
-        return self.redis_client.set(key, value, ex)
-    def delete(self, key: str) -> bool:
-        return self.redis_client.delete(key)
