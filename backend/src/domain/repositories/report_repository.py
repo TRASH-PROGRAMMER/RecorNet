@@ -12,10 +12,10 @@ class ReportRepository(ABC):
     def get_by_id(self, report_id : str) -> Optional[Report]:
         raise NotImplementedError
     @abstractmethod
-    def get_for_patient(self, patient_id: str) -> List[Report]:
+    def get_by_subject(self, subject_id: str) -> List[Report]:
         raise NotImplementedError
     @abstractmethod
-    def get_for_caregiver(self, caregiver_id: str) -> List[Report]:
+    def get_by_creator(self, created_by_user_id: str) -> List[Report]:
         raise NotImplementedError
     @abstractmethod
     def delete(self, report_id: str) -> bool:
