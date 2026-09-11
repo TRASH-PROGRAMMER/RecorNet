@@ -20,7 +20,7 @@ class DoseEventRepository(ABC):
         """Obtiene un evento de dosis por su clave de idempotencia"""
         raise NotImplementedError
     @abstractmethod
-    def get_history_for_patient(self, patient_id: str,from_date: datetime,*,to_date:datetime,actor_id: str, permission:str = "view_dose_events") -> List[DoseEvent]:
+    def get_history_for_patient(self, patient_id: str,*,from_date: datetime,to_date:datetime,actor_id: str, permission:str = "view_dose_events") -> List[DoseEvent]:
         """Obtiene todos los eventos de dosis de un paciente"""
         raise NotImplementedError
     @abstractmethod

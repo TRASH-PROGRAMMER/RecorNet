@@ -12,7 +12,7 @@ class ProfileRepository(ABC):
         raise NotImplementedError
     # Metodos para obtener perfiles
     @abstractmethod
-    def get_by_id(self, use_id: str) -> Optional[Profile]:
+    def get_by_id(self, user_id: str) -> Optional[Profile]:
         raise NotImplementedError
     # Metodos para obtener perfiles
     @abstractmethod
