@@ -10,10 +10,10 @@ class StatisticsSnapshotRepository(ABC):
     def save(self, statistics_snapshot: StatisticsSnapshots) -> StatisticsSnapshots:
         raise NotImplementedError
     @abstractmethod
-    def get_by_id(self, statistics_snapshot_id: str) -> Optional[StatisticsSnapshots]:
+    def get_latest_for_patient(self, patient_id: str, *, actor_id: str, permission: str = "view_statistics") -> Optional[StatisticsSnapshots]:
         raise NotImplementedError
     @abstractmethod
-    def get_for_user(self, user_id: str) -> List[StatisticsSnapshots]:
+    def get_history_for_patient(self, patient_id: str, *, actor_id: str, permission: str = "view_statistics") -> List[StatisticsSnapshots]:
         raise NotImplementedError
     @abstractmethod
     def delete(self, statistics_snapshot_id: str) -> bool:

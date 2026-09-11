@@ -10,6 +10,9 @@ class UserDeviceRepository(ABC):
     def get_by_id(self, user_device_id: str) -> Optional[UserDevices]:
         raise NotImplementedError
     @abstractmethod
+    def get_by_device(self, user_id: str, device_id: str) -> Optional[UserDevices]:
+        raise NotImplementedError
+    @abstractmethod
     def get_for_user(self, user_id: str) -> List[UserDevices]:
         raise NotImplementedError
     @abstractmethod

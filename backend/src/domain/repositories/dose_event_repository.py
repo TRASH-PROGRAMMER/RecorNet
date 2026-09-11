@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
+from datetime import datetime
 from src.domain.entities.dose_events import DoseEvent
 # clase para representar el repositorio de eventos de dosis
 # @abstractmethod indica que el metodo es abstracto y debe ser implementado por la clase hija
@@ -15,11 +16,14 @@ class DoseEventRepository(ABC):
         """Obtiene un evento de dosis por su ID"""
         raise NotImplementedError
     @abstractmethod
-    def get_for_user(self, user_id: str) -> List[DoseEvent]:
-        """Obtiene todos los eventos de dosis de un usuario"""
-        
+    def get_by_idempotency_key(self, idempotency_key: str) -> Optional[DoseEvent]:
+        """Obtiene un evento de dosis por su clave de idempotencia"""
         raise NotImplementedError
     @abstractmethod
-    def delete(self, dose_event_id: str) -> bool:
-        """Elimina un evento de dosis"""
+    def get_history_for_patient(self, patient_id: str,from_date: datetime,*,to_date:datetime,actor_id: str, permission:str = "view_dose_events") -> List[DoseEvent]:
+        """Obtiene todos los eventos de dosis de un paciente"""
+        raise NotImplementedError
+    @abstractmethod
+    def get_pending_for_patient(self, caregiver_id: str) -> List[DoseEvent]:
+        """Obtiene todos los eventos de dosis pendientes para un paciente"""
         raise NotImplementedError
