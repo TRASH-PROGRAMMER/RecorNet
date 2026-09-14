@@ -9,17 +9,21 @@ class UserRoleRepository(ABC):
     @abstractmethod
     # Metodos para guardar roles de usuario
     def save(self, user_role: UserRole) -> UserRole:
+        """Guarda un rol de usuario"""
         raise NotImplementedError
     # Metodos para obtener roles de usuario
     @abstractmethod
     def get_by_id(self, user_role_id: str) -> Optional[UserRole]:
+        """Obtiene un rol de usuario por su ID"""
         raise NotImplementedError
     # Metodos para obtener roles de usuario
     @abstractmethod
     def get_for_user(self, user_id: str) -> List[UserRole]:
+        """Obtiene los roles de un usuario"""
         raise NotImplementedError
     # Metodos para eliminar roles de usuario
     @abstractmethod
     def delete(self, user_role_id: str) -> bool:
+        """Elimina un rol de usuario"""
         raise NotImplementedError
     

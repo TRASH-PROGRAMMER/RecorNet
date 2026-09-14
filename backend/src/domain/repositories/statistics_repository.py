@@ -10,15 +10,17 @@ class StatisticsRepository(ABC):
     @abstractmethod
     # Metodos para obtener estadisticas
     def get_by_patient(self, patient_id: str) -> Dict[str, float]:
+        """Obtiene las estadisticas de un paciente"""
         raise NotImplementedError
     # Metodos para guardar estadisticas
     @abstractmethod
     def get_by_id(self, snapshot_id: str) -> Optional[StatisticsSnapshots]:
+        """Obtiene una estadistica por su ID"""
         raise NotImplementedError
     # Metodos para obtener estadisticas
     @abstractmethod
     def get_for_patient(self, patient_id: str) -> List[StatisticsSnapshots]:
-        raise NotImplementedError
+        """Obtiene las estadisticas de un paciente"""
     # Metodos para eliminar estadisticas
     @abstractmethod
     def delete(self, snapshot_id: str) -> bool:
