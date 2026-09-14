@@ -27,3 +27,11 @@ class DoseEventRepository(ABC):
     def get_pending_for_patient(self, caregiver_id: str) -> List[DoseEvent]:
         """Obtiene todos los eventos de dosis pendientes para un paciente"""
         raise NotImplementedError
+    @abstractmethod
+    def get_for_patient(self, patient_id: str) -> List[DoseEvent]:
+        """Obtiene todos los historiales de un paciente"""
+        raise NotImplementedError
+    @abstractmethod
+    def delete(self, history_id: str) -> bool:
+        """Elimina un historial"""
+        raise NotImplementedError
