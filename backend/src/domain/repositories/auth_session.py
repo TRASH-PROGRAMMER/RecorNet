@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 from src.domain.entities.auth_session import AuthSession
-
+# pyre-ignore [13] 
 class AuthSessionRepository(ABC):
     """Repositorio de sesiones de autenticación"""
     @abstractmethod
