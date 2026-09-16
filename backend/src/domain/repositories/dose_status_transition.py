@@ -26,3 +26,4 @@ class DoseStatusTransitionRepository(ABC):
     @abstractmethod
     def delete(self, dose_status_transition_id: str) -> bool:
         """Elimina una transición de estado de dosis"""
+        raise NotImplementedError

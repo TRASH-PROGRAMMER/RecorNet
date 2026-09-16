@@ -32,6 +32,6 @@ class DoseEventRepository(ABC):
         """Obtiene todos los historiales de un paciente"""
         raise NotImplementedError
     @abstractmethod
-    def delete(self, history_id: str) -> bool:
-        """Elimina un historial"""
+    def delete(self, dose_event_id: str) -> bool:
+        """Elimina un evento de dosis"""
         raise NotImplementedError
