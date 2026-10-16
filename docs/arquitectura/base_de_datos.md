@@ -446,6 +446,6 @@ En la capa de aplicación, el patrón es siempre el mismo — `session.execute(t
 Este modelo es la materialización en PostgreSQL de las entidades de dominio documentadas en `backend.md` y `arquitectura_movil.md` (`Medication`, `Treatment`, `DoseEvent`, `Reminder`/`reminder_schedules`, `CareRelation`), y de las reglas del negocio de `reglas_del_negocio.md` (campos obligatorios, prevención de duplicados, idempotencia de confirmaciones, roles asimétricos). La separación entre el catálogo de medicamentos y la prescripción (`treatments`) evita atribuir al medicamento una dosis o frecuencia que en realidad pertenece al paciente. Asimismo, `user_roles` es la única fuente de asignación de roles; `dose_events` separa el estado clínico de una toma de la sincronización; y los agregados de sesión, consentimiento, auditoría y entrega mantienen un rastro verificable de las operaciones sensibles. Los servicios de contenedores que lo hostean están definidos en `docker.md`.
 
 ---
-**Autor:** Manus AI
+**Autor:** Rudy Pico
 **Versión:** 1.2.0
 **Referencias:** `backend.md`, `arquitectura_movil.md`, `docker.md`, `reglas_del_negocio.md` y `CONTEXTO GENRAL.md` de RecorNet.
