@@ -43,8 +43,6 @@ Tecnología: Python + Celery
 
 - Planificador
 
-- Notificaciones Push
-
 - Almacenamiento de imágenes
 
 - Estadísticas
