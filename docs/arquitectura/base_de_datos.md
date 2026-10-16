@@ -14,6 +14,8 @@ erDiagram
     USERS ||--o| ACCESSIBILITY_PREFERENCES : configura
     USERS ||--o{ CARE_RELATIONSHIPS : cuidador
     USERS ||--o{ CARE_RELATIONSHIPS : adulto_mayor
+    USERS ||--o{ CARE_INVITATIONS : invita
+    USERS }o--o{ CARE_INVITATIONS : vinculado_a
     CARE_RELATIONSHIPS ||--o{ CARE_PERMISSIONS : delega
     USERS ||--o{ TREATMENTS : paciente
     USERS ||--o{ TREATMENTS : creado_por
@@ -36,9 +38,13 @@ erDiagram
     REMINDER_SCHEDULES ||--o{ DOSE_EVENTS : instancia
 ```
 
-## Diagrama de la máquina de estados de una dosis
+## Máquinas de estados de una dosis
 
-El estado de cada evento de dosis sigue la máquina documentada en `arquitectura_movil.md` y se registra en la columna `status`:
+Una dosis mantiene dos máquinas de estados independientes: una para el estado clínico de la toma y otra para la sincronización con el servidor.
+
+### A. Estado clínico de la dosis
+
+Describe lo que ocurre con la toma del medicamento:
 
 ```mermaid
 stateDiagram-v2
@@ -48,10 +54,31 @@ stateDiagram-v2
     Alertada --> Pendiente: vence el tiempo sin confirmar
     Pendiente --> Alertada: reintento permitido
     Pendiente --> Omitida: usuario omite o expira política
-    Tomada --> Sincronizada: servidor acepta evento
-    Omitida --> Sincronizada: servidor acepta evento
-    Pendiente --> Sincronizada: servidor registra pendiente
 ```
+
+### B. Estado de sincronización
+
+Describe la comunicación del evento con el servidor:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pendiente
+    Pendiente --> Sincronizada: servidor acepta evento
+    Sincronizada --> Fallida: error de sincronización
+    Fallida --> Pendiente: reintento permitido
+```
+
+Una dosis puede estar tomada y todavía no haberse sincronizado. Del mismo modo, una dosis omitida puede sincronizarse correctamente sin dejar de estar omitida. Por ello, el estado clínico (`status`) y el estado de sincronización (`sync_status`) se conservan en columnas separadas. Esta separación es esencial para la aplicación móvil cuando el dispositivo pierde conectividad: el usuario puede confirmar u omitir una dosis localmente, y la sincronización con el servidor se gestiona como un proceso independiente que se reintenta hasta lograr la entrega.
+
+### Idempotencia en la confirmación de dosis
+
+La columna `idempotency_key` en `dose_events` evita duplicar la creación de un evento únicamente si las solicitudes reutilizan la misma clave. No garantiza por sí sola que las confirmaciones de una dosis no se dupliquen.
+
+Para evitar confirmaciones duplicadas, el endpoint de confirmación debe implementar:
+
+1. **Estrategia de idempotencia propia:** clave de idempotencia por solicitud de confirmación, almacenada y consultada antes de procesar.
+2. **Validación de transiciones:** solo se permiten transiciones válidas entre estados clínicos (por ejemplo, `Alertada` → `Tomada`, no `Tomada` → `Tomada`).
+3. **Operación transaccional:** la verificación de la clave, la actualización del estado y el registro de la transición deben ejecutarse en una sola transacción para evitar condiciones de carrera entre solicitudes concurrentes.
 
 ## Tablas, relaciones y descripción
 
@@ -80,7 +107,9 @@ stateDiagram-v2
 | `statistics_snapshots` | `id` (PK) | Snapshot histórico opcional de estadísticas (adherencia, rachas), complementario a la caché de Redis. |
 | `sync_operations` | `id` (PK) | Cola durable de operaciones offline con idempotencia, reintentos y último error conocido. |
 | `audit_events` | `id` (PK) | Registro inmutable de acciones relevantes de seguridad, cambios de estado, acceso y entregas. |
-| `care_permissions` | `id` (PK) | Permiso individual, revocable y auditable dentro de una relación cuidador-adulto mayor. |
+| `care_relationships` | `id` (PK) | Relación cuidador-adulto mayor como episodio histórico; permite re-vinculación tras revocación. Solo existe una relación activa por pareja gracias a un índice único parcial. |
+| `care_permissions` | `id` (PK) | Fuente de verdad de permisos de una relación cuidador-adulto mayor; concede, revoca y audita permisos individuales. `care_relationships` ya no almacena permisos embebidos. |
+| `care_invitations` | `id` (PK) | Invitación de vinculación cuidador-adulto mayor generada por el adulto mayor; almacena el hash del código de un solo uso, estado, vencimiento y marcas de consumo/respuesta. |
 
 ## Esquema DDL de referencia (PostgreSQL)
 
@@ -149,13 +178,13 @@ CREATE TABLE care_relationships (
     id         SERIAL PRIMARY KEY,
     caregiver_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     elderly_id   INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    permissions  JSONB NOT NULL DEFAULT '[]',
     status       TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'revoked')),
     created_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
     revoked_at   TIMESTAMPTZ,
-    CONSTRAINT caregiver_differs_from_elderly CHECK (caregiver_id <> elderly_id),
-    UNIQUE (caregiver_id, elderly_id)
+    CONSTRAINT caregiver_differs_from_elderly CHECK (caregiver_id <> elderly_id)
 );
+
+CREATE UNIQUE INDEX idx_care_relationships_active_unique ON care_relationships(caregiver_id, elderly_id) WHERE status = 'active';
 
 CREATE TABLE care_permissions (
     id                   UUID PRIMARY KEY,
@@ -163,8 +192,21 @@ CREATE TABLE care_permissions (
     code                 TEXT NOT NULL CHECK (code IN ('view_treatments', 'manage_treatments', 'view_history', 'view_statistics', 'receive_escalations')),
     granted_by_user_id   INTEGER REFERENCES users(id),
     granted_at           TIMESTAMPTZ NOT NULL DEFAULT now(),
-    revoked_at           TIMESTAMPTZ,
-    UNIQUE (care_relationship_id, code)
+    revoked_at           TIMESTAMPTZ
+);
+
+CREATE TABLE care_invitations (
+    id             UUID PRIMARY KEY,
+    elderly_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    caregiver_user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    code_hash      TEXT NOT NULL UNIQUE,            -- hash del código, nunca texto plano
+    status         TEXT NOT NULL DEFAULT 'pendiente'
+                   CHECK (status IN ('pendiente', 'aceptada', 'rechazada', 'expirada', 'cancelada')),
+    expires_at     TIMESTAMPTZ NOT NULL,            -- vigencia breve
+    used_at        TIMESTAMPTZ,                     -- consumo del código (un solo uso)
+    responded_at   TIMESTAMPTZ,                     -- aceptación o rechazo
+    created_at     TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT caregiver_differs_from_elderly CHECK (caregiver_user_id IS DISTINCT FROM elderly_user_id)
 );
 
 CREATE TABLE medications (
@@ -358,9 +400,18 @@ CREATE INDEX idx_snapshots_user         ON statistics_snapshots(user_id, snapsho
 CREATE INDEX idx_reminder_times_schedule ON reminder_times(schedule_id, time_of_day);
 CREATE INDEX idx_transitions_dose_event   ON dose_status_transitions(dose_event_id, occurred_at);
 CREATE INDEX idx_deliveries_notification  ON notification_deliveries(notification_id, attempt_number);
+CREATE INDEX idx_care_invitations_elderly    ON care_invitations(elderly_user_id, status);
+CREATE INDEX idx_care_invitations_caregiver  ON care_invitations(caregiver_user_id) WHERE caregiver_user_id IS NOT NULL;
+CREATE INDEX idx_care_invitations_code_hash  ON care_invitations(code_hash);
+CREATE INDEX idx_care_invitations_expires    ON care_invitations(expires_at) WHERE status = 'pendiente';
+CREATE UNIQUE INDEX idx_care_permissions_active_unique ON care_permissions(care_relationship_id, code) WHERE revoked_at IS NULL;
 CREATE INDEX idx_sync_operations_pending  ON sync_operations(next_attempt_at) WHERE status IN ('pending', 'failed');
 CREATE INDEX idx_audit_aggregate           ON audit_events(aggregate_type, aggregate_id, occurred_at);
 ```
+
+## Autorización de permisos de cuidado
+
+El backend es la única autoridad para conceder o revocar permisos en `care_permissions`. Antes de escribir cualquier concesión, el backend debe comprobar que el `granted_by_user_id` es el Adulto Mayor (`elderly_id`) de la relación `care_relationships` correspondiente, y nunca confiar en el valor recibido del cliente. El campo `caregiver_user_id` de una invitación solo se resuelve tras la aceptación transaccional del código.
 
 ## Seguridad de la base de datos
 
