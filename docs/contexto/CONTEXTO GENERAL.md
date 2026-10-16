@@ -256,6 +256,8 @@ RF-AM-11	El adulto mayor podrá visualizar estadísticas del cumplimiento de su 
 
 RF-AM-12	El adulto mayor podrá personalizar opciones de accesibilidad como tamaño de letra, contraste y volumen de las alertas.
 
+RF-AM-13	El adulto mayor podrá  enviar una vinculación asistida iniciada por el Cuidador y autorizada explícitamente por el Adulto Mayor.
+
 
 #### 4.2 Rol: Cuidador
 Código	Requisito funcional
@@ -284,6 +286,8 @@ RF-CU-11	El sistema podrá notificar al cuidador cuando una dosis no haya sido c
 
 RF-CU-12	El cuidador podrá modificar la configuración de las notificaciones y recordatorios del tratamiento.
 
+RF-CU-13	El cuidador podrá ingrear el codigo propocionado por el adulto mayor para activar la vinculación asistida.
+
 
 
 
@@ -307,12 +311,40 @@ RF-CM-06	El sistema registrará automáticamente las confirmaciones de las dosis
 
 RF-CM-07	El sistema mostrará una interfaz accesible, intuitiva y adaptada a las necesidades de los adultos mayores.
 
-RF-CM-08	El sistema funcionará de forma multiplataforma en dispositivos Android, iOS y Web.
+RF-CM-08	El sistema funcionará de forma multiplataforma en dispositivos Android y Web.
+
+RF-CM-09	El sistema permitirá la vinculación asistida entre el adulto mayor y el cuidador.
+
+RF-CM-10	El sistema permitirá la eliminación de la vinculación asistida por parte del adulto mayor.
+
+RF-CM-11	El sistema permitirá la eliminación de la vinculación asistida por parte del cuidador.
+
 
 
 Con estos requisitos funcionales se definen las operaciones permitidas para cada tipo de usuario, garantizando una adecuada gestión de los medicamentos, el seguimiento del tratamiento y una experiencia de uso accesible y segura.
 
 
+## Vinculación asistida
+
+## Vinculación asistida entre el Adulto Mayor y el Cuidador
+
+1. El Adulto Mayor inicia sesión en la aplicación.
+2. El Adulto Mayor solicita generar un código de invitación para vincular su cuenta con la de un Cuidador.
+3. El sistema genera un código alfanumérico temporal, de un solo uso, asociado a la cuenta del Adulto Mayor.
+4. El Adulto Mayor comparte voluntariamente el código con el Cuidador.
+5. El Cuidador inicia sesión en la aplicación.
+6. El Cuidador introduce el código de invitación en la sección de vinculación.
+7. El sistema valida el código, su vigencia, su estado de uso y los límites de intentos permitidos(5 intentos).
+8. Si el código es válido, el sistema identifica la cuenta del Adulto Mayor y registra una solicitud de vinculación pendiente de autorización.
+9. El sistema informa al Adulto Mayor de la solicitud e identifica al Cuidador que desea vincularse.
+10. El Adulto Mayor acepta o rechaza la solicitud mediante una interfaz accesible que explica las consecuencias de cada opción.
+11. Si el Adulto Mayor acepta, el sistema establece la vinculación y habilita únicamente los permisos autorizados.
+12. Si el Adulto Mayor rechaza, el sistema no establece la vinculación ni concede acceso a su información protegida.
+13. El sistema notifica a ambas partes el resultado de la solicitud.
+14. El Adulto Mayor podrá consultar la vinculación activa y solicitar su desvinculación desde su cuenta.
+15. El Cuidador podrá consultar la vinculación activa y solicitar su desvinculación desde su cuenta.
+16. Cuando cualquiera de las partes confirma la desvinculación, el sistema revoca los permisos derivados de esa relación y registra el evento de auditoría.
+17. Para establecer nuevamente una vinculación terminada, el sistema requerirá un nuevo proceso de invitación y autorización.
 
 ## Accesibilidad
 
@@ -459,7 +491,7 @@ El flujo general de RecorNet describe la secuencia de actividades que realizan l
 ````
 1. Inicio de la aplicación
 
-> El usuario abre RecorNet desde un dispositivo Android, iOS o desde la versión web.
+> El usuario abre RecorNet desde un dispositivo Android o desde la versión web.
 ````
 ````
 2. Autenticación
