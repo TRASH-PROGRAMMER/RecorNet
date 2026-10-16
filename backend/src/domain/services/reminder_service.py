@@ -1,9 +1,16 @@
+from abc import ABC, abstractmethod
+from typing import Optional, List
+
 # pyrefly: ignore [missing-import]
 from src.domain.repositories.reminder_repository import ReminderRepository
 
+# Alias de compatibilidad
+Reminder = Reminder
+
+
 # pyre-ignore [13]
 # Clase para representar el servicio de recordatorio
-class ReminderService:
+class ReminderService(ABC):
     #@abstractmethod indica que el metodo es abstracto y debe ser implementado por la clase hija
     @abstractmethod
     # Metodos para guardar recordatorios
