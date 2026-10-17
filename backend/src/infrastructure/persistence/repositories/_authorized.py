@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __future__ import annotations  #  anotaciones para que el código sea más legible y se pueda hacer un chequeo de tipos
 
 from datetime import datetime
 from typing import TypeVar
@@ -22,9 +22,9 @@ from src.infrastructure.persistence.models.recornet import (
     TreatmentModel,
 )
 
-T = TypeVar("T")
+T = TypeVar("T")   #  Tipo genérico para que pueda ser usado en diferentes clases
 
-
+# normaliza los permisos
 def normalize_permission(permission: str) -> str:
     if permission in {"view_medication", "view_treatment", "view_reminder"}:
         return "view_treatments"
@@ -32,14 +32,14 @@ def normalize_permission(permission: str) -> str:
         return "manage_treatments"
     return permission
 
-
+# convierte el valor a entero
 def int_id(value: str | int) -> int:
     try:
         return int(value)
     except (TypeError, ValueError) as exc:
         raise ValueError(f"numeric repository id required, got {value!r}") from exc
 
-
+# funcion para obtener la autorización
 def authorization_clause(patient_id: str | int, actor_id: str | int, permission: str):
     """Predicate used together with the explicit relationship/permission joins."""
     permission = normalize_permission(permission)
@@ -56,7 +56,7 @@ def authorization_clause(patient_id: str | int, actor_id: str | int, permission:
         ),
     )
 
-
+# funcion para requerir la autorización
 def require_authorized(session: Session, patient_id: str | int, actor_id: str | int, permission: str) -> None:
     permission = normalize_permission(permission)
     stmt = (
@@ -79,6 +79,7 @@ def require_authorized(session: Session, patient_id: str | int, actor_id: str | 
         )
 
 
+# mapea el modelo de medicamento a una entidad de medicamento
 def map_medication(model: MedicationModel) -> Medication:
     return Medication(
         id=str(model.id),
@@ -92,7 +93,7 @@ def map_medication(model: MedicationModel) -> Medication:
         status=MedicationStatus(model.status),
     )
 
-
+# mapea el modelo de tratamiento a una entidad de tratamiento
 def map_treatment(model: TreatmentModel) -> Treatment:
     amount, _, unit = (model.dose or "0").partition(" ")
     return Treatment(
@@ -110,6 +111,7 @@ def map_treatment(model: TreatmentModel) -> Treatment:
     )
 
 
+# mapea el modelo de recordatorio a una entidad de recordatorio
 def map_reminder(model: ReminderScheduleModel) -> ReminderSchedule:
     return ReminderSchedule(
         id=str(model.id),
@@ -121,6 +123,7 @@ def map_reminder(model: ReminderScheduleModel) -> ReminderSchedule:
     )
 
 
+# crea una relación de cuidado a partir de un modelo de relación de cuidado
 def relationship_from_models(relationship: CareRelationshipModel, permissions: list[str]) -> CareRelationship:
     return CareRelationship(
         id=str(relationship.id),

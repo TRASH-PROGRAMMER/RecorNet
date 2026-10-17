@@ -7,11 +7,11 @@ from sqlalchemy import Date, DateTime, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy.types import JSON
 
-
+#declaracion de la clase base para la persistencia
 class Base(DeclarativeBase):
     pass
 
-
+# clase modelo para la persistencia de la tabla care_relationships
 class CareRelationshipModel(Base):
     __tablename__ = "care_relationships"
 
@@ -20,7 +20,7 @@ class CareRelationshipModel(Base):
     elderly_id: Mapped[int] = mapped_column(Integer, nullable=False, index=True)
     status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
 
-
+# clase modelo para la persistencia de la tabla care_permissions
 class CarePermissionModel(Base):
     __tablename__ = "care_permissions"
 
@@ -34,6 +34,7 @@ class CarePermissionModel(Base):
     revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
+# clase modelo para la persistencia de la tabla medications
 class MedicationModel(Base):
     __tablename__ = "medications"
 
@@ -48,6 +49,7 @@ class MedicationModel(Base):
     status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
 
 
+# clase modelo para la persistencia de la tabla treatments
 class TreatmentModel(Base):
     __tablename__ = "treatments"
 
@@ -65,6 +67,7 @@ class TreatmentModel(Base):
     status: Mapped[str] = mapped_column(String(32), default="active", nullable=False)
 
 
+# clase modelo para la persistencia de la tabla reminder_schedules
 class ReminderScheduleModel(Base):
     __tablename__ = "reminder_schedules"
 
@@ -79,5 +82,5 @@ class ReminderScheduleModel(Base):
     is_active: Mapped[bool] = mapped_column(default=True, nullable=False)
 
 
-# Kept as a small export surface for infrastructure tests and future adapters.
+# # Se mantiene como una pequeña superficie de exportación para pruebas de infraestructura y futuros adaptadores.
 Model = Any

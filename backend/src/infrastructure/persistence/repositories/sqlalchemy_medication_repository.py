@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __future__ import annotations  #  anotaciones para que el código sea más legible y se pueda hacer un chequeo de tipos
 
 from datetime import datetime, timezone
 
@@ -21,7 +21,7 @@ from src.infrastructure.persistence.repositories._authorized import (
     require_authorized,
 )
 
-
+# clase para la persistencia de medicamentos
 class SqlAlchemyMedicationRepository(MedicationRepository):
     """Persistencia de medicamentos; el alcance por paciente pasa por treatments."""
 
@@ -49,8 +49,8 @@ class SqlAlchemyMedicationRepository(MedicationRepository):
             self._session.add(model)
         else:
             if model.created_by_user_id != actor:
-                # A medication is a catalog record; updates are restricted to its creator
-                # until a patient context is supplied by a higher-level use case.
+                # Un medicamento es un registro de catálogo; las actualizaciones están restringidas a su creador
+                # hasta que un caso de uso de nivel superior proporcione un contexto de paciente.
                 raise UnauthorizedAccess(
                     f"actor {actor_id} cannot update medication {medication.id}"
                 )
@@ -63,6 +63,9 @@ class SqlAlchemyMedicationRepository(MedicationRepository):
         self._session.flush()
         return map_medication(model)
 
+
+    
+    # statement para obtener medicamentos autorizados
     def _authorized_medication_statement(self, patient_id: str, actor_id: str, permission: str):
         return (
             select(MedicationModel)
@@ -105,6 +108,7 @@ class SqlAlchemyMedicationRepository(MedicationRepository):
             )
         return map_medication(model) if model else None
 
+    # obtiene los medicamentos autorizados para un paciente
     def get_for_patient(self, patient_id: str, *, actor_id: str, permission: str = "view_medication") -> list[Medication]:
         return [
             map_medication(model)
@@ -112,7 +116,8 @@ class SqlAlchemyMedicationRepository(MedicationRepository):
                 self._authorized_medication_statement(patient_id, actor_id, permission)
             ).all()
         ]
-
+    
+    # elimina un medicamento
     def delete(self, medication_id: str, *, actor_id: str, patient_id: str) -> bool:
         require_authorized(self._session, patient_id, actor_id, "manage_treatments")
         model = self._session.scalar(

@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __future__ import annotations  #  anotaciones para que el código sea más legible y se pueda hacer un chequeo de tipos
 
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
@@ -18,11 +18,12 @@ from src.infrastructure.persistence.repositories._authorized import (
     require_authorized,
 )
 
-
+# clase para la persistencia de recordatorios
 class SqlAlchemyReminderRepository(ReminderRepository):
     def __init__(self, session: Session) -> None:
         self._session = session
 
+    # statement para obtener recordatorios autorizados
     def _authorized_statement(self, patient_id: str, actor_id: str, permission: str):
         return (
             select(ReminderScheduleModel)
@@ -40,7 +41,8 @@ class SqlAlchemyReminderRepository(ReminderRepository):
                 authorization_clause(patient_id, actor_id, permission),
             )
         )
-
+    
+    # guarda un recordatorio
     def save(
         self,
         reminder: ReminderSchedule,
@@ -73,7 +75,8 @@ class SqlAlchemyReminderRepository(ReminderRepository):
             model.is_active = reminder.is_active
         self._session.flush()
         return map_reminder(model)
-
+    
+    # obtiene un recordatorio por id
     def get_by_id(
         self,
         reminder_id: str,
@@ -88,7 +91,8 @@ class SqlAlchemyReminderRepository(ReminderRepository):
             )
         )
         return map_reminder(model) if model else None
-
+    
+    # obtiene todos los recordatorios para un paciente
     def get_for_patient(
         self,
         patient_id: str,
@@ -102,7 +106,8 @@ class SqlAlchemyReminderRepository(ReminderRepository):
                 self._authorized_statement(patient_id, actor_id, _permission(permission))
             ).all()
         ]
-
+    
+    # elimina un recordatorio
     def delete(
         self,
         reminder_id: str,
@@ -123,7 +128,7 @@ class SqlAlchemyReminderRepository(ReminderRepository):
         self._session.flush()
         return True
 
-
+# mapea los nombres de los puertos heredados a los códigos de permiso normalizados
 def _permission(permission: str, manage: bool = False) -> str:
     """Map legacy port names to the normalized DDL permission codes."""
     if permission in {"view_reminder", "view_treatment", "view_medication"}:

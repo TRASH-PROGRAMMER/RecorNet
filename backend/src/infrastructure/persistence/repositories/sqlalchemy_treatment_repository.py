@@ -84,8 +84,8 @@ class SqlAlchemyTreatmentRepository(TreatmentRepository):
         actor_id: str,
         permission: str = "view_treatment",
     ) -> Treatment | None:
-        # The patient id is intentionally obtained only after the authorized query: callers
-        # cannot use an arbitrary treatment id to discover a non-linked patient's record.
+        # El identificador del paciente se obtiene, de forma deliberada, únicamente tras una consulta autorizada: quienes realizan la llamada
+# no pueden utilizar un identificador de tratamiento arbitrario para acceder al registro de un paciente que no esté vinculado a dicho tratamiento.
         model = self._session.scalar(
             select(TreatmentModel)
             .outerjoin(
@@ -111,6 +111,7 @@ class SqlAlchemyTreatmentRepository(TreatmentRepository):
         )
         return map_treatment(model) if model else None
 
+    # obtiene los tratamientos autorizados para un paciente
     def get_by_patient_id(
         self,
         patient_id: str,
