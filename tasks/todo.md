@@ -120,3 +120,9 @@ El informe cubre los commits `9978e9f`, `f32e9a9`, `4bf856a`, `79f76de` y `b432c
 | Pruebas | `tests/integration/test_authorized_sqlalchemy_repositories.py` cubre cuidador vinculado, no vinculado, permiso revocado y propietario. | Cumplido. |
 | Verificación técnica | `PYTHONPATH=src pytest -q`: 23 correctas; `compileall -q src tests`: correcto; `git diff --check`: correcto. | Cumplido, con una advertencia preexistente de `datetime.utcnow()`. |
 | Alcance protegido | No se modificaron `docs/` ni `.agents/`. | Cumplido. |
+
+## Contexto obligatorio cargado — documentación y skills (2026-10-17)
+- [x] Leer los 9 documentos Markdown de `docs/` y sus secciones completas.
+- [x] Leer `SKILL.md`, referencias, plantilla y script de `frontend-skill`.
+- [x] Leer `SKILL.md` y el paquete `recornet-capacitor-dev.skill` de `mobile-skill`.
+- [x] Registrar las reglas consolidadas en `tasks/lessons.md` sin modificar `docs/` ni `.agents/`.
