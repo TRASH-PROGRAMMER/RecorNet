@@ -1,13 +1,11 @@
 from abc import ABC, abstractmethod
 from typing import Optional, List
 # pyrefly: ignore [missing-import]
-from src.domain.repositories.notification_delivery_repository import NotificationDeliveryRepository
 from src.domain.entities.notification import Notification
-from src.domain.repositories.reminder_times_repository import ReminderTimesRepository
 
 # pyre-ignore [13]
 # Clase para representar el servicio de notificación
-class NotificationService:
+class NotificationService(ABC):
     #@abstractmethod indica que el metodo es abstracto y debe ser implementado por la clase hija
     @abstractmethod
     # Metodos para guardar notificaciones
