@@ -127,3 +127,21 @@ El informe cubre los commits `9978e9f`, `f32e9a9`, `4bf856a`, `79f76de` y `b432c
 - [x] Leer `SKILL.md` y el paquete `recornet-capacitor-dev.skill` de `mobile-skill`.
 - [x] Registrar las reglas consolidadas en `tasks/lessons.md` sin modificar `docs/` ni `.agents/`.
 - [x] Leer y registrar `GEMINI.md` como directiva maestra global del agente.
+
+## Corrección de bugs en servicios de dominio — reminder_service.py y notification_service.py
+- [x] `reminder_service.py`: corregir `NameError` por `Reminder = Reminder` sin import (línea 8 original).
+- [x] `reminder_service.py`: importar `ReminderSchedule` y crear alias `Reminder = ReminderSchedule`.
+- [x] `reminder_service.py`: inyectar `ReminderRepository` en `__init__`.
+- [x] `reminder_service.py`: corregir firma de `update` (usaba `ReminderRepository` como tipo en vez de `Reminder`).
+- [x] `notification_service.py`: eliminar import inexistente `notification_delivery_repository`.
+- [x] `notification_service.py`: heredar de `ABC` para que los `@abstractmethod` sean efectivos.
+- [x] Verificar con `python -m pytest -v`: 23/23 tests pasaron.
+
+### Revisión verificable — bugs servicios de dominio (2026-10-17)
+
+| Criterio | Evidencia | Resultado |
+| --- | --- | --- |
+| Import exitoso | `python -c "import src.domain.services.reminder_service"` y `"...notification_service"` sin errores. | Cumplido. |
+| Tipado correcto | `reminder_service.update` usa `Reminder` (alias de `ReminderSchedule`), no `ReminderRepository`. | Cumplido. |
+| ABC efectivo | `NotificationService(ABC)` hace que `@abstractmethod` sea vinculante. | Cumplido. |
+| Suite completa | `python -m pytest -v`: 23 passed, 0 failed. | Cumplido. |
