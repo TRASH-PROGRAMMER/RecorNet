@@ -126,3 +126,4 @@ El informe cubre los commits `9978e9f`, `f32e9a9`, `4bf856a`, `79f76de` y `b432c
 - [x] Leer `SKILL.md`, referencias, plantilla y script de `frontend-skill`.
 - [x] Leer `SKILL.md` y el paquete `recornet-capacitor-dev.skill` de `mobile-skill`.
 - [x] Registrar las reglas consolidadas en `tasks/lessons.md` sin modificar `docs/` ni `.agents/`.
+- [x] Leer y registrar `GEMINI.md` como directiva maestra global del agente.
