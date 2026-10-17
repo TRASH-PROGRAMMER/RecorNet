@@ -16,3 +16,7 @@ No se deben eliminar, mover, renombrar ni modificar archivos dentro de `docs/` o
 ## 2026-09-01 — G3: autorización por relación de cuidado
 
 Una relación cuidador–adulto mayor no debe representarse con listas mutuas en memoria. `CareRelationship` es la fuente única de verdad y toda operación de tratamiento o medicación debe recibir `actor_id`, el paciente y el permiso requerido. Los puertos de repositorio deben impedir consultas sin contexto de autorización; las implementaciones concretas deben aplicar ese contrato mediante un join a relaciones activas.
+
+## 2026-10-17 — Persistencia y autorización en dos niveles
+
+Los adaptadores de persistencia no deben confiar en una autorización previa del caso de uso. Las consultas sensibles deben incorporar el contexto del actor y un `JOIN` a `care_relationships` activa y a `care_permissions` no revocada; el propietario puede acceder a sus propios datos mediante una rama explícita. Cuando el dominio y el DDL usan tipos de identificador distintos, la conversión debe quedar encapsulada en infraestructura y no filtrarse a los puertos.

@@ -95,3 +95,28 @@ El informe cubre los commits `9978e9f`, `f32e9a9`, `4bf856a`, `79f76de` y `b432c
 | Contexto de autorización | `save`, `get_by_id`, `get_for_patient` y `delete` exigen `actor_id`; las operaciones por registro también exigen `patient_id` y `permission`. | Cumplido en el contrato de dominio. |
 | Pruebas | `backend/tests/unit/test_operational_domain_entities.py` verifica tipos, parámetros keyword-only y permisos; `pytest -q` terminó con 14 pruebas correctas. | Cumplido. |
 | Persistencia concreta | No existe todavía un adaptador SQLAlchemy de recordatorios en el árbol actual. | Pendiente para la capa de infraestructura. |
+
+## Implementación de persistencia autorizada — Componente 3
+- [x] Crear modelos SQLAlchemy mínimos para relaciones, permisos, medicamentos, tratamientos y horarios.
+- [x] Implementar adaptadores concretos de `MedicationRepository`, `TreatmentRepository` y `ReminderRepository`.
+- [x] Aplicar joins a `care_relationships` y `care_permissions`, permitiendo también al paciente actuar sobre sus propios datos.
+- [x] Añadir pruebas de integración SQLite para aislamiento de cuidadores no vinculados y permisos revocados.
+- [x] Ejecutar pruebas unitarias/integración, compilación y revisión del diff.
+
+### Plan verificable — persistencia autorizada (2026-10-17)
+
+**Alcance:** solo `backend/src/infrastructure/persistence` y `backend/tests/integration`; no se modifican `docs/` ni `.agents/`.
+
+**Riesgos:** diferencias de tipos de identificador entre entidades (`str`/`int`), divergencia entre `CareRelationship.permissions` y el esquema normalizado `care_permissions`, y ausencia de PostgreSQL en el sandbox.
+
+**Criterios de aceptación:** (1) los tres adaptadores implementan sus puertos; (2) las lecturas de cuidador usan joins con relación activa y permiso no revocado; (3) un cuidador no vinculado no obtiene filas ni puede borrar; (4) el paciente puede consultar sus propios datos; (5) las pruebas SQLite pasan y el código compila.
+
+### Revisión verificable — persistencia autorizada (2026-10-17)
+
+| Criterio | Evidencia | Resultado |
+| --- | --- | --- |
+| Adaptadores | `sqlalchemy_medication_repository.py`, `sqlalchemy_treatment_repository.py` y `sqlalchemy_reminder_repository.py` implementan los puertos de dominio. | Cumplido. |
+| Aislamiento | Consultas con joins/outer joins a `care_relationships` y `care_permissions`, estado activo y permiso no revocado. | Cumplido. |
+| Pruebas | `tests/integration/test_authorized_sqlalchemy_repositories.py` cubre cuidador vinculado, no vinculado, permiso revocado y propietario. | Cumplido. |
+| Verificación técnica | `PYTHONPATH=src pytest -q`: 23 correctas; `compileall -q src tests`: correcto; `git diff --check`: correcto. | Cumplido, con una advertencia preexistente de `datetime.utcnow()`. |
+| Alcance protegido | No se modificaron `docs/` ni `.agents/`. | Cumplido. |
