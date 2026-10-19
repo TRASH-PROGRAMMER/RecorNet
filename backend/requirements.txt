@@ -43,3 +43,4 @@ pytest-flask==1.3.0
 
 # --- Utilidades ---
 marshmallow==3.26.1
+
