@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from datetime import date, datetime
 from typing import Any
+from sqlalchemy import CheckConstraint
+from sqlalchemy import text
 
 from sqlalchemy import Date, DateTime, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -16,10 +18,21 @@ class CareRelationshipModel(Base):
     __tablename__ = "care_relationships"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    caregiver_id: Mapped[int] = mapped_column(Integer, nullable=False, index=True)
-    elderly_id: Mapped[int] = mapped_column(Integer, nullable=False, index=True)
+    caregiver_id: Mapped[int] = mapped_column(Integer,ForeignKey("users.id"), nullable=False, index=True )
+    elderly_id: Mapped[int] = mapped_column(Integer,ForeignKey("users.id"), nullable=False, index=True ,)
     status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
 
+    __table_args__ = (
+        CheckConstraint(
+            "idx_care_relationships_active_unique",
+            "caregiver_id <> elderly_id",
+            name="caregiver_differs_from_elderly",
+            unique=True,
+            postgresql_where=text("status = 'active'")
+        ),
+    )
 # clase modelo para la persistencia de la tabla care_permissions
 class CarePermissionModel(Base):
     __tablename__ = "care_permissions"
