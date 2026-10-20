@@ -181,3 +181,22 @@ El informe cubre los commits `9978e9f`, `f32e9a9`, `4bf856a`, `79f76de` y `b432c
 | Prueba específica | `tests/integration/test_app_factory.py`: 1 pasada. | Cumplido. |
 | Compilación | `python3 -m compileall -q backend/src backend/main.py backend/tests`: correcto. | Cumplido. |
 | Suite global | 20 pruebas pasan; 4 errores de setup persisten por FK a `users` sin `UserModel` en `Base`. | Pendiente independiente. |
+
+## Auditoría de imports y módulos heredados (2026-10-20)
+- [x] Auditar imports internos y símbolos heredados en `backend/src` y `backend/tests`.
+- [x] Importar los 106 módulos Python del backend para detectar referencias rotas.
+- [x] Eliminar el alias heredado `Reminder` del servicio y usar `ReminderSchedule` de forma canónica.
+- [x] Mantener `backend/main.py` únicamente como shim compatible hacia `src.main`.
+- [x] Validar imports, pruebas dirigidas, compilación y `git diff --check`.
+- [ ] Normalizar el nombre de archivo `Frequency.py` a `frequency.py` mediante una tarea separada con plan de migración; actualmente todos los imports son consistentes.
+
+### Revisión verificable — imports heredados
+
+| Hallazgo | Estado |
+| --- | --- |
+| `Reminder` como alias de `ReminderSchedule` | Corregido en `domain/services/reminder_service.py`; no quedan referencias al símbolo aislado. |
+| `notification_delivery_repository` | No se encontraron referencias; el repositorio canónico es `notification_delivery.py`. |
+| `backend/main.py` | Se conserva intencionalmente como shim; la implementación canónica está en `src/main.py`. |
+| Importación de módulos | 106 módulos importados, 0 fallos. |
+| Pruebas dirigidas | 15 pasadas (`test_app_factory.py` y `test_operational_domain_entities.py`). |
+| Compilación y diff | Correctos; no se modificaron `docs/` ni `.agents/`. |

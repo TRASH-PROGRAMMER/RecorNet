@@ -6,8 +6,6 @@ from src.domain.entities.reminder import ReminderSchedule
 from src.domain.repositories.reminder_repository import ReminderRepository
 
 
-Reminder = ReminderSchedule
-
 # pyre-ignore [13]
 # Clase para representar el servicio de recordatorio
 class ReminderService(ABC):
@@ -16,17 +14,17 @@ class ReminderService(ABC):
     #@abstractmethod indica que el metodo es abstracto y debe ser implementado por la clase hija
     @abstractmethod
     # Metodos para guardar recordatorios
-    def save(self, reminder: Reminder) -> Reminder:
+    def save(self, reminder: ReminderSchedule) -> ReminderSchedule:
         """Guarda un recordatorio"""
         raise NotImplementedError
     # Metodos para obtener recordatorios
     @abstractmethod
-    def get_by_id(self, reminder_id: str) -> Optional[Reminder]:
+    def get_by_id(self, reminder_id: str) -> Optional[ReminderSchedule]:
         """Obtiene un recordatorio por su ID"""
         raise NotImplementedError
     # Metodos para actualizar recordatorios
     @abstractmethod
-    def update(self, reminder_id: str, reminder: Reminder) -> Optional[Reminder]:
+    def update(self, reminder_id: str, reminder: ReminderSchedule) -> Optional[ReminderSchedule]:
         """Actualiza un recordatorio"""
         raise NotImplementedError
     # Metodos para eliminar recordatorios
@@ -36,6 +34,6 @@ class ReminderService(ABC):
         raise NotImplementedError
     # Metodos para obtener recordatorios pendientes
     @abstractmethod
-    def get_pending(self) -> List[Reminder]:
+    def get_pending(self) -> List[ReminderSchedule]:
         """Obtiene los recordatorios pendientes"""
         raise NotImplementedError

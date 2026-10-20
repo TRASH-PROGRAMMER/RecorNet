@@ -42,3 +42,7 @@ Un `GET /health` que responde `200` confirma únicamente que el proceso Flask es
 ## 2026-10-20 — Factoría Flask en `src.main`
 
 La factoría debe vivir en `backend/src/main.py` para cumplir el contrato `FLASK_APP=src.main:create_app` y la estructura de entrada del backend. Cuando exista un punto de entrada histórico en `backend/main.py`, se conserva como shim que reexporta la factoría, evitando dos implementaciones divergentes y manteniendo compatibilidad con scripts locales. El movimiento se valida con imports canónicos y heredados, `flask routes`, prueba HTTP de `/health`, Swagger y compilación.
+
+## 2026-10-20 — Auditoría de nombres heredados
+
+Un alias histórico como `Reminder = ReminderSchedule` puede ocultar imports antiguos y divergir del lenguaje ubicuo del dominio; debe eliminarse cuando no existan consumidores externos y reemplazarse por el nombre canónico en todas las anotaciones. En cambio, un shim de entrada como `backend/main.py` es válido si su función es únicamente compatibilidad explícita hacia `src.main`. La migración debe acompañarse de un smoke test que importe todos los módulos, pruebas dirigidas y compilación. Los cambios de mayúsculas/minúsculas de módulos, como `Frequency.py` → `frequency.py`, requieren una migración separada por su impacto en sistemas case-sensitive.
