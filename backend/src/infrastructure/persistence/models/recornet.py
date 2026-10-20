@@ -1,12 +1,24 @@
 from __future__ import annotations
 
-from datetime import date, datetime
+from datetime import date, datetime, time
 from typing import Any
-from sqlalchemy import CheckConstraint
-from sqlalchemy import text
-
-from sqlalchemy import Date, DateTime, ForeignKey, Integer, String, Text
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy import (
+    Boolean,
+    CheckConstraint,
+    Date,
+    DateTime,
+    ForeignKey,
+    Index,
+    Integer,
+    SmallInteger,
+    String,
+    Text,
+    Time,
+    UniqueConstraint,
+    text,
+)
+from sqlalchemy.dialects.postgresql import ARRAY
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from sqlalchemy.types import JSON
 
 #declaracion de la clase base para la persistencia
@@ -26,11 +38,15 @@ class CareRelationshipModel(Base):
 
     __table_args__ = (
         CheckConstraint(
-            "idx_care_relationships_active_unique",
             "caregiver_id <> elderly_id",
             name="caregiver_differs_from_elderly",
+        ),
+        Index(
+            "idx_care_relationships_active_unique",
+            "caregiver_id",
+            "elderly_id",
             unique=True,
-            postgresql_where=text("status = 'active'")
+            postgresql_where=text("status = 'active'"),
         ),
     )
 # clase modelo para la persistencia de la tabla care_permissions
@@ -88,11 +104,85 @@ class ReminderScheduleModel(Base):
     treatment_id: Mapped[int] = mapped_column(
         ForeignKey("treatments.id", ondelete="CASCADE"), nullable=False, index=True
     )
-    scheduled_time: Mapped[str] = mapped_column(String(16), default="", nullable=False)
-    frequency_value: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
-    frequency_unit: Mapped[str] = mapped_column(String(32), default="days", nullable=False)
-    days_of_week: Mapped[list[int]] = mapped_column(JSON, default=list, nullable=False)
-    is_active: Mapped[bool] = mapped_column(default=True, nullable=False)
+    frequency: Mapped[str] = mapped_column(String(32), nullable=False, default="daily")
+    weekdays: Mapped[list[int]] = mapped_column(
+        ARRAY(SmallInteger).with_variant(JSON, "sqlite"), default=list, nullable=False
+    )
+    timezone: Mapped[str] = mapped_column(String(100), default="UTC", nullable=False)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+
+    times: Mapped[list[ReminderTimeModel]] = relationship(
+        "ReminderTimeModel", back_populates="schedule", cascade="all, delete-orphan", lazy="selectin"
+    )
+
+    __table_args__ = (
+        CheckConstraint(
+            "frequency IN ('daily', 'weekly', 'interval')",
+            name="check_reminder_schedule_frequency",
+        ),
+    )
+
+    # Propiedades de compatibilidad con repositorios y entidades existentes
+    @property
+    def days_of_week(self) -> list[int]:
+        return self.weekdays
+
+    @days_of_week.setter
+    def days_of_week(self, value: list[int]) -> None:
+        self.weekdays = value
+
+    @property
+    def scheduled_time(self) -> str:
+        if self.times:
+            first_time = self.times[0].time_of_day
+            return first_time.strftime("%H:%M") if hasattr(first_time, "strftime") else str(first_time)
+        return ""
+
+    @scheduled_time.setter
+    def scheduled_time(self, value: str) -> None:
+        if not value:
+            self.times = []
+            return
+        parts = value.split(":")
+        t = time(int(parts[0]), int(parts[1]))
+        self.times = [ReminderTimeModel(time_of_day=t)]
+
+    @property
+    def frequency_value(self) -> int:
+        return 1
+
+    @frequency_value.setter
+    def frequency_value(self, value: int) -> None:
+        pass
+
+    @property
+    def frequency_unit(self) -> str:
+        return "days"
+
+    @frequency_unit.setter
+    def frequency_unit(self, value: str) -> None:
+        pass
+
+
+# clase modelo para la persistencia de la tabla reminder_times
+class ReminderTimeModel(Base):
+    __tablename__ = "reminder_times"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    schedule_id: Mapped[int] = mapped_column(
+        ForeignKey("reminder_schedules.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    time_of_day: Mapped[time] = mapped_column(Time, nullable=False)
+
+    schedule: Mapped[ReminderScheduleModel] = relationship(
+        "ReminderScheduleModel", back_populates="times"
+    )
+
+    __table_args__ = (
+        UniqueConstraint("schedule_id", "time_of_day", name="uq_reminder_times_schedule_time"),
+    )
 
 
 # # Se mantiene como una pequeña superficie de exportación para pruebas de infraestructura y futuros adaptadores.
