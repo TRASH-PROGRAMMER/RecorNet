@@ -145,3 +145,21 @@ El informe cubre los commits `9978e9f`, `f32e9a9`, `4bf856a`, `79f76de` y `b432c
 | Tipado correcto | `reminder_service.update` usa `Reminder` (alias de `ReminderSchedule`), no `ReminderRepository`. | Cumplido. |
 | ABC efectivo | `NotificationService(ABC)` hace que `@abstractmethod` sea vinculante. | Cumplido. |
 | Suite completa | `python -m pytest -v`: 23 passed, 0 failed. | Cumplido. |
+
+## Verificación del endpoint de salud — `GET /health` (2026-10-20)
+- [x] Verificar que `create_app()` registra `GET /health` y devuelve JSON `200`.
+- [x] Verificar que Swagger expone `/health` en `/apispec_1.json`.
+- [x] Ejecutar compilación del backend y revisión de diff.
+- [ ] Formalizar el contrato de salud en la documentación aprobada, previa autorización para modificar `docs/`.
+- [ ] Separar liveness (`/health`) de readiness con comprobación de dependencias (PostgreSQL/Redis) cuando exista la capa de configuración correspondiente.
+- [ ] Resolver la incidencia de integración: `Base.metadata.create_all()` falla porque `care_relationships` referencia `users` y no existe un modelo `UserModel` registrado.
+
+### Revisión verificable — endpoint de salud
+
+| Criterio | Evidencia | Resultado |
+| --- | --- | --- |
+| Respuesta HTTP | Flask test client: `GET /health` → `200`, `application/json`, `{"status": "200 ok"}`. | Cumplido como liveness básico. |
+| Documentación técnica | `/apispec_1.json` → `200` y contiene `/health`. | Cumplido técnicamente; falta contrato canónico en `docs/`. |
+| Arquitectura | La ruta está en `backend/main.py`, fuera de `src/application`/adaptadores formales. | Alineación parcial; requiere consolidación con la entrada API prevista. |
+| Producción | `main.py` arranca con `debug=True`; el endpoint no comprueba PostgreSQL/Redis. | Pendiente de endurecimiento. |
+| Suite global | `23` pruebas de dominio no se ejecutan completamente: `4` errores de setup por FK a `users`; la prueba directa del endpoint sí pasó. | Incidencia independiente pendiente. |
