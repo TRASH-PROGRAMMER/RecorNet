@@ -163,3 +163,21 @@ El informe cubre los commits `9978e9f`, `f32e9a9`, `4bf856a`, `79f76de` y `b432c
 | Arquitectura | La ruta está en `backend/main.py`, fuera de `src/application`/adaptadores formales. | Alineación parcial; requiere consolidación con la entrada API prevista. |
 | Producción | `main.py` arranca con `debug=True`; el endpoint no comprueba PostgreSQL/Redis. | Pendiente de endurecimiento. |
 | Suite global | `23` pruebas de dominio no se ejecutan completamente: `4` errores de setup por FK a `users`; la prueba directa del endpoint sí pasó. | Incidencia independiente pendiente. |
+
+## Movimiento de la factoría Flask a `backend/src/main.py` (2026-10-20)
+- [x] Mover la implementación real de `create_app()` a `backend/src/main.py`.
+- [x] Mantener `backend/main.py` como shim de compatibilidad, sin duplicar la factoría.
+- [x] Verificar el contrato `FLASK_APP=src.main:create_app` y los imports desde `src.main` y `main`.
+- [x] Probar `/health`, Swagger, compilación y las pruebas específicas de la factoría.
+- [x] Registrar evidencia y publicar el cambio sin modificar `docs/` ni `.agents/`.
+
+### Revisión verificable — factoría Flask en `src.main`
+
+| Criterio | Evidencia | Resultado |
+| --- | --- | --- |
+| Ubicación canónica | `backend/src/main.py` contiene la única implementación de `create_app()`. | Cumplido. |
+| Compatibilidad | `backend/main.py` reexporta `create_app` desde `src.main`, sin duplicar la factoría. | Cumplido. |
+| Descubrimiento Flask | `FLASK_APP=src.main:create_app flask routes` registra `/health` y Swagger. | Cumplido. |
+| Prueba específica | `tests/integration/test_app_factory.py`: 1 pasada. | Cumplido. |
+| Compilación | `python3 -m compileall -q backend/src backend/main.py backend/tests`: correcto. | Cumplido. |
+| Suite global | 20 pruebas pasan; 4 errores de setup persisten por FK a `users` sin `UserModel` en `Base`. | Pendiente independiente. |

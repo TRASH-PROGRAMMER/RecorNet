@@ -38,3 +38,7 @@ Antes de cada tarea se debe enrutar el contexto hacia las fuentes indicadas por 
 ## 2026-10-20 — Verificación de salud del backend
 
 Un `GET /health` que responde `200` confirma únicamente que el proceso Flask está vivo; no demuestra disponibilidad de PostgreSQL, Redis ni del resto de dependencias. Debe distinguirse entre liveness y readiness, con contratos documentados y pruebas separadas. Durante la verificación actual, el endpoint directo y su especificación Swagger pasaron, pero la suite de integración falló en el setup porque los modelos `care_relationships` referencian `users` sin un `UserModel` registrado en el mismo `Base`; no se debe declarar la suite global saludable mientras esa base de pruebas no esté completa.
+
+## 2026-10-20 — Factoría Flask en `src.main`
+
+La factoría debe vivir en `backend/src/main.py` para cumplir el contrato `FLASK_APP=src.main:create_app` y la estructura de entrada del backend. Cuando exista un punto de entrada histórico en `backend/main.py`, se conserva como shim que reexporta la factoría, evitando dos implementaciones divergentes y manteniendo compatibilidad con scripts locales. El movimiento se valida con imports canónicos y heredados, `flask routes`, prueba HTTP de `/health`, Swagger y compilación.
