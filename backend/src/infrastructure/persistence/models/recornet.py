@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import date, datetime, time
-from typing import Any
+from typing import Any,Float
 from sqlalchemy import (
     Boolean,
     CheckConstraint,
@@ -183,6 +183,98 @@ class ReminderTimeModel(Base):
     __table_args__ = (
         UniqueConstraint("schedule_id", "time_of_day", name="uq_reminder_times_schedule_time"),
     )
+
+# clase modelo para la persistencia de la tabla users
+class  UserModel(Base):
+    __tablename__ = "users"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(String(255), nullable=False)
+    email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
+    password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+__table_args__ = (
+    CheckConstraint(
+        "status IN ('active', 'inactive')",
+        name="check_users_status",
+    ),
+)
+
+class Role(Base):
+    __tablename__ = "roles"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(String(255), nullable=False)
+    
+    __table_args__ = (
+        UniqueConstraint("name", name="uq_roles_name"),
+        CheckConstraint(
+            "status IN ('active', 'inactive')",
+            name="check_roles_status",
+        ),
+    )
+
+class UserRolesModel(Base):
+    __tablename__ = "user_roles"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    role_id: Mapped[int] = mapped_column(ForeignKey("roles.id", ondelete="CASCADE"), nullable=False)
+    
+    __table_args__ = (
+        UniqueConstraint("user_id", "role_id", name="uq_user_roles_user_role"),
+    )
+
+    class ccessibility_preferences(Base):
+        __tablename__ = "accessibility_preferences"
+
+        id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+        user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE", index=True), nullable=False)
+        text_scale: Mapped[float] = mapped_column(Float, default=1.0, nullable=False)
+        high_contrast: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+        voice_guidance_enabled: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+        haptics_enabled: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+        reduce_motion: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+        
+        __table_args__ = (
+            UniqueConstraint("user_id", name="uq_accessibility_preferences_user_id"),
+        ),
+        CheckConstraint(
+            "text_scale >= 0.5 AND text_scale <= 2.0",
+            name="check_accessibility_preferences_text_scale",
+        )
+        
+class AuthenticationSessionModel(Base):
+    __tablename__ = "authentication_sessions"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    device_id : Mapped[str] = mapped_column(String(255), nullable=False)
+    refresh_token_hash : Mapped[str] = mapped_column(String(255), nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    used_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    
+    __table_args__ = (
+     CheckConstraint(" status IN ('active', 'inactive')", name="check_authentication_sessions_status")
+    )
+
+class password_reset_tokens(Base):
+    __tablename__ = "password_reset_tokens"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    token_hash: Mapped[str] = mapped_column(String(255), nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    used_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    
+    
+
 
 
 # # Se mantiene como una pequeña superficie de exportación para pruebas de infraestructura y futuros adaptadores.
