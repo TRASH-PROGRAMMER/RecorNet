@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 from datetime import date, datetime, time
-from typing import Any,Float
+from typing import Any
 from sqlalchemy import (
     Boolean,
     CheckConstraint,
     Date,
     DateTime,
+    Float,
     ForeignKey,
     Index,
     Integer,
