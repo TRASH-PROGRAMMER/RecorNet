@@ -278,5 +278,6 @@ class password_reset_tokens(Base):
 
 
 
+
 # # Se mantiene como una pequeña superficie de exportación para pruebas de infraestructura y futuros adaptadores.
 Model = Any
